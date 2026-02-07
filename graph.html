@@ -10,39 +10,6 @@
   <script src="https://cdn.jsdelivr.net/npm/graphology@0.26.0/dist/graphology.umd.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/sigma@3.0.2/dist/sigma.min.js" defer></script>
   <script src="graph-view.js" defer></script>
-  <script id="graph-data" type="application/json">
-  {
-    "nodes": [
-      { "id": "index", "label": "Home", "url": "index.html", "group": "home", "description": "Design memo overview: why this exists, core guarantees, threat model, and roadmap." },
-      { "id": "glossary", "label": "Glossary", "url": "spec/glossary.html", "group": "spec", "description": "Canonical definitions for every term used across the spec." },
-      { "id": "lifecycle", "label": "Lifecycle", "url": "spec/lifecycle.html", "group": "spec", "description": "States and transitions for a persona artifact from enrollment to sunset." },
-      { "id": "governance", "label": "Governance", "url": "spec/governance.html", "group": "spec", "description": "Trustee quorum rules, release policy, and multi-party authorization." },
-      { "id": "citation-binding", "label": "Citation Binding", "url": "spec/citation-binding.html", "group": "spec", "description": "How responses are bound to source artifacts with proof-carrying bundles." },
-      { "id": "novel-approaches", "label": "Novel Approaches", "url": "spec/novel-approaches.html", "group": "spec", "description": "Techniques that distinguish this design from existing memorial bot approaches." },
-      { "id": "ambiguities", "label": "Ambiguities", "url": "spec/ambiguities.html", "group": "spec", "description": "Open questions and unresolved design tensions tracked as a living ledger." },
-      { "id": "style-tile", "label": "Style Tile", "url": "style-tile.html", "group": "meta", "description": "Visual design language: colors, typography, spacing, and component patterns." }
-    ],
-    "edges": [
-      { "source": "lifecycle", "target": "glossary" },
-      { "source": "governance", "target": "glossary" },
-      { "source": "citation-binding", "target": "glossary" },
-      { "source": "novel-approaches", "target": "glossary" },
-      { "source": "ambiguities", "target": "glossary" },
-      { "source": "citation-binding", "target": "governance" },
-      { "source": "citation-binding", "target": "lifecycle" },
-      { "source": "novel-approaches", "target": "governance" },
-      { "source": "novel-approaches", "target": "citation-binding" },
-      { "source": "novel-approaches", "target": "lifecycle" },
-      { "source": "ambiguities", "target": "governance" },
-      { "source": "ambiguities", "target": "lifecycle" },
-      { "source": "ambiguities", "target": "citation-binding" },
-      { "source": "index", "target": "glossary" },
-      { "source": "index", "target": "lifecycle" },
-      { "source": "index", "target": "governance" },
-      { "source": "index", "target": "citation-binding" }
-    ]
-  }
-  </script>
 </head>
 <body>
 <header class="global-nav">
@@ -80,6 +47,7 @@
   <div class="graph-container" id="graph-container">
     <div id="sigma-canvas" role="img" aria-label="Interactive graph showing connections between specification pages. Use the search field to find pages, or use the list view below."></div>
     <div class="graph-tooltip" id="graph-tooltip"></div>
+    <div class="graph-fallback" id="graph-fallback"><p>Loading graph. If it does not appear, use the list view below.</p></div>
     <noscript>
       <div class="graph-fallback">
         <p>This graph requires JavaScript. Use the list view below to browse pages.</p>
@@ -91,6 +59,53 @@
     <details id="graph-list-details">
       <summary>List view: browse all pages</summary>
       <div id="graph-list-view">
+      <div class="graph-list-group">
+        <h3>Home</h3>
+        <ul>
+          <li>
+            <a href="index.html">Home</a>
+            <span class="list-desc">Design memo overview: why this exists, core guarantees, threat model, and roadmap.</span>
+          </li>
+        </ul>
+      </div>
+<div class="graph-list-group">
+        <h3>Spec</h3>
+        <ul>
+          <li>
+            <a href="spec/ambiguities.html">Ambiguities</a>
+            <span class="list-desc">Open questions and unresolved design tensions tracked as a living ledger.</span>
+          </li>
+<li>
+            <a href="spec/citation-binding.html">Citation Binding</a>
+            <span class="list-desc">How responses are bound to source artifacts with proof-carrying bundles.</span>
+          </li>
+<li>
+            <a href="spec/glossary.html">Glossary</a>
+            <span class="list-desc">Canonical definitions for every term used across the spec.</span>
+          </li>
+<li>
+            <a href="spec/governance.html">Governance</a>
+            <span class="list-desc">Trustee quorum rules, release policy, and multi-party authorization.</span>
+          </li>
+<li>
+            <a href="spec/lifecycle.html">Lifecycle</a>
+            <span class="list-desc">States and transitions for a persona artifact from enrollment to sunset.</span>
+          </li>
+<li>
+            <a href="spec/novel-approaches.html">Novel Approaches</a>
+            <span class="list-desc">Techniques that distinguish this design from existing memorial bot approaches.</span>
+          </li>
+        </ul>
+      </div>
+<div class="graph-list-group">
+        <h3>Meta</h3>
+        <ul>
+          <li>
+            <a href="style-tile.html">Style Tile</a>
+            <span class="list-desc">Visual design language: colors, typography, spacing, and component patterns.</span>
+          </li>
+        </ul>
+      </div>
       </div>
     </details>
   </div>
@@ -100,5 +115,7 @@
   <p>Last updated: 2026-02-06</p>
   <p><a href="spec/glossary.html">Glossary</a> · <a href="spec/lifecycle.html">Lifecycle</a> · <a href="spec/citation-binding.html">Citation&nbsp;Binding</a> · <a href="spec/governance.html">Governance</a> · <a href="spec/ambiguities.html">Ambiguity&nbsp;Ledger</a> · <a href="style-tile.html">Style&nbsp;Tile</a></p>
 </footer>
+  <a href="#" class="back-to-top" aria-label="Back to top" hidden>&uarr;</a>
+  <script src="motion.js" defer></script>
 </body>
 </html>
