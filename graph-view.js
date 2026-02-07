@@ -9,8 +9,8 @@
   /* ── Constants ─────────────────────────────── */
   var GROUP_COLORS = { home: '--accent', spec: '--accent2', meta: '--muted' };
   var GROUP_LABELS = { home: 'Home', spec: 'Spec', meta: 'Meta' };
-  var SIZE_FLOOR = 6;
-  var SIZE_CAP = 32;
+  var SIZE_FLOOR = 4;
+  var SIZE_CAP = 16;
   var FADE_NEAR = 0.20;
   var FADE_FAR = 0.10;
   var FADE_DELAY = 100;
@@ -121,16 +121,16 @@
   function layoutForceDirected(nodes, edges) {
     /* Simple force-directed layout — no extra library needed for small graphs */
     var i, j, n1, n2, dx, dy, dist, force, ex, ey;
-    var repulsion = 800;
-    var attraction = 0.06;
-    var damping = 0.9;
+    var repulsion = 20000;
+    var attraction = 0.005;
+    var damping = 0.85;
     var dt = 0.4;
 
     /* Initialize with circular positions + zero velocity */
     var step = (2 * Math.PI) / nodes.length;
     nodes.forEach(function (n, idx) {
-      n._x = 100 * Math.cos(idx * step - Math.PI / 2);
-      n._y = 100 * Math.sin(idx * step - Math.PI / 2);
+      n._x = 300 * Math.cos(idx * step - Math.PI / 2);
+      n._y = 300 * Math.sin(idx * step - Math.PI / 2);
       n._vx = 0;
       n._vy = 0;
     });
@@ -559,21 +559,37 @@
   }
 
   /* ── Boot ───────────────────────────────────── */
+  function loadAndInit(data) {
+    var errors = validate(data);
+    if (errors.length) {
+      showError('Graph data error: ' + errors[0]);
+      if (data.nodes) buildListView(data.nodes);
+      return;
+    }
+    init(data);
+  }
+
   function boot() {
+    /* Try inline data first (works on file:// protocol) */
+    var inlineEl = document.getElementById('graph-data');
+    if (inlineEl) {
+      try {
+        var data = JSON.parse(inlineEl.textContent);
+        loadAndInit(data);
+        return;
+      } catch (e) {
+        showError('Invalid inline graph data: ' + e.message);
+        return;
+      }
+    }
+
+    /* Fall back to fetching graph.json */
     fetch('graph.json')
       .then(function (res) {
         if (!res.ok) throw new Error('Failed to load graph.json (HTTP ' + res.status + ')');
         return res.json();
       })
-      .then(function (data) {
-        var errors = validate(data);
-        if (errors.length) {
-          showError('Graph data error: ' + errors[0]);
-          if (data.nodes) buildListView(data.nodes);
-          return;
-        }
-        init(data);
-      })
+      .then(loadAndInit)
       .catch(function (err) {
         showError('Could not load graph: ' + err.message);
       });
