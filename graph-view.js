@@ -45,6 +45,15 @@
 
   if (!canvasEl || !containerEl) return;
 
+  /* Resolve Sigma constructor (UMD bundle exports a namespace object) */
+  var SigmaClass =
+    (typeof Sigma !== 'undefined' && (Sigma.Sigma || Sigma['default'])) ||
+    (typeof Sigma === 'function' ? Sigma : null);
+  if (typeof SigmaClass !== 'function') {
+    if (typeof console !== 'undefined') console.error('Sigma constructor not found.');
+    return;
+  }
+
   /* Helpers */
   function cssVar(name) {
     return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
@@ -293,7 +302,7 @@
     var pointerDownPos = null;
     var userHasMoved = false;
 
-    var renderer = new Sigma(graph, canvasEl, {
+    var renderer = new SigmaClass(graph, canvasEl, {
       renderLabels: true,
       labelDensity: 1,
       labelRenderedSizeThreshold: 0,
