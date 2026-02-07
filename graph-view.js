@@ -1,7 +1,7 @@
 /**
  * graph-view.js
  * Interactive spec dependency graph using Sigma.js + graphology.
- * No globals. No build step. ~200 lines.
+ * No globals. No build step.
  */
 (function () {
   'use strict';
@@ -33,7 +33,18 @@
 
   /* ── Helpers ───────────────────────────────── */
   function resolveColor(varName) {
-    return getComputedStyle(document.documentElement).getPropertyValue(varName).trim();
+    var raw = getComputedStyle(document.documentElement).getPropertyValue(varName).trim();
+    return colorToHex(raw);
+  }
+
+  function colorToHex(color) {
+    var canvas = document.createElement('canvas');
+    canvas.width = canvas.height = 1;
+    var ctx = canvas.getContext('2d');
+    ctx.fillStyle = color;
+    ctx.fillRect(0, 0, 1, 1);
+    var d = ctx.getImageData(0, 0, 1, 1).data;
+    return '#' + ((1 << 24) + (d[0] << 16) + (d[1] << 8) + d[2]).toString(16).slice(1);
   }
 
   function showError(msg) {
@@ -57,9 +68,13 @@
       if (ids[n.id]) errors.push('Duplicate node id: ' + n.id);
       ids[n.id] = true;
     });
+    var edgeSet = {};
     data.edges.forEach(function (e, i) {
       if (!ids[e.source]) errors.push('Edge ' + i + ': unknown source "' + e.source + '"');
       if (!ids[e.target]) errors.push('Edge ' + i + ': unknown target "' + e.target + '"');
+      var edgeKey = e.source + '->' + e.target;
+      if (edgeSet[edgeKey]) errors.push('Edge ' + i + ': duplicate edge ' + edgeKey);
+      edgeSet[edgeKey] = true;
     });
     return errors;
   }
@@ -71,19 +86,33 @@
       if (!groups[g]) groups[g] = [];
       groups[g].push(n);
     });
-    var html = '';
+    listViewEl.innerHTML = '';
     Object.keys(GROUP_LABELS).forEach(function (key) {
       var list = groups[key];
       if (!list || !list.length) return;
-      html += '<div class="graph-list-group"><h3>' + GROUP_LABELS[key] + '</h3><ul>';
+      var div = document.createElement('div');
+      div.className = 'graph-list-group';
+      var h3 = document.createElement('h3');
+      h3.textContent = GROUP_LABELS[key];
+      div.appendChild(h3);
+      var ul = document.createElement('ul');
       list.forEach(function (n) {
-        html += '<li><a href="' + n.url + '">' + n.label + '</a>';
-        if (n.description) html += '<span class="list-desc">' + n.description + '</span>';
-        html += '</li>';
+        var li = document.createElement('li');
+        var a = document.createElement('a');
+        a.href = n.url;
+        a.textContent = n.label;
+        li.appendChild(a);
+        if (n.description) {
+          var span = document.createElement('span');
+          span.className = 'list-desc';
+          span.textContent = n.description;
+          li.appendChild(span);
+        }
+        ul.appendChild(li);
       });
-      html += '</ul></div>';
+      div.appendChild(ul);
+      listViewEl.appendChild(div);
     });
-    listViewEl.innerHTML = html;
   }
 
   function layoutCircular(nodes) {
@@ -221,10 +250,15 @@
     });
 
     /* Fit camera initially */
-    renderer.getCamera().animatedReset({ duration: 0 });
+    var cam = renderer.getCamera();
+    var ignoreCameraUpdate = true;
+    cam.animatedReset({ duration: 0 });
 
-    /* Track user camera interaction */
-    renderer.getCamera().on('updated', function () { userHasMoved = true; });
+    /* Track user camera interaction (defer to avoid catching initial reset) */
+    requestAnimationFrame(function () { ignoreCameraUpdate = false; });
+    cam.on('updated', function () {
+      if (!ignoreCameraUpdate) userHasMoved = true;
+    });
 
     /* ── Hover behavior ──────────────────────── */
     renderer.on('enterNode', function (event) {
@@ -332,12 +366,13 @@
       if (bestNode) {
         var nodeX = graph.getNodeAttribute(bestNode, 'x');
         var nodeY = graph.getNodeAttribute(bestNode, 'y');
-        var cam = renderer.getCamera();
+        ignoreCameraUpdate = true;
         if (reducedMotion) {
           cam.setState({ x: nodeX, y: nodeY, ratio: 0.5 });
         } else {
           cam.animate({ x: nodeX, y: nodeY, ratio: 0.5 }, { duration: 300 });
         }
+        setTimeout(function () { ignoreCameraUpdate = false; }, 350);
       }
     }
 
@@ -409,12 +444,13 @@
     /* ── Reset button ────────────────────────── */
     function fitVisibleNodes() {
       userHasMoved = false;
-      var cam = renderer.getCamera();
+      ignoreCameraUpdate = true;
       if (reducedMotion) {
         cam.animatedReset({ duration: 0 });
       } else {
         cam.animatedReset({ duration: 300 });
       }
+      setTimeout(function () { ignoreCameraUpdate = false; }, 350);
     }
 
     resetBtn.addEventListener('click', function () {
