@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Graph | PMG Digital Personas</title>
+  <meta name="description" content="Interactive graph showing how the PMG Digital Persona spec pages depend on each other.">
+  <meta name="theme-color" content="#0b0f14">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/graphology@0.26.0/dist/graphology.umd.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/sigma@3.0.2/dist/sigma.min.js" defer></script>
+  <script src="graph-view.js" defer></script>
+</head>
+<body>
+<header class="global-nav">
+  <a href="index.html" class="site-name">PMG Digital Personas</a>
+  <nav aria-label="Spec pages">
+    <a href="spec/glossary.html">Glossary</a>
+    <a href="spec/lifecycle.html">Lifecycle</a>
+    <a href="spec/governance.html">Governance</a>
+    <a href="spec/citation-binding.html">Citation Binding</a>
+    <a href="spec/novel-approaches.html">Novel Approaches</a>
+    <a href="spec/ambiguities.html">Ambiguities</a>
+    <a href="graph.html" aria-current="page">Graph</a>
+  </nav>
+</header>
+
+<main>
+  <div class="graph-page-header">
+    <h1>Spec Graph</h1>
+    <p class="page-intro">How the specification pages depend on each other.</p>
+    <p class="graph-tip">Tip: type to search, drag to pan, scroll to zoom.</p>
+  </div>
+
+  <div class="graph-controls" id="graph-controls">
+    <div class="graph-search">
+      <label for="graph-search-input">Search</label>
+      <input type="text" id="graph-search-input" placeholder="Find a page…" autocomplete="off">
+      <button type="button" class="clear-btn" id="graph-clear-btn" aria-label="Clear search">Clear</button>
+    </div>
+    <div class="graph-chips" id="graph-chips" role="group" aria-label="Filter by group">
+    </div>
+    <button type="button" class="graph-reset-btn" id="graph-reset-btn">Reset view</button>
+    <div id="graph-status" class="sr-only" aria-live="polite"></div>
+  </div>
+
+  <div class="graph-container" id="graph-container">
+    <div id="sigma-canvas" role="img" aria-label="Interactive graph showing connections between specification pages. Use the search field to find pages, or use the list view below."></div>
+    <div class="graph-tooltip" id="graph-tooltip"></div>
+    <noscript>
+      <div class="graph-fallback">
+        <p>This graph requires JavaScript. Use the list view below to browse pages.</p>
+      </div>
+    </noscript>
+  </div>
+
+  <div class="graph-list-wrap">
+    <details id="graph-list-details">
+      <summary>List view: browse all pages</summary>
+      <div id="graph-list-view">
+      </div>
+    </details>
+  </div>
+</main>
+
+<footer>
+  <p>Last updated: 2026-02-06</p>
+  <p><a href="spec/glossary.html">Glossary</a> · <a href="spec/lifecycle.html">Lifecycle</a> · <a href="spec/citation-binding.html">Citation&nbsp;Binding</a> · <a href="spec/governance.html">Governance</a> · <a href="spec/ambiguities.html">Ambiguity&nbsp;Ledger</a> · <a href="style-tile.html">Style&nbsp;Tile</a></p>
+</footer>
+</body>
+</html>
