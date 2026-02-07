@@ -9,13 +9,16 @@
   /* ── Constants ─────────────────────────────── */
   var GROUP_COLORS = { home: '--accent', spec: '--accent2', meta: '--muted' };
   var GROUP_LABELS = { home: 'Home', spec: 'Spec', meta: 'Meta' };
-  var SIZE_FLOOR = 8;
-  var SIZE_CAP = 28;
-  var FADE_NEAR = 0.25;
-  var FADE_FAR = 0.15;
+  var SIZE_FLOOR = 6;
+  var SIZE_CAP = 32;
+  var FADE_NEAR = 0.20;
+  var FADE_FAR = 0.10;
   var FADE_DELAY = 100;
   var TOOLTIP_DELAY = 200;
   var DRAG_THRESHOLD = 4;
+  var EDGE_DEFAULT_SIZE = 0.5;
+  var EDGE_HIGHLIGHT_SIZE = 1.5;
+  var FORCE_ITERATIONS = 300;
 
   var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var isTouch = 'ontouchstart' in window;
@@ -115,13 +118,70 @@
     });
   }
 
-  function layoutCircular(nodes) {
-    var r = 100;
+  function layoutForceDirected(nodes, edges) {
+    /* Simple force-directed layout — no extra library needed for small graphs */
+    var i, j, n1, n2, dx, dy, dist, force, ex, ey;
+    var repulsion = 800;
+    var attraction = 0.06;
+    var damping = 0.9;
+    var dt = 0.4;
+
+    /* Initialize with circular positions + zero velocity */
     var step = (2 * Math.PI) / nodes.length;
-    nodes.forEach(function (n, i) {
-      n._x = r * Math.cos(i * step - Math.PI / 2);
-      n._y = r * Math.sin(i * step - Math.PI / 2);
+    nodes.forEach(function (n, idx) {
+      n._x = 100 * Math.cos(idx * step - Math.PI / 2);
+      n._y = 100 * Math.sin(idx * step - Math.PI / 2);
+      n._vx = 0;
+      n._vy = 0;
     });
+
+    var nodeMap = {};
+    nodes.forEach(function (n) { nodeMap[n.id] = n; });
+
+    for (i = 0; i < FORCE_ITERATIONS; i++) {
+      /* Repulsion between all pairs */
+      for (j = 0; j < nodes.length; j++) {
+        for (var k = j + 1; k < nodes.length; k++) {
+          n1 = nodes[j];
+          n2 = nodes[k];
+          dx = n1._x - n2._x;
+          dy = n1._y - n2._y;
+          dist = Math.sqrt(dx * dx + dy * dy) || 1;
+          force = repulsion / (dist * dist);
+          var fx = (dx / dist) * force;
+          var fy = (dy / dist) * force;
+          n1._vx += fx;
+          n1._vy += fy;
+          n2._vx -= fx;
+          n2._vy -= fy;
+        }
+      }
+
+      /* Attraction along edges */
+      edges.forEach(function (e) {
+        var src = nodeMap[e.source];
+        var tgt = nodeMap[e.target];
+        if (!src || !tgt) return;
+        dx = tgt._x - src._x;
+        dy = tgt._y - src._y;
+        dist = Math.sqrt(dx * dx + dy * dy) || 1;
+        force = attraction * dist;
+        var fx = (dx / dist) * force;
+        var fy = (dy / dist) * force;
+        src._vx += fx;
+        src._vy += fy;
+        tgt._vx -= fx;
+        tgt._vy -= fy;
+      });
+
+      /* Integrate + damp */
+      nodes.forEach(function (n) {
+        n._vx *= damping;
+        n._vy *= damping;
+        n._x += n._vx * dt;
+        n._y += n._vy * dt;
+      });
+    }
   }
 
   /* ── Main ──────────────────────────────────── */
@@ -138,15 +198,19 @@
     var maxDeg = Math.max.apply(null, Object.values(degree).concat([1]));
 
     /* Layout */
-    layoutCircular(data.nodes);
+    layoutForceDirected(data.nodes, data.edges);
 
     /* Resolve CSS colors once */
     var colors = {};
     Object.keys(GROUP_COLORS).forEach(function (k) {
       colors[k] = resolveColor(GROUP_COLORS[k]);
     });
+    var nodeColor = resolveColor('--text');
+    var nodeColorDim = resolveColor('--muted');
+    var lineColor = resolveColor('--line');
+    var edgeColor = lineColor + '40'; /* very low opacity edges */
 
-    /* Add nodes */
+    /* Add nodes — white/light filled circles (Obsidian style) */
     data.nodes.forEach(function (n) {
       var deg = degree[n.id] || 0;
       var size = SIZE_FLOOR + ((deg / maxDeg) * (SIZE_CAP - SIZE_FLOOR));
@@ -155,19 +219,18 @@
         x: n._x,
         y: n._y,
         size: size,
-        color: colors[n.group] || colors.meta,
+        color: nodeColorDim,
         url: n.url,
         description: n.description || '',
         group: n.group || 'meta'
       });
     });
 
-    /* Add edges */
-    var lineColor = resolveColor('--line');
+    /* Add edges — thin, subtle lines */
     data.edges.forEach(function (e) {
       graph.addEdge(e.source, e.target, {
-        size: 1.5,
-        color: lineColor
+        size: EDGE_DEFAULT_SIZE,
+        color: edgeColor
       });
     });
 
@@ -189,10 +252,12 @@
     var tooltipTimeout = null;
 
     var renderer = new Sigma(graph, canvasEl, {
-      labelDensity: 0.12,
-      labelRenderedSizeThreshold: 6,
+      labelDensity: 0.15,
+      labelRenderedSizeThreshold: 4,
       labelColor: { color: textColor },
-      defaultEdgeColor: lineColor,
+      labelFont: 'var(--sans)',
+      labelSize: 13,
+      defaultEdgeColor: edgeColor,
       renderLabels: true,
       nodeReducer: function (node, attrs) {
         var res = Object.assign({}, attrs);
@@ -207,17 +272,25 @@
         /* Search highlighting */
         var hasSearch = Object.keys(searchMatches).length > 0;
         if (hasSearch && !searchMatches[node]) {
-          res.color = lineColor;
+          res.color = lineColor + '30';
           res.label = '';
+        } else if (hasSearch && searchMatches[node]) {
+          res.color = accentColor;
         }
 
-        /* Hover fade */
-        if (hoveredNode && hoveredNode !== node) {
-          var isNeighbor = graph.hasEdge(hoveredNode, node) || graph.hasEdge(node, hoveredNode);
-          if (!isNeighbor) {
-            var opacity = deepFade ? FADE_FAR : FADE_NEAR;
-            res.color = res.color + Math.round(opacity * 255).toString(16).padStart(2, '0');
-            res.label = '';
+        /* Hover: hovered node glows accent, neighbors stay bright, rest fades */
+        if (hoveredNode) {
+          if (hoveredNode === node) {
+            res.color = accentColor;
+          } else {
+            var isNeighbor = graph.hasEdge(hoveredNode, node) || graph.hasEdge(node, hoveredNode);
+            if (isNeighbor) {
+              res.color = nodeColor;
+            } else {
+              var opacity = deepFade ? FADE_FAR : FADE_NEAR;
+              res.color = nodeColorDim + Math.round(opacity * 255).toString(16).padStart(2, '0');
+              res.label = '';
+            }
           }
         }
         return res;
@@ -235,14 +308,15 @@
           return res;
         }
 
-        /* Hover highlight */
+        /* Hover: connected edges glow accent, rest nearly vanish */
         if (hoveredNode) {
           if (src === hoveredNode || tgt === hoveredNode) {
             res.color = accentColor;
-            res.size = 2.5;
+            res.size = EDGE_HIGHLIGHT_SIZE;
           } else {
             var opacity = deepFade ? FADE_FAR : FADE_NEAR;
             res.color = lineColor + Math.round(opacity * 255).toString(16).padStart(2, '0');
+            res.size = EDGE_DEFAULT_SIZE;
           }
         }
         return res;
