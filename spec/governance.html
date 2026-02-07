@@ -1,0 +1,1228 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Governance Policy | PMG Digital Personas</title>
+  <meta name="description" content="Governance roles, permission thresholds, procedures, and failure modes for post-mortem-governed digital personas. Defines who can do what, and what stops anyone from doing too much.">
+  <meta name="theme-color" content="#0b0f14">
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    .transition-table { width: 100%; border-collapse: collapse; font-size: 14px; margin: 16px 0; }
+    .transition-table th, .transition-table td { padding: 10px 12px; border: 1px solid var(--line); text-align: left; vertical-align: top; }
+    .transition-table th { background: var(--card-bg); font-weight: 600; font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+    .transition-table tr:hover td { background: var(--card-bg); }
+    .role-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin: 16px 0; }
+    .role-card { padding: 20px; border: 1px solid var(--line); border-radius: 10px; background: var(--card-bg); text-align: center; }
+    .role-card svg { margin: 0 auto 12px; display: block; }
+    .role-card h3 { margin: 0 0 8px; font-size: 18px; }
+    .role-card .role-desc { font-size: 15px; color: var(--muted); margin: 0 0 12px; }
+    .can-do, .cannot-do { font-size: 14px; text-align: left; margin: 8px 0; }
+    .can-do dt, .cannot-do dt { font-weight: 600; margin-bottom: 4px; }
+    .can-do dt { color: var(--accent2); }
+    .cannot-do dt { color: var(--danger); }
+    .can-do dd, .cannot-do dd { margin: 0 0 0 16px; color: var(--muted); }
+    .escalation-steps { counter-reset: step; list-style: none; margin: 16px 0; padding: 0; }
+    .escalation-steps li { counter-increment: step; padding: 12px 16px; border: 1px solid var(--line); border-radius: 8px; margin: 8px 0; background: var(--card-bg); position: relative; padding-left: 48px; }
+    .escalation-steps li::before { content: "Level " counter(step); position: absolute; left: 12px; top: 12px; font-size: 12px; font-weight: 600; color: var(--muted); }
+    .table-wrap { overflow-x: auto; margin: 16px 0; }
+  </style>
+</head>
+<body>
+
+<!-- Hidden SVG symbol definitions -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+
+  <!-- ============================================================
+       PMG Digital Persona — Stick Figure Component Library
+
+       All strokes use currentColor so figures inherit page color.
+       All coordinates use decimal offsets for a hand-drawn feel.
+       Include this SVG block (hidden) at the top of the page body,
+       then reference symbols with:
+         <svg viewBox="0 0 60 100"><use href="#fig-author"/></svg>
+       ============================================================ -->
+
+  <!-- ===========================================================
+       CHARACTER: AUTHOR
+       Distinguishing feature: pencil near the hand
+       =========================================================== -->
+  <symbol id="fig-author" viewBox="0 0 60 100">
+    <!-- Head — wobbly circle, center ~(30,18), radius ~12 -->
+    <path d="M 30.3,6.2
+             C 36.8,5.8 42.5,11.4 42.3,17.6
+               42.6,24.1 37.1,29.7 30.4,30.2
+               23.6,30.5 17.5,24.8 17.7,18.1
+               17.4,11.3 23.5,5.9 30.3,6.2 Z"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Body -->
+    <path d="M 30.2,30.4 L 30.5,62.3"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left arm — slightly bent -->
+    <path d="M 30.3,38.6 L 22.4,46.3 L 14.7,43.5"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right arm — slightly bent -->
+    <path d="M 30.4,38.4 L 38.6,46.7 L 45.3,43.8"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left leg -->
+    <path d="M 30.3,62.3 L 19.6,88.4 L 16.5,92.7"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right leg -->
+    <path d="M 30.5,62.5 L 40.7,88.3 L 43.8,92.5"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Pencil near right hand — short diagonal with nib -->
+    <path d="M 45.5,43.6 L 52.3,36.8"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Pencil nib -->
+    <path d="M 52.3,36.8 L 54.1,34.5"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Pencil nib detail -->
+    <path d="M 53.5,35.8 L 52.8,34.3"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+
+  <!-- ===========================================================
+       CHARACTER: REVIEWER
+       Distinguishing feature: round glasses on face
+       =========================================================== -->
+  <symbol id="fig-reviewer" viewBox="0 0 60 100">
+    <!-- Head — wobbly circle -->
+    <path d="M 30.5,6.4
+             C 37.1,5.9 42.7,11.6 42.4,17.8
+               42.8,24.3 37.3,29.5 30.6,30.3
+               23.4,30.6 17.6,24.6 17.8,18.3
+               17.3,11.5 23.7,6.1 30.5,6.4 Z"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left glasses lens — small wobbly circle -->
+    <path d="M 24.3,16.3
+             C 26.4,15.1 28.7,16.5 28.5,18.4
+               28.8,20.5 26.6,21.8 24.5,21.3
+               22.3,21.6 21.2,19.1 21.5,17.4
+               21.3,15.8 22.9,15.5 24.3,16.3 Z"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right glasses lens — small wobbly circle -->
+    <path d="M 36.4,16.5
+             C 38.5,15.3 40.6,16.7 40.4,18.6
+               40.7,20.7 38.5,21.6 36.3,21.5
+               34.2,21.7 33.3,19.3 33.5,17.6
+               33.2,15.9 34.8,15.7 36.4,16.5 Z"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Glasses bridge -->
+    <path d="M 28.6,18.3 L 33.4,17.8"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Body -->
+    <path d="M 30.4,30.5 L 30.3,62.4"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left arm — neutral examining posture, slightly raised -->
+    <path d="M 30.3,38.5 L 21.6,44.7 L 14.4,42.6"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right arm — neutral, slightly forward -->
+    <path d="M 30.5,38.3 L 39.4,44.5 L 45.7,42.3"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left leg -->
+    <path d="M 30.3,62.4 L 19.8,88.6 L 16.7,92.4"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right leg -->
+    <path d="M 30.4,62.6 L 40.5,88.5 L 43.6,92.3"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+
+  <!-- ===========================================================
+       CHARACTER: TRUSTEE
+       Distinguishing feature: square/rectangular head
+       =========================================================== -->
+  <symbol id="fig-trustee" viewBox="0 0 60 100">
+    <!-- Head — wobbly rectangle with rounded corners, center ~(30,18) -->
+    <path d="M 20.4,7.6
+             C 20.6,6.3 21.8,5.7 23.2,5.8
+             L 37.3,5.5
+             C 38.7,5.4 39.8,6.5 40.1,7.8
+             L 40.4,27.6
+             C 40.3,29.1 39.2,30.2 37.6,30.4
+             L 22.8,30.6
+             C 21.4,30.5 20.2,29.3 20.3,27.8
+             Z"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Body -->
+    <path d="M 30.3,30.5 L 30.6,62.4"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left arm — slightly bent -->
+    <path d="M 30.4,38.7 L 22.3,46.5 L 14.5,43.6"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right arm — slightly bent -->
+    <path d="M 30.5,38.5 L 38.7,46.4 L 45.5,43.4"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left leg -->
+    <path d="M 30.4,62.4 L 19.5,88.3 L 16.3,92.6"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right leg -->
+    <path d="M 30.6,62.6 L 40.8,88.4 L 43.7,92.4"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+
+  <!-- ===========================================================
+       CHARACTER: READER
+       Distinguishing feature: scarf at the neck
+       =========================================================== -->
+  <symbol id="fig-reader" viewBox="0 0 60 100">
+    <!-- Head — wobbly circle -->
+    <path d="M 30.4,6.3
+             C 36.9,6.1 42.6,11.5 42.5,17.7
+               42.7,24.2 37.2,29.8 30.3,30.4
+               23.5,30.7 17.4,24.7 17.6,18.2
+               17.5,11.4 23.6,6.0 30.4,6.3 Z"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Scarf — wavy curves at neck -->
+    <path d="M 23.6,30.8
+             C 25.3,33.4 27.8,32.6 30.3,33.7
+               32.7,32.5 35.2,33.6 36.8,31.3"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Scarf tail hanging left -->
+    <path d="M 23.6,30.8
+             C 22.4,33.5 21.7,36.4 22.3,39.6"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Scarf tail hanging right -->
+    <path d="M 36.8,31.3
+             C 37.6,34.2 38.3,37.1 37.5,39.8"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Body -->
+    <path d="M 30.3,33.8 L 30.5,62.5"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left arm — slightly bent -->
+    <path d="M 30.4,40.6 L 22.5,48.3 L 14.6,45.5"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right arm — slightly bent -->
+    <path d="M 30.5,40.4 L 38.7,48.5 L 45.4,45.7"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left leg -->
+    <path d="M 30.3,62.5 L 19.7,88.5 L 16.4,92.6"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right leg -->
+    <path d="M 30.5,62.7 L 40.6,88.4 L 43.5,92.5"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+
+  <!-- ===========================================================
+       ACTION POSE: AUTHOR POINTING
+       Author with right arm extended forward/pointing
+       =========================================================== -->
+  <symbol id="fig-author-pointing" viewBox="0 0 60 100">
+    <!-- Head — wobbly circle -->
+    <path d="M 26.3,6.5
+             C 32.8,5.7 38.5,11.3 38.4,17.5
+               38.7,24.0 33.1,29.6 26.5,30.3
+               19.7,30.6 13.5,24.6 13.7,18.0
+               13.4,11.2 19.6,5.9 26.3,6.5 Z"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Body — shifted left slightly to allow pointing room -->
+    <path d="M 26.4,30.5 L 26.6,62.4"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left arm — relaxed behind -->
+    <path d="M 26.3,38.6 L 18.5,46.4 L 11.3,43.7"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right arm — extended forward, pointing -->
+    <path d="M 26.5,38.4 L 38.7,36.3 L 50.4,33.6"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Pointing finger detail -->
+    <path d="M 50.4,33.6 L 54.6,32.3"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left leg -->
+    <path d="M 26.4,62.4 L 16.3,88.5 L 13.4,92.6"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right leg -->
+    <path d="M 26.6,62.6 L 36.8,88.3 L 39.7,92.5"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Pencil near left hand -->
+    <path d="M 11.3,43.7 L 5.6,37.3"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Pencil nib -->
+    <path d="M 5.6,37.3 L 4.2,35.1"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 5.1,36.4 L 3.8,36.8"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+
+  <!-- ===========================================================
+       ACTION POSE: TRUSTEE HOLDING
+       Trustee with one arm in a holding position
+       =========================================================== -->
+  <symbol id="fig-trustee-holding" viewBox="0 0 60 100">
+    <!-- Head — wobbly square -->
+    <path d="M 20.3,7.4
+             C 20.5,6.2 21.7,5.6 23.1,5.7
+             L 37.4,5.4
+             C 38.8,5.3 39.7,6.4 40.2,7.7
+             L 40.3,27.5
+             C 40.4,29.0 39.3,30.3 37.5,30.3
+             L 22.7,30.5
+             C 21.3,30.4 20.3,29.2 20.4,27.7
+             Z"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Body -->
+    <path d="M 30.4,30.4 L 30.5,62.3"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left arm — slightly bent, normal -->
+    <path d="M 30.3,38.6 L 22.5,46.4 L 14.6,43.5"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right arm — extended flat, holding position -->
+    <path d="M 30.5,38.4 L 39.6,42.7 L 47.3,40.5"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Holding hand — slightly cupped shape -->
+    <path d="M 47.3,40.5
+             C 48.6,39.3 50.4,39.5 50.7,41.2
+               50.5,42.6 49.3,43.4 47.8,43.3"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Hand bottom -->
+    <path d="M 47.8,43.3 L 47.3,40.5"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left leg -->
+    <path d="M 30.3,62.3 L 19.6,88.4 L 16.4,92.5"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right leg -->
+    <path d="M 30.5,62.5 L 40.7,88.3 L 43.6,92.4"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+
+  <!-- ===========================================================
+       ACTION POSE: REVIEWER CHECKING
+       Reviewer leaning forward, examining something
+       =========================================================== -->
+  <symbol id="fig-reviewer-checking" viewBox="0 0 60 100">
+    <!-- Head — wobbly circle, shifted forward for lean -->
+    <path d="M 34.4,7.3
+             C 40.7,6.5 46.1,12.1 45.8,18.2
+               46.3,24.5 40.8,30.1 34.3,30.6
+               27.6,31.0 21.8,25.3 21.9,18.5
+               21.7,12.0 27.8,6.8 34.4,7.3 Z"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left glasses lens — slightly larger for emphasis -->
+    <path d="M 28.5,16.6
+             C 30.8,15.1 33.6,16.8 33.4,18.9
+               33.7,21.3 31.2,22.6 28.7,22.3
+               26.3,22.5 24.8,19.8 25.3,17.8
+               25.1,16.1 27.0,15.6 28.5,16.6 Z"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right glasses lens — slightly larger -->
+    <path d="M 39.6,16.8
+             C 41.8,15.4 44.4,17.0 44.3,19.1
+               44.5,21.5 42.1,22.4 39.8,22.5
+               37.6,22.6 36.3,20.1 36.7,18.0
+               36.4,16.3 38.1,15.8 39.6,16.8 Z"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Glasses bridge -->
+    <path d="M 33.5,18.7 L 36.6,18.2"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Body — leaning forward (angled) -->
+    <path d="M 33.6,30.7 L 28.4,62.5"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left arm — behind for balance -->
+    <path d="M 31.3,40.5 L 20.6,44.7 L 13.4,47.3"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right arm — extended forward, examining -->
+    <path d="M 31.5,40.3 L 42.7,35.6 L 52.3,32.4"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Extended hand detail -->
+    <path d="M 52.3,32.4 L 54.7,31.6"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left leg -->
+    <path d="M 28.4,62.5 L 17.5,88.4 L 14.3,92.6"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right leg -->
+    <path d="M 28.6,62.7 L 38.7,88.5 L 41.5,92.4"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+
+  <!-- ===========================================================
+       ACTION POSE: READER RECEIVING
+       Reader with both arms extended forward, hands open
+       =========================================================== -->
+  <symbol id="fig-reader-receiving" viewBox="0 0 60 100">
+    <!-- Head — wobbly circle -->
+    <path d="M 30.5,6.4
+             C 37.0,6.0 42.4,11.6 42.3,17.8
+               42.6,24.3 37.0,29.7 30.4,30.3
+               23.6,30.5 17.5,24.8 17.7,18.0
+               17.6,11.3 23.8,6.1 30.5,6.4 Z"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Scarf — wavy curves at neck -->
+    <path d="M 23.7,30.6
+             C 25.4,33.3 28.0,32.5 30.4,33.5
+               32.8,32.4 35.3,33.5 36.7,31.2"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Scarf tail left -->
+    <path d="M 23.7,30.6
+             C 22.5,33.4 21.8,36.3 22.4,39.4"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Scarf tail right -->
+    <path d="M 36.7,31.2
+             C 37.5,34.1 38.2,37.0 37.4,39.7"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Body -->
+    <path d="M 30.4,33.6 L 30.5,62.4"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left arm — extended forward, open hand -->
+    <path d="M 30.3,40.5 L 22.4,36.3 L 14.6,33.7"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left open hand -->
+    <path d="M 14.6,33.7 L 12.3,31.5"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 14.6,33.7 L 11.8,33.4"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 14.6,33.7 L 12.5,35.6"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right arm — extended forward, open hand -->
+    <path d="M 30.5,40.3 L 38.7,36.5 L 46.4,33.8"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right open hand -->
+    <path d="M 46.4,33.8 L 48.7,31.6"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 46.4,33.8 L 49.3,33.5"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 46.4,33.8 L 48.5,35.7"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left leg -->
+    <path d="M 30.3,62.4 L 19.7,88.6 L 16.5,92.5"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right leg -->
+    <path d="M 30.5,62.6 L 40.6,88.4 L 43.7,92.4"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+
+  <!-- ===========================================================
+       PROP: CLAIM
+       A small paper note with folded corner and text lines
+       =========================================================== -->
+  <symbol id="prop-claim" viewBox="0 0 30 35">
+    <!-- Paper body with folded corner -->
+    <path d="M 2.3,2.4
+             L 20.6,2.3
+             L 27.4,9.3
+             L 27.6,32.5
+             L 2.5,32.7
+             Z"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Folded corner triangle -->
+    <path d="M 20.6,2.3 L 20.4,9.5 L 27.4,9.3"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Text line 1 -->
+    <path d="M 5.6,15.4 L 18.3,15.6"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.5"/>
+    <!-- Text line 2 -->
+    <path d="M 5.4,19.7 L 22.7,19.5"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.5"/>
+    <!-- Text line 3 -->
+    <path d="M 5.5,23.8 L 20.4,24.0"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.5"/>
+    <!-- Text line 4 (shorter) -->
+    <path d="M 5.7,27.9 L 14.3,28.1"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.5"/>
+  </symbol>
+
+  <!-- ===========================================================
+       PROP: CITATION
+       A tag/ribbon shape with "#" mark
+       =========================================================== -->
+  <symbol id="prop-citation" viewBox="0 0 25 30">
+    <!-- Tag body — pentagon (rectangle with pointed left end) -->
+    <path d="M 7.3,3.4
+             L 22.5,3.6
+             L 22.7,26.4
+             L 7.5,26.6
+             L 1.6,15.3
+             Z"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Hole near the pointed end -->
+    <path d="M 6.8,14.3
+             C 7.6,13.2 9.1,13.5 9.0,14.8
+               9.2,16.1 7.7,16.5 6.7,15.7
+               6.0,15.0 6.2,14.2 6.8,14.3 Z"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Hash "#" symbol — vertical strokes -->
+    <path d="M 13.4,9.5 L 13.6,21.3"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 17.5,9.3 L 17.3,21.5"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Hash "#" symbol — horizontal strokes -->
+    <path d="M 11.3,13.4 L 19.7,13.6"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 11.5,17.5 L 19.5,17.3"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+
+  <!-- ===========================================================
+       PROP: BINDING
+       A wax seal with checkmark, ribbons hanging below
+       =========================================================== -->
+  <symbol id="prop-binding" viewBox="0 0 25 25">
+    <!-- Outer seal circle — wobbly -->
+    <path d="M 12.6,2.3
+             C 16.8,1.8 20.7,5.4 20.8,9.6
+               21.3,13.7 17.8,17.4 13.4,17.6
+               9.1,18.0 5.4,14.3 5.3,10.1
+               4.8,5.7 8.5,2.5 12.6,2.3 Z"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Inner seal circle — wobbly -->
+    <path d="M 12.7,4.6
+             C 15.6,4.3 18.2,6.7 18.3,9.5
+               18.6,12.4 16.1,14.8 13.3,15.0
+               10.4,15.3 7.9,12.8 7.8,10.0
+               7.5,7.0 10.0,4.7 12.7,4.6 Z"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Checkmark inside seal -->
+    <path d="M 9.6,10.3 L 11.8,12.7 L 16.3,7.5"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Ribbon left -->
+    <path d="M 9.4,17.3
+             C 8.6,19.5 7.3,21.4 6.5,23.6"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Ribbon right -->
+    <path d="M 16.3,17.4
+             C 17.1,19.6 18.4,21.3 19.2,23.5"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Ribbon left forked end -->
+    <path d="M 6.5,23.6 L 5.3,22.4"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 6.5,23.6 L 7.8,22.6"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Ribbon right forked end -->
+    <path d="M 19.2,23.5 L 18.0,22.3"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 19.2,23.5 L 20.5,22.5"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+
+  <!-- ===========================================================
+       PROP: POLICY
+       A small rulebook with spine and text lines
+       =========================================================== -->
+  <symbol id="prop-policy" viewBox="0 0 30 35">
+    <!-- Book front cover -->
+    <path d="M 6.4,3.6
+             L 27.3,3.4
+             L 27.5,31.6
+             L 6.6,31.4
+             Z"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Book spine — 3D perspective -->
+    <path d="M 6.4,3.6 L 2.7,5.8 L 2.5,33.6 L 6.6,31.4"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Book bottom edge — 3D -->
+    <path d="M 2.5,33.6 L 23.6,33.4 L 27.5,31.6"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Spine detail lines -->
+    <path d="M 3.7,8.4 L 5.4,7.3"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.5"/>
+    <path d="M 3.5,28.6 L 5.6,27.5"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.5"/>
+    <!-- Cover text line 1 — "POLICY" suggestion -->
+    <path d="M 10.6,11.4 L 23.4,11.6"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.7"/>
+    <!-- Cover text line 2 -->
+    <path d="M 12.5,15.5 L 21.3,15.7"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.4"/>
+    <!-- Cover text line 3 -->
+    <path d="M 10.7,19.6 L 23.5,19.4"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.4"/>
+    <!-- Cover text line 4 -->
+    <path d="M 12.4,23.5 L 21.6,23.7"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.4"/>
+  </symbol>
+
+  <!-- ===========================================================
+       PROP: STATE
+       A labeled room/box frame with opening, like a stage set
+       =========================================================== -->
+  <symbol id="prop-state" viewBox="0 0 80 70">
+    <!-- Outer room frame -->
+    <path d="M 3.4,12.6
+             L 76.6,12.4
+             L 76.4,67.5
+             L 3.6,67.7
+             Z"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Label area at top — recessed header bar -->
+    <path d="M 3.4,12.6 L 76.6,12.4"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 3.5,3.5 L 76.5,3.3 L 76.6,12.4 L 3.4,12.6 Z"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Opening at bottom — gap in the bottom wall -->
+    <path d="M 3.6,67.7 L 28.4,67.5"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 52.6,67.6 L 76.4,67.5"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Floor line suggestions inside room -->
+    <path d="M 8.5,63.4 L 24.3,63.6"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.3"/>
+    <path d="M 56.7,63.5 L 72.4,63.3"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.3"/>
+    <!-- Corner accents to give depth -->
+    <path d="M 6.5,15.7 L 6.3,20.4"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.3"/>
+    <path d="M 73.4,15.6 L 73.6,20.3"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.3"/>
+  </symbol>
+
+  <!-- ===========================================================
+       PROP: TRANSITION
+       A doorway with an open door and arrow pointing through
+       =========================================================== -->
+  <symbol id="prop-transition" viewBox="0 0 40 60">
+    <!-- Door frame -->
+    <path d="M 5.4,3.6
+             L 34.6,3.4
+             L 34.4,56.5
+             L 5.6,56.7
+             Z"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Door frame inner edge (threshold) -->
+    <path d="M 8.5,6.4 L 31.4,6.6 L 31.6,56.4 L 8.3,56.6 Z"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.4"/>
+    <!-- Open door — angled perspective -->
+    <path d="M 8.5,6.4
+             L 16.3,12.5
+             L 16.5,50.6
+             L 8.3,56.6"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Door handle -->
+    <path d="M 14.3,32.5
+             C 15.1,31.6 16.0,32.3 15.6,33.4
+               15.8,34.2 14.5,34.6 14.0,33.5
+               13.6,32.8 13.8,32.3 14.3,32.5 Z"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Arrow pointing through the doorway -->
+    <path d="M 18.6,33.4 L 33.4,33.6"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Arrow head -->
+    <path d="M 30.3,30.4 L 33.4,33.6 L 30.5,36.7"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Sign area above door -->
+    <path d="M 11.4,0.6 L 28.6,0.4 L 28.4,3.5 L 11.6,3.7 Z"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.6"/>
+  </symbol>
+
+</svg>
+
+<header class="global-nav">
+  <a href="../index.html" class="site-name">PMG Digital Personas</a>
+  <nav aria-label="Spec pages">
+    <a href="glossary.html">Glossary</a>
+    <a href="lifecycle.html">Lifecycle</a>
+    <a href="governance.html">Governance</a>
+    <a href="citation-binding.html">Citation Binding</a>
+    <a href="novel-approaches.html">Novel Approaches</a>
+    <a href="ambiguities.html">Ambiguities</a>
+  </nav>
+</header>
+
+<main class="wrap">
+  <header class="page-header">
+    <div class="kicker">Governance</div>
+    <h1>Governance Policy</h1>
+    <p class="page-intro">Who can do what, and what stops anyone from doing too much. This page defines the roles, thresholds, procedures, and failure modes that keep the system honest.</p>
+  </header>
+
+  <nav class="section-nav" aria-label="On this page">
+    <a href="#roles">The cast</a>
+    <a href="#permissions">Permissions matrix</a>
+    <a href="#procedures">Procedures</a>
+    <a href="#dispute-resolution">Dispute Resolution</a>
+    <a href="#archive-inspection">Archive Inspection</a>
+    <a href="#failures">Failure modes</a>
+    <a href="#deadlocks">Deadlocks</a>
+  </nav>
+
+  <!-- ============================================================
+       SECTION 1: Visual Cast
+       ============================================================ -->
+  <section class="section" id="roles">
+    <h2>The cast</h2>
+    <p>Five roles interact with the governance system. Each has specific powers and hard limits. The asymmetry is deliberate: stopping is easy, starting is hard, and expanding is impossible.</p>
+
+    <div class="role-grid" data-reveal>
+
+      <!-- Trustee -->
+      <div class="role-card" data-reveal>
+        <svg viewBox="0 0 60 100" width="60" height="100" aria-hidden="true"><use href="#fig-trustee"/></svg>
+        <h3>Trustee</h3>
+        <p class="role-desc">Governors with constrained authority. They hold key shares and make collective decisions.</p>
+        <dl class="can-do">
+          <dt>Can do</dt>
+          <dd>Suspend unilaterally. Participate in quorum votes. Narrow behavior post-mortem.</dd>
+        </dl>
+        <dl class="cannot-do">
+          <dt>Cannot do</dt>
+          <dd>Unilaterally activate. Expand consent. View the archive directly. Delegate authority.</dd>
+        </dl>
+      </div>
+
+      <!-- Auditor -->
+      <div class="role-card" data-reveal>
+        <svg viewBox="0 0 60 100" width="60" height="100" aria-hidden="true"><use href="#fig-reviewer"/></svg>
+        <h3>Auditor</h3>
+        <p class="role-desc">Inspectors who verify system behavior under defined conditions.</p>
+        <dl class="can-do">
+          <dt>Can do</dt>
+          <dd>Verify response bundles. Check logs. Request inclusion proofs.</dd>
+        </dl>
+        <dl class="cannot-do">
+          <dt>Cannot do</dt>
+          <dd>Modify logs. Access the archive directly. Expand access beyond their scope.</dd>
+        </dl>
+      </div>
+
+      <!-- Operator -->
+      <div class="role-card" data-reveal>
+        <svg viewBox="0 0 60 100" width="60" height="100" aria-hidden="true"><use href="#fig-trustee-holding"/></svg>
+        <h3>Operator</h3>
+        <p class="role-desc">Runs the infrastructure. Keeps the system available and correct.</p>
+        <dl class="can-do">
+          <dt>Can do</dt>
+          <dd>Maintain systems. Deploy updates (with governance approval). Serve requests.</dd>
+        </dl>
+        <dl class="cannot-do">
+          <dt>Cannot do</dt>
+          <dd>Override policy. Access plaintext archive content. Lower thresholds.</dd>
+        </dl>
+      </div>
+
+      <!-- Decedent -->
+      <div class="role-card" data-reveal>
+        <svg viewBox="0 0 60 100" width="60" height="100" aria-hidden="true"><use href="#fig-author"/></svg>
+        <h3>Decedent</h3>
+        <p class="role-desc">The person whose archive exists. Defined everything while alive.</p>
+        <dl class="can-do">
+          <dt>Can do</dt>
+          <dd>Set all consent. Choose trustees. Configure thresholds and delays. Revoke everything.</dd>
+        </dl>
+        <dl class="cannot-do">
+          <dt>Cannot do</dt>
+          <dd>Act after death. Their consent is immutable once they are gone; scope only narrows.</dd>
+        </dl>
+      </div>
+
+      <!-- Requestor -->
+      <div class="role-card" data-reveal>
+        <svg viewBox="0 0 60 100" width="60" height="100" aria-hidden="true"><use href="#fig-reader"/></svg>
+        <h3>Requestor</h3>
+        <p class="role-desc">Someone seeking interaction with the persona.</p>
+        <dl class="can-do">
+          <dt>Can do</dt>
+          <dd>Submit questions. View display citations. Export session receipts.</dd>
+        </dl>
+        <dl class="cannot-do">
+          <dt>Cannot do</dt>
+          <dd>Access the archive directly. Bypass consent gates. Override coverage rules.</dd>
+        </dl>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 2: Permissions Matrix
+       ============================================================ -->
+  <section class="section" id="permissions">
+    <h2>Permissions matrix</h2>
+    <p>Every trustee action has its own threshold. The principle: the more irreversible or expansive the action, the higher the bar. The more protective the action, the lower the bar. For a trustee set of size N, here is what each action requires.</p>
+
+    <div class="table-wrap" data-reveal>
+      <table class="transition-table">
+        <thead>
+          <tr>
+            <th>Action</th>
+            <th>Threshold</th>
+            <th>Formula</th>
+            <th>Who can trigger</th>
+            <th>Reversible?</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Suspend persona</td>
+            <td>Any single trustee</td>
+            <td>1-of-N</td>
+            <td>Trustee</td>
+            <td>Yes (by quorum)</td>
+          </tr>
+          <tr>
+            <td>Flag anomaly</td>
+            <td>Any single trustee</td>
+            <td>1-of-N</td>
+            <td>Trustee</td>
+            <td>N/A</td>
+          </tr>
+          <tr>
+            <td>Request assembly</td>
+            <td>Any single trustee</td>
+            <td>1-of-N</td>
+            <td>Trustee</td>
+            <td>N/A</td>
+          </tr>
+          <tr>
+            <td>Lift suspension</td>
+            <td>Simple majority</td>
+            <td>&gt;N/2</td>
+            <td>Trustees (not original suspender alone)</td>
+            <td>N/A</td>
+          </tr>
+          <tr>
+            <td>Approve rotation</td>
+            <td>Simple majority</td>
+            <td>&gt;N/2</td>
+            <td>Trustees</td>
+            <td>No (swap is permanent)</td>
+          </tr>
+          <tr>
+            <td>Key assembly</td>
+            <td>Supermajority</td>
+            <td>ceil(2N/3), min 3</td>
+            <td>Trustees</td>
+            <td>No</td>
+          </tr>
+          <tr>
+            <td>Dispute resolution</td>
+            <td>Supermajority</td>
+            <td>ceil(2N/3)</td>
+            <td>Trustees</td>
+            <td>No</td>
+          </tr>
+          <tr>
+            <td>Policy changes</td>
+            <td>Supermajority</td>
+            <td>ceil(2N/3)</td>
+            <td>Trustees</td>
+            <td>By another policy change</td>
+          </tr>
+          <tr>
+            <td>Archive inspection</td>
+            <td>Near-unanimity</td>
+            <td>N-1 of N</td>
+            <td>Trustees</td>
+            <td>Scope-bounded</td>
+          </tr>
+          <tr>
+            <td>Emergency override</td>
+            <td>Near-unanimity</td>
+            <td>N-1 of N</td>
+            <td>Trustees</td>
+            <td>Limited scope</td>
+          </tr>
+          <tr>
+            <td>Expand consent</td>
+            <td>Impossible</td>
+            <td>0-of-N</td>
+            <td>No one</td>
+            <td>Never</td>
+          </tr>
+          <tr>
+            <td>Delete audit logs</td>
+            <td>Impossible</td>
+            <td>0-of-N</td>
+            <td>No one</td>
+            <td>Never</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout" data-reveal>
+      <strong>Asymmetry by design.</strong> One trustee can stop everything. It takes a majority to resume. It takes a supermajority to assemble keys. And no number of trustees, no matter how many agree, can expand what the decedent authorized. The gradient runs from easy-to-protect to impossible-to-exploit.
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 3: Procedures
+       ============================================================ -->
+  <section class="section" id="procedures">
+    <h2>Procedures</h2>
+    <p>Six governance actions illustrated step by step. Each procedure has a defined trigger, a sequence of operations, and a clear outcome.</p>
+
+    <!-- Procedure 1: Suspension -->
+    <h3>Suspension</h3>
+    <p>Any single trustee can freeze the persona immediately. The system halts all interaction, zeroes active key material, and logs the event with a reason code. Lifting the suspension requires a quorum vote that includes at least one trustee other than the one who pulled the switch.</p>
+
+    <div class="panel-sequence" data-reveal>
+      <div class="panel" data-reveal>
+        <svg viewBox="0 0 60 100" width="60" height="100" aria-hidden="true"><use href="#fig-trustee"/></svg>
+        <p class="caption">A trustee detects a problem: anomalous responses, a breach report, or a governance concern. They submit a suspension with a reason code.</p>
+      </div>
+      <div class="panel" data-reveal>
+        <svg viewBox="0 0 80 70" width="80" height="70" aria-hidden="true"><use href="#prop-state"/></svg>
+        <p class="caption">The system freezes immediately. All sessions end. Key material is zeroed. No interaction is possible.</p>
+      </div>
+      <div class="panel" data-reveal>
+        <svg viewBox="0 0 60 100" width="45" height="75" aria-hidden="true"><use href="#fig-trustee"/></svg>
+        <svg viewBox="0 0 60 100" width="45" height="75" aria-hidden="true" style="margin-left:4px"><use href="#fig-trustee-holding"/></svg>
+        <svg viewBox="0 0 60 100" width="45" height="75" aria-hidden="true" style="margin-left:4px"><use href="#fig-trustee"/></svg>
+        <p class="caption">To resume, a majority of trustees must vote to lift. The original suspender alone cannot lift it. The root cause must be addressed and logged.</p>
+      </div>
+    </div>
+
+    <!-- Procedure 2: Trustee rotation -->
+    <h3>Trustee rotation</h3>
+    <p>Replacing a trustee without weakening governance. N never drops during rotation. The departing trustee's share is invalidated, and a fresh share is issued to the replacement. The secret is never reconstructed during this process.</p>
+
+    <div class="panel-sequence" data-reveal>
+      <div class="panel" data-reveal>
+        <svg viewBox="0 0 60 100" width="60" height="100" aria-hidden="true"><use href="#fig-trustee"/></svg>
+        <svg viewBox="0 0 30 35" width="30" height="35" aria-hidden="true" style="margin-top:8px"><use href="#prop-claim"/></svg>
+        <p class="caption"><strong>Step 1: Propose.</strong> Any trustee submits a rotation proposal naming the departing and incoming trustees.</p>
+      </div>
+      <div class="panel" data-reveal>
+        <svg viewBox="0 0 60 100" width="45" height="75" aria-hidden="true"><use href="#fig-trustee"/></svg>
+        <svg viewBox="0 0 60 100" width="45" height="75" aria-hidden="true" style="margin-left:4px"><use href="#fig-trustee-holding"/></svg>
+        <p class="caption"><strong>Step 2: Vote.</strong> Remaining trustees vote. Simple majority for standard rotation; supermajority if contested.</p>
+      </div>
+      <div class="panel" data-reveal>
+        <svg viewBox="0 0 25 25" width="40" height="40" aria-hidden="true"><use href="#prop-binding"/></svg>
+        <p class="caption"><strong>Step 3: Refresh shares.</strong> Proactive share refresh re-randomizes all shares. The departing trustee's share is invalidated. No secret reconstruction occurs.</p>
+      </div>
+      <div class="panel" data-reveal>
+        <svg viewBox="0 0 60 100" width="60" height="100" aria-hidden="true"><use href="#fig-reviewer-checking"/></svg>
+        <p class="caption"><strong>Step 4: Onboard.</strong> New trustee completes identity verification, signs the role acceptance, and verifies their share against published commitments.</p>
+      </div>
+      <div class="panel" data-reveal>
+        <svg viewBox="0 0 30 35" width="30" height="35" aria-hidden="true"><use href="#prop-policy"/></svg>
+        <p class="caption"><strong>Step 5: Activate.</strong> Only after all phases complete is the new trustee marked active and eligible to participate in governance actions.</p>
+      </div>
+    </div>
+
+    <!-- Procedure 3: Key assembly -->
+    <h3>Key assembly</h3>
+    <p>After the delay window completes, trustees convene to reconstruct the decryption key. The reconstructed key exists only inside sealed compute, is used immediately, and is then zeroed. Completion of the delay does not activate the persona; it only permits this step.</p>
+
+    <div class="panel-sequence" data-reveal>
+      <div class="panel" data-reveal>
+        <svg viewBox="0 0 80 70" width="80" height="70" aria-hidden="true"><use href="#prop-state"/></svg>
+        <p class="caption"><strong>Delay complete.</strong> The system logs that the configured duration has elapsed with only clean time counted. No disputes or suspensions are pending.</p>
+      </div>
+      <div class="panel" data-reveal>
+        <svg viewBox="0 0 60 100" width="45" height="75" aria-hidden="true"><use href="#fig-trustee"/></svg>
+        <svg viewBox="0 0 60 100" width="45" height="75" aria-hidden="true" style="margin-left:4px"><use href="#fig-trustee-holding"/></svg>
+        <svg viewBox="0 0 60 100" width="45" height="75" aria-hidden="true" style="margin-left:4px"><use href="#fig-trustee"/></svg>
+        <p class="caption"><strong>Trustees submit shares.</strong> Each share is encrypted to the attested enclave's public key. The supermajority threshold must be met: at least ceil(2N/3) shares, minimum 3.</p>
+      </div>
+      <div class="panel" data-reveal>
+        <svg viewBox="0 0 25 25" width="40" height="40" aria-hidden="true"><use href="#prop-binding"/></svg>
+        <svg viewBox="0 0 30 35" width="30" height="35" aria-hidden="true" style="margin-top:8px"><use href="#prop-policy"/></svg>
+        <p class="caption"><strong>Sealed compute assembly.</strong> Shares combine inside the enclave. The key is used, then zeroed from memory. The persona is now operational.</p>
+      </div>
+    </div>
+
+    <!-- Procedure 4: Operator distrust -->
+    <h3>Operator distrust</h3>
+    <p>When the operator misbehaves, trustees have a five-level escalation ladder. Each level requires a higher threshold of agreement. The operator is a named threat actor in the governance model; trustee oversight is not optional.</p>
+
+    <ol class="escalation-steps" data-reveal>
+      <li><strong>Inquiry.</strong> Any single trustee sends a formal, logged question. The operator has 7 days to respond. No system changes.</li>
+      <li><strong>Audit demand.</strong> A simple majority of trustees requests specific evidence. The operator must provide it. Failure to comply is itself a violation.</li>
+      <li><strong>Suspension.</strong> Any single trustee pulls the circuit breaker. The operator cannot lift it. All interaction halts until the quorum votes to resume.</li>
+      <li><strong>Distrust declaration.</strong> A supermajority declares the operator untrustworthy. The persona is suspended, key assembly is blocked for this operator, and migration to a new operator begins. The distrusted operator retains encrypted data but cannot decrypt it.</li>
+      <li><strong>Archive extraction.</strong> Near-unanimity authorizes a full export: content-addressed manifest, consent and policy history, transparency log with proofs, and a signed completeness statement. The archive moves to trustees or a successor operator.</li>
+    </ol>
+
+    <div class="panel-sequence" data-reveal style="margin-top:2rem;grid-template-columns:repeat(5,1fr)">
+      <figure class="comic-panel">
+        <svg viewBox="0 0 120 120" aria-hidden="true"><use href="#fig-reviewer-checking"/></svg>
+        <figcaption>Inquiry opened</figcaption>
+      </figure>
+      <figure class="comic-panel">
+        <svg viewBox="0 0 120 120" aria-hidden="true"><use href="#prop-policy"/></svg>
+        <figcaption>Audit demand issued</figcaption>
+      </figure>
+      <figure class="comic-panel">
+        <svg viewBox="0 0 120 120" aria-hidden="true"><use href="#fig-trustee-holding"/></svg>
+        <figcaption>Operator suspended</figcaption>
+      </figure>
+      <figure class="comic-panel">
+        <svg viewBox="0 0 120 120" aria-hidden="true"><use href="#prop-transition"/></svg>
+        <figcaption>Operator distrusted</figcaption>
+      </figure>
+      <figure class="comic-panel">
+        <svg viewBox="0 0 120 120" aria-hidden="true"><use href="#fig-reader-receiving"/></svg>
+        <figcaption>Personas extracted</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section id="dispute-resolution" data-reveal>
+    <h3>Dispute Resolution</h3>
+    <p>When a persona's authenticity or compliance is challenged, the framework provides three resolution paths scaled to severity.</p>
+
+    <ol>
+      <li><strong>Liveness check.</strong> Automated re-verification of credentials and binding validity. Resolves within one delay window.</li>
+      <li><strong>Evidentiary review.</strong> An appointed auditor examines the challenger's evidence and the persona holder's response bundle. The auditor publishes findings to the transparency log.</li>
+      <li><strong>Trustee supermajority vote.</strong> For unresolved disputes, trustees convene a supermajority vote (<code>ceil(2N/3)</code>). The outcome (sustained, dismissed, or escalated) is final and logged.</li>
+    </ol>
+
+    <div class="callout" data-reveal>
+      <strong>Anti-harassment safeguard.</strong> Frivolous or repeated challenges from the same origin trigger a cooling-off period. The challenger must wait two delay windows before filing again.
+    </div>
+
+    <div class="callout" data-reveal>
+      <strong>Duress protocol.</strong> If a persona holder signals duress during dispute proceedings, the process pauses and a trustee quorum must confirm safety before resuming.
+    </div>
+  </section>
+
+  <section id="archive-inspection" data-reveal>
+    <h3>Archive Inspection</h3>
+    <p>Archived personas remain queryable under strict scope-bounded access. Every inspection request must include a reason code.</p>
+
+    <table class="transition-table">
+      <thead>
+        <tr><th>Reason Code</th><th>Access Scope</th><th>Approval</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Legal hold</td><td>Full record</td><td>Trustee supermajority</td></tr>
+        <tr><td>Academic research</td><td>Anonymised extract</td><td>Single trustee + auditor</td></tr>
+        <tr><td>Compliance audit</td><td>Metadata only</td><td>Auditor credential check</td></tr>
+        <tr><td>Heir access</td><td>Designated subset</td><td>Near-unanimity (<code>ceil(2N/3)</code> + 1)</td></tr>
+      </tbody>
+    </table>
+
+    <p>Near-unanimity threshold ensures archived data is never disclosed casually. All inspection events are appended to the transparency log with requester identity and scope.</p>
+  </section>
+
+  <!-- ============================================================
+       SECTION 4: Failure Modes
+       ============================================================ -->
+  <section class="section" id="failures">
+    <h2>Failure modes</h2>
+    <p>Trustees are humans. They disappear, get compromised, face coercion, conspire, or simply lose track of things. The system handles each case with a specific detection signal and a specific response. The universal principle: the system degrades toward safety, never toward access.</p>
+
+    <!-- Failure 1: Disappearance -->
+    <h3>1. Disappearance</h3>
+    <div class="callout" data-reveal>
+      <p><strong>Detection:</strong> Non-responsive after missing an action window. Consecutive non-responses or missed liveness checks trigger a trustee-absent flag.</p>
+      <p><strong>Response:</strong> The system does not reduce N. It does not route around absent trustees. Disappearance makes activation harder, not easier. The 1-of-N suspension power still works regardless.</p>
+      <p><strong>Recovery:</strong> Rotation via the standard procedure. A trustee may also formally resign with a signed statement, immediately marking them absent and starting rotation.</p>
+    </div>
+
+    <div class="panel-sequence" data-reveal>
+      <div class="panel" data-reveal>
+        <svg viewBox="0 0 60 100" width="60" height="100" aria-hidden="true" style="opacity:0.35"><use href="#fig-trustee"/></svg>
+        <p class="caption">A trustee stops responding. Action windows pass without their input.</p>
+      </div>
+      <div class="panel" data-reveal>
+        <svg viewBox="0 0 60 100" width="45" height="75" aria-hidden="true"><use href="#fig-trustee"/></svg>
+        <svg viewBox="0 0 60 100" width="45" height="75" aria-hidden="true" style="margin-left:4px"><use href="#fig-trustee-holding"/></svg>
+        <p class="caption">The remaining trustees proceed with reduced numbers, but N stays the same. Thresholds become harder to reach.</p>
+      </div>
+      <div class="panel" data-reveal>
+        <svg viewBox="0 0 30 35" width="30" height="35" aria-hidden="true"><use href="#prop-policy"/></svg>
+        <p class="caption">Rotation begins. A replacement is proposed, voted on, and onboarded through the standard procedure.</p>
+      </div>
+    </div>
+
+    <!-- Failure 2: Compromise -->
+    <h3>2. Compromise</h3>
+    <div class="callout" data-reveal>
+      <p><strong>Detection:</strong> Unexpected actions, self-report, or external breach reports.</p>
+      <p><strong>Response:</strong> Immediate suspension via circuit breaker. Flagged votes on pending actions. The compromised trustee's share is marked as tainted and cannot contribute to any threshold action or reconstruction until re-verified and reissued.</p>
+      <p><strong>Recovery:</strong> Proactive share refresh for all non-tainted trustees. Forced rotation of the compromised trustee.</p>
+    </div>
+
+    <!-- Failure 3: Coercion -->
+    <h3>3. Coercion</h3>
+    <div class="callout" data-reveal>
+      <p><strong>Structural defense:</strong> Thresholds mean one coerced trustee is insufficient for anything beyond suspension. Geographic and organizational diversity is recommended. Share submission uses sealed compute.</p>
+      <p><strong>Optional duress protocol:</strong> A trustee submitting under duress uses a duress key that is indistinguishable from a normal key to any outside observer. Duress-flagged votes do not count toward thresholds. The flag triggers a "coercion hold" that requires supermajority plus a cooling period to exit.</p>
+      <p><strong>Recovery:</strong> Re-verification and share refresh, or rotation if coercion is ongoing.</p>
+    </div>
+
+    <!-- Failure 4: Collusion -->
+    <h3>4. Collusion</h3>
+    <div class="callout" data-reveal>
+      <p><strong>Detection:</strong> Audit patterns reveal identical or near-identical reason codes, identical vote timing, repeated safety-flag overrides, or repeated attempts at invasive actions. Consistent agreement is a soft hint only, not an automatic trigger.</p>
+      <p><strong>Response:</strong> A collusion-suspected flag ratchets thresholds upward temporarily. Actions that are structurally impossible (0-of-N) remain impossible regardless. A non-colluding trustee can suspend, and an audit review begins.</p>
+      <p><strong>Recovery:</strong> Rotation of suspected trustees if thresholds allow.</p>
+    </div>
+
+    <!-- Failure 5: Incompetence -->
+    <h3>5. Incompetence</h3>
+    <div class="callout" data-reveal>
+      <p><strong>Detection:</strong> Empty reason codes, copy-paste duplicates, votes submitted without opening the evidence hash. High-impact actions require a read receipt.</p>
+      <p><strong>Response:</strong> Lost key material triggers share refresh. Thin reason codes get flagged with a prompt for more detail. Security hygiene failures cause action rejection.</p>
+      <p><strong>Recovery:</strong> Re-verification. Rotation for persistent incompetence at the same threshold as any standard rotation.</p>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 5: Appeals and Deadlocks
+       ============================================================ -->
+  <section class="section" id="deadlocks">
+    <h2>Appeals and deadlocks</h2>
+    <p>Sometimes governance stalls. Trustees disagree, grieve, or simply cannot act. The system treats deadlock as a legitimate state, not a malfunction. The posture: wait safely, preserve everything, never force a resolution.</p>
+
+    <div class="callout" data-reveal>
+      <strong>If quorum cannot be reached, the archive remains sealed.</strong> The encrypted archive is preserved. Governance state is frozen. No timers advance. The transparency log records "no governance action taken" at regular intervals. Quarterly reminders go to trustees; these are prompts, not demands.
+    </div>
+
+    <h3>Backup trustees</h3>
+    <p data-reveal>The decedent can pre-enroll backup trustees while alive. These are identity-verified and recorded in the governance policy from day one, but inactive. Activating a backup trustee is a supermajority governance action. Their share is issued through a logged refresh event. There are no surprise trustees.</p>
+
+    <h3>Refusal is legitimate</h3>
+    <p data-reveal>A trustee who believes the persona should not activate can submit a refusal attestation: signed, with a reason code, and logged. This is not permanent unless stated. Withdrawal of a refusal is also logged. When permanent refusals make a threshold mathematically impossible, the system acknowledges it: the action is foreclosed, all parties are notified, and the archive is not destroyed.</p>
+
+    <h3>The long wait</h3>
+    <p data-reveal>If rotation is also foreclosed, the system enters permanent preservation mode. The archive exists as a sealed time capsule, preserved for posterity but never interactive. The transparency log persists independently.</p>
+
+    <div class="callout" data-reveal>
+      <strong>The system degrades toward safety, never toward access.</strong> There is no fallback that bypasses the threshold model. No timeout resolves a deadlock automatically. No external authority can override the governance structure. Some archives will never activate, even when the decedent wanted them to. The design accepts this because forcing activation when governance disagrees is worse than waiting.
+    </div>
+
+    <h3>Letter of intent</h3>
+    <p data-reveal>The decedent can leave a message to trustees stored in the governance record, visible at key assembly, explicitly labeled as non-binding. It is context, not a command. Something like: "I built this because I wanted my grandchildren to hear my voice. I hope you will let them, when it is time."</p>
+  </section>
+
+  <!-- ============================================================
+       Page navigation
+       ============================================================ -->
+  <nav class="page-nav" aria-label="Page navigation">
+    <a href="lifecycle.html" class="prev">Previous: Lifecycle</a>
+    <a href="citation-binding.html" class="next">Next: Citation Binding</a>
+  </nav>
+</main>
+
+<a href="#" class="back-to-top" aria-label="Back to top" hidden>&uarr;</a>
+<script src="../motion.js" defer></script>
+</body>
+</html>

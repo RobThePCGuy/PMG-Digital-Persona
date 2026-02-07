@@ -1,0 +1,1688 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Glossary | PMG Digital Personas</title>
+  <meta name="description" content="Shared vocabulary for post-mortem-governed digital personas. Every term defined in plain language, with cross-references and comic vignettes.">
+  <meta name="theme-color" content="#0b0f14">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<!-- Hidden SVG symbol definitions -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+
+  <!-- ============================================================
+       PMG Digital Persona — Stick Figure Component Library
+
+       All strokes use currentColor so figures inherit page color.
+       All coordinates use decimal offsets for a hand-drawn feel.
+       Include this SVG block (hidden) at the top of the page body,
+       then reference symbols with:
+         <svg viewBox="0 0 60 100"><use href="#fig-author"/></svg>
+       ============================================================ -->
+
+  <!-- ===========================================================
+       CHARACTER: AUTHOR
+       Distinguishing feature: pencil near the hand
+       =========================================================== -->
+  <symbol id="fig-author" viewBox="0 0 60 100">
+    <!-- Head — wobbly circle, center ~(30,18), radius ~12 -->
+    <path d="M 30.3,6.2
+             C 36.8,5.8 42.5,11.4 42.3,17.6
+               42.6,24.1 37.1,29.7 30.4,30.2
+               23.6,30.5 17.5,24.8 17.7,18.1
+               17.4,11.3 23.5,5.9 30.3,6.2 Z"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Body -->
+    <path d="M 30.2,30.4 L 30.5,62.3"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left arm — slightly bent -->
+    <path d="M 30.3,38.6 L 22.4,46.3 L 14.7,43.5"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right arm — slightly bent -->
+    <path d="M 30.4,38.4 L 38.6,46.7 L 45.3,43.8"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left leg -->
+    <path d="M 30.3,62.3 L 19.6,88.4 L 16.5,92.7"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right leg -->
+    <path d="M 30.5,62.5 L 40.7,88.3 L 43.8,92.5"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Pencil near right hand — short diagonal with nib -->
+    <path d="M 45.5,43.6 L 52.3,36.8"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Pencil nib -->
+    <path d="M 52.3,36.8 L 54.1,34.5"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Pencil nib detail -->
+    <path d="M 53.5,35.8 L 52.8,34.3"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+
+  <!-- ===========================================================
+       CHARACTER: REVIEWER
+       Distinguishing feature: round glasses on face
+       =========================================================== -->
+  <symbol id="fig-reviewer" viewBox="0 0 60 100">
+    <!-- Head — wobbly circle -->
+    <path d="M 30.5,6.4
+             C 37.1,5.9 42.7,11.6 42.4,17.8
+               42.8,24.3 37.3,29.5 30.6,30.3
+               23.4,30.6 17.6,24.6 17.8,18.3
+               17.3,11.5 23.7,6.1 30.5,6.4 Z"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left glasses lens — small wobbly circle -->
+    <path d="M 24.3,16.3
+             C 26.4,15.1 28.7,16.5 28.5,18.4
+               28.8,20.5 26.6,21.8 24.5,21.3
+               22.3,21.6 21.2,19.1 21.5,17.4
+               21.3,15.8 22.9,15.5 24.3,16.3 Z"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right glasses lens — small wobbly circle -->
+    <path d="M 36.4,16.5
+             C 38.5,15.3 40.6,16.7 40.4,18.6
+               40.7,20.7 38.5,21.6 36.3,21.5
+               34.2,21.7 33.3,19.3 33.5,17.6
+               33.2,15.9 34.8,15.7 36.4,16.5 Z"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Glasses bridge -->
+    <path d="M 28.6,18.3 L 33.4,17.8"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Body -->
+    <path d="M 30.4,30.5 L 30.3,62.4"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left arm — neutral examining posture, slightly raised -->
+    <path d="M 30.3,38.5 L 21.6,44.7 L 14.4,42.6"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right arm — neutral, slightly forward -->
+    <path d="M 30.5,38.3 L 39.4,44.5 L 45.7,42.3"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left leg -->
+    <path d="M 30.3,62.4 L 19.8,88.6 L 16.7,92.4"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right leg -->
+    <path d="M 30.4,62.6 L 40.5,88.5 L 43.6,92.3"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+
+  <!-- ===========================================================
+       CHARACTER: TRUSTEE
+       Distinguishing feature: square/rectangular head
+       =========================================================== -->
+  <symbol id="fig-trustee" viewBox="0 0 60 100">
+    <!-- Head — wobbly rectangle with rounded corners, center ~(30,18) -->
+    <path d="M 20.4,7.6
+             C 20.6,6.3 21.8,5.7 23.2,5.8
+             L 37.3,5.5
+             C 38.7,5.4 39.8,6.5 40.1,7.8
+             L 40.4,27.6
+             C 40.3,29.1 39.2,30.2 37.6,30.4
+             L 22.8,30.6
+             C 21.4,30.5 20.2,29.3 20.3,27.8
+             Z"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Body -->
+    <path d="M 30.3,30.5 L 30.6,62.4"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left arm — slightly bent -->
+    <path d="M 30.4,38.7 L 22.3,46.5 L 14.5,43.6"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right arm — slightly bent -->
+    <path d="M 30.5,38.5 L 38.7,46.4 L 45.5,43.4"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left leg -->
+    <path d="M 30.4,62.4 L 19.5,88.3 L 16.3,92.6"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right leg -->
+    <path d="M 30.6,62.6 L 40.8,88.4 L 43.7,92.4"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+
+  <!-- ===========================================================
+       CHARACTER: READER
+       Distinguishing feature: scarf at the neck
+       =========================================================== -->
+  <symbol id="fig-reader" viewBox="0 0 60 100">
+    <!-- Head — wobbly circle -->
+    <path d="M 30.4,6.3
+             C 36.9,6.1 42.6,11.5 42.5,17.7
+               42.7,24.2 37.2,29.8 30.3,30.4
+               23.5,30.7 17.4,24.7 17.6,18.2
+               17.5,11.4 23.6,6.0 30.4,6.3 Z"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Scarf — wavy curves at neck -->
+    <path d="M 23.6,30.8
+             C 25.3,33.4 27.8,32.6 30.3,33.7
+               32.7,32.5 35.2,33.6 36.8,31.3"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Scarf tail hanging left -->
+    <path d="M 23.6,30.8
+             C 22.4,33.5 21.7,36.4 22.3,39.6"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Scarf tail hanging right -->
+    <path d="M 36.8,31.3
+             C 37.6,34.2 38.3,37.1 37.5,39.8"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Body -->
+    <path d="M 30.3,33.8 L 30.5,62.5"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left arm — slightly bent -->
+    <path d="M 30.4,40.6 L 22.5,48.3 L 14.6,45.5"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right arm — slightly bent -->
+    <path d="M 30.5,40.4 L 38.7,48.5 L 45.4,45.7"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left leg -->
+    <path d="M 30.3,62.5 L 19.7,88.5 L 16.4,92.6"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right leg -->
+    <path d="M 30.5,62.7 L 40.6,88.4 L 43.5,92.5"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+
+  <!-- ===========================================================
+       ACTION POSE: AUTHOR POINTING
+       Author with right arm extended forward/pointing
+       =========================================================== -->
+  <symbol id="fig-author-pointing" viewBox="0 0 60 100">
+    <!-- Head — wobbly circle -->
+    <path d="M 26.3,6.5
+             C 32.8,5.7 38.5,11.3 38.4,17.5
+               38.7,24.0 33.1,29.6 26.5,30.3
+               19.7,30.6 13.5,24.6 13.7,18.0
+               13.4,11.2 19.6,5.9 26.3,6.5 Z"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Body — shifted left slightly to allow pointing room -->
+    <path d="M 26.4,30.5 L 26.6,62.4"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left arm — relaxed behind -->
+    <path d="M 26.3,38.6 L 18.5,46.4 L 11.3,43.7"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right arm — extended forward, pointing -->
+    <path d="M 26.5,38.4 L 38.7,36.3 L 50.4,33.6"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Pointing finger detail -->
+    <path d="M 50.4,33.6 L 54.6,32.3"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left leg -->
+    <path d="M 26.4,62.4 L 16.3,88.5 L 13.4,92.6"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right leg -->
+    <path d="M 26.6,62.6 L 36.8,88.3 L 39.7,92.5"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Pencil near left hand -->
+    <path d="M 11.3,43.7 L 5.6,37.3"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Pencil nib -->
+    <path d="M 5.6,37.3 L 4.2,35.1"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 5.1,36.4 L 3.8,36.8"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+
+  <!-- ===========================================================
+       ACTION POSE: TRUSTEE HOLDING
+       Trustee with one arm in a holding position
+       =========================================================== -->
+  <symbol id="fig-trustee-holding" viewBox="0 0 60 100">
+    <!-- Head — wobbly square -->
+    <path d="M 20.3,7.4
+             C 20.5,6.2 21.7,5.6 23.1,5.7
+             L 37.4,5.4
+             C 38.8,5.3 39.7,6.4 40.2,7.7
+             L 40.3,27.5
+             C 40.4,29.0 39.3,30.3 37.5,30.3
+             L 22.7,30.5
+             C 21.3,30.4 20.3,29.2 20.4,27.7
+             Z"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Body -->
+    <path d="M 30.4,30.4 L 30.5,62.3"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left arm — slightly bent, normal -->
+    <path d="M 30.3,38.6 L 22.5,46.4 L 14.6,43.5"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right arm — extended flat, holding position -->
+    <path d="M 30.5,38.4 L 39.6,42.7 L 47.3,40.5"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Holding hand — slightly cupped shape -->
+    <path d="M 47.3,40.5
+             C 48.6,39.3 50.4,39.5 50.7,41.2
+               50.5,42.6 49.3,43.4 47.8,43.3"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Hand bottom -->
+    <path d="M 47.8,43.3 L 47.3,40.5"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left leg -->
+    <path d="M 30.3,62.3 L 19.6,88.4 L 16.4,92.5"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right leg -->
+    <path d="M 30.5,62.5 L 40.7,88.3 L 43.6,92.4"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+
+  <!-- ===========================================================
+       ACTION POSE: REVIEWER CHECKING
+       Reviewer leaning forward, examining something
+       =========================================================== -->
+  <symbol id="fig-reviewer-checking" viewBox="0 0 60 100">
+    <!-- Head — wobbly circle, shifted forward for lean -->
+    <path d="M 34.4,7.3
+             C 40.7,6.5 46.1,12.1 45.8,18.2
+               46.3,24.5 40.8,30.1 34.3,30.6
+               27.6,31.0 21.8,25.3 21.9,18.5
+               21.7,12.0 27.8,6.8 34.4,7.3 Z"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left glasses lens — slightly larger for emphasis -->
+    <path d="M 28.5,16.6
+             C 30.8,15.1 33.6,16.8 33.4,18.9
+               33.7,21.3 31.2,22.6 28.7,22.3
+               26.3,22.5 24.8,19.8 25.3,17.8
+               25.1,16.1 27.0,15.6 28.5,16.6 Z"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right glasses lens — slightly larger -->
+    <path d="M 39.6,16.8
+             C 41.8,15.4 44.4,17.0 44.3,19.1
+               44.5,21.5 42.1,22.4 39.8,22.5
+               37.6,22.6 36.3,20.1 36.7,18.0
+               36.4,16.3 38.1,15.8 39.6,16.8 Z"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Glasses bridge -->
+    <path d="M 33.5,18.7 L 36.6,18.2"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Body — leaning forward (angled) -->
+    <path d="M 33.6,30.7 L 28.4,62.5"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left arm — behind for balance -->
+    <path d="M 31.3,40.5 L 20.6,44.7 L 13.4,47.3"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right arm — extended forward, examining -->
+    <path d="M 31.5,40.3 L 42.7,35.6 L 52.3,32.4"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Extended hand detail -->
+    <path d="M 52.3,32.4 L 54.7,31.6"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left leg -->
+    <path d="M 28.4,62.5 L 17.5,88.4 L 14.3,92.6"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right leg -->
+    <path d="M 28.6,62.7 L 38.7,88.5 L 41.5,92.4"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+
+  <!-- ===========================================================
+       ACTION POSE: READER RECEIVING
+       Reader with both arms extended forward, hands open
+       =========================================================== -->
+  <symbol id="fig-reader-receiving" viewBox="0 0 60 100">
+    <!-- Head — wobbly circle -->
+    <path d="M 30.5,6.4
+             C 37.0,6.0 42.4,11.6 42.3,17.8
+               42.6,24.3 37.0,29.7 30.4,30.3
+               23.6,30.5 17.5,24.8 17.7,18.0
+               17.6,11.3 23.8,6.1 30.5,6.4 Z"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Scarf — wavy curves at neck -->
+    <path d="M 23.7,30.6
+             C 25.4,33.3 28.0,32.5 30.4,33.5
+               32.8,32.4 35.3,33.5 36.7,31.2"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Scarf tail left -->
+    <path d="M 23.7,30.6
+             C 22.5,33.4 21.8,36.3 22.4,39.4"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Scarf tail right -->
+    <path d="M 36.7,31.2
+             C 37.5,34.1 38.2,37.0 37.4,39.7"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Body -->
+    <path d="M 30.4,33.6 L 30.5,62.4"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left arm — extended forward, open hand -->
+    <path d="M 30.3,40.5 L 22.4,36.3 L 14.6,33.7"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left open hand -->
+    <path d="M 14.6,33.7 L 12.3,31.5"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 14.6,33.7 L 11.8,33.4"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 14.6,33.7 L 12.5,35.6"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right arm — extended forward, open hand -->
+    <path d="M 30.5,40.3 L 38.7,36.5 L 46.4,33.8"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right open hand -->
+    <path d="M 46.4,33.8 L 48.7,31.6"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 46.4,33.8 L 49.3,33.5"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 46.4,33.8 L 48.5,35.7"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left leg -->
+    <path d="M 30.3,62.4 L 19.7,88.6 L 16.5,92.5"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right leg -->
+    <path d="M 30.5,62.6 L 40.6,88.4 L 43.7,92.4"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+
+  <!-- ===========================================================
+       PROP: CLAIM
+       A small paper note with folded corner and text lines
+       =========================================================== -->
+  <symbol id="prop-claim" viewBox="0 0 30 35">
+    <!-- Paper body with folded corner -->
+    <path d="M 2.3,2.4
+             L 20.6,2.3
+             L 27.4,9.3
+             L 27.6,32.5
+             L 2.5,32.7
+             Z"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Folded corner triangle -->
+    <path d="M 20.6,2.3 L 20.4,9.5 L 27.4,9.3"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Text line 1 -->
+    <path d="M 5.6,15.4 L 18.3,15.6"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.5"/>
+    <!-- Text line 2 -->
+    <path d="M 5.4,19.7 L 22.7,19.5"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.5"/>
+    <!-- Text line 3 -->
+    <path d="M 5.5,23.8 L 20.4,24.0"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.5"/>
+    <!-- Text line 4 (shorter) -->
+    <path d="M 5.7,27.9 L 14.3,28.1"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.5"/>
+  </symbol>
+
+  <!-- ===========================================================
+       PROP: CITATION
+       A tag/ribbon shape with "#" mark
+       =========================================================== -->
+  <symbol id="prop-citation" viewBox="0 0 25 30">
+    <!-- Tag body — pentagon (rectangle with pointed left end) -->
+    <path d="M 7.3,3.4
+             L 22.5,3.6
+             L 22.7,26.4
+             L 7.5,26.6
+             L 1.6,15.3
+             Z"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Hole near the pointed end -->
+    <path d="M 6.8,14.3
+             C 7.6,13.2 9.1,13.5 9.0,14.8
+               9.2,16.1 7.7,16.5 6.7,15.7
+               6.0,15.0 6.2,14.2 6.8,14.3 Z"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Hash "#" symbol — vertical strokes -->
+    <path d="M 13.4,9.5 L 13.6,21.3"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 17.5,9.3 L 17.3,21.5"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Hash "#" symbol — horizontal strokes -->
+    <path d="M 11.3,13.4 L 19.7,13.6"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 11.5,17.5 L 19.5,17.3"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+
+  <!-- ===========================================================
+       PROP: BINDING
+       A wax seal with checkmark, ribbons hanging below
+       =========================================================== -->
+  <symbol id="prop-binding" viewBox="0 0 25 25">
+    <!-- Outer seal circle — wobbly -->
+    <path d="M 12.6,2.3
+             C 16.8,1.8 20.7,5.4 20.8,9.6
+               21.3,13.7 17.8,17.4 13.4,17.6
+               9.1,18.0 5.4,14.3 5.3,10.1
+               4.8,5.7 8.5,2.5 12.6,2.3 Z"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Inner seal circle — wobbly -->
+    <path d="M 12.7,4.6
+             C 15.6,4.3 18.2,6.7 18.3,9.5
+               18.6,12.4 16.1,14.8 13.3,15.0
+               10.4,15.3 7.9,12.8 7.8,10.0
+               7.5,7.0 10.0,4.7 12.7,4.6 Z"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Checkmark inside seal -->
+    <path d="M 9.6,10.3 L 11.8,12.7 L 16.3,7.5"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Ribbon left -->
+    <path d="M 9.4,17.3
+             C 8.6,19.5 7.3,21.4 6.5,23.6"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Ribbon right -->
+    <path d="M 16.3,17.4
+             C 17.1,19.6 18.4,21.3 19.2,23.5"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Ribbon left forked end -->
+    <path d="M 6.5,23.6 L 5.3,22.4"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 6.5,23.6 L 7.8,22.6"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Ribbon right forked end -->
+    <path d="M 19.2,23.5 L 18.0,22.3"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 19.2,23.5 L 20.5,22.5"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+
+  <!-- ===========================================================
+       PROP: POLICY
+       A small rulebook with spine and text lines
+       =========================================================== -->
+  <symbol id="prop-policy" viewBox="0 0 30 35">
+    <!-- Book front cover -->
+    <path d="M 6.4,3.6
+             L 27.3,3.4
+             L 27.5,31.6
+             L 6.6,31.4
+             Z"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Book spine — 3D perspective -->
+    <path d="M 6.4,3.6 L 2.7,5.8 L 2.5,33.6 L 6.6,31.4"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Book bottom edge — 3D -->
+    <path d="M 2.5,33.6 L 23.6,33.4 L 27.5,31.6"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Spine detail lines -->
+    <path d="M 3.7,8.4 L 5.4,7.3"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.5"/>
+    <path d="M 3.5,28.6 L 5.6,27.5"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.5"/>
+    <!-- Cover text line 1 — "POLICY" suggestion -->
+    <path d="M 10.6,11.4 L 23.4,11.6"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.7"/>
+    <!-- Cover text line 2 -->
+    <path d="M 12.5,15.5 L 21.3,15.7"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.4"/>
+    <!-- Cover text line 3 -->
+    <path d="M 10.7,19.6 L 23.5,19.4"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.4"/>
+    <!-- Cover text line 4 -->
+    <path d="M 12.4,23.5 L 21.6,23.7"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.4"/>
+  </symbol>
+
+  <!-- ===========================================================
+       PROP: STATE
+       A labeled room/box frame with opening, like a stage set
+       =========================================================== -->
+  <symbol id="prop-state" viewBox="0 0 80 70">
+    <!-- Outer room frame -->
+    <path d="M 3.4,12.6
+             L 76.6,12.4
+             L 76.4,67.5
+             L 3.6,67.7
+             Z"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Label area at top — recessed header bar -->
+    <path d="M 3.4,12.6 L 76.6,12.4"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 3.5,3.5 L 76.5,3.3 L 76.6,12.4 L 3.4,12.6 Z"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Opening at bottom — gap in the bottom wall -->
+    <path d="M 3.6,67.7 L 28.4,67.5"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 52.6,67.6 L 76.4,67.5"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Floor line suggestions inside room -->
+    <path d="M 8.5,63.4 L 24.3,63.6"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.3"/>
+    <path d="M 56.7,63.5 L 72.4,63.3"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.3"/>
+    <!-- Corner accents to give depth -->
+    <path d="M 6.5,15.7 L 6.3,20.4"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.3"/>
+    <path d="M 73.4,15.6 L 73.6,20.3"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.3"/>
+  </symbol>
+
+  <!-- ===========================================================
+       PROP: TRANSITION
+       A doorway with an open door and arrow pointing through
+       =========================================================== -->
+  <symbol id="prop-transition" viewBox="0 0 40 60">
+    <!-- Door frame -->
+    <path d="M 5.4,3.6
+             L 34.6,3.4
+             L 34.4,56.5
+             L 5.6,56.7
+             Z"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Door frame inner edge (threshold) -->
+    <path d="M 8.5,6.4 L 31.4,6.6 L 31.6,56.4 L 8.3,56.6 Z"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.4"/>
+    <!-- Open door — angled perspective -->
+    <path d="M 8.5,6.4
+             L 16.3,12.5
+             L 16.5,50.6
+             L 8.3,56.6"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Door handle -->
+    <path d="M 14.3,32.5
+             C 15.1,31.6 16.0,32.3 15.6,33.4
+               15.8,34.2 14.5,34.6 14.0,33.5
+               13.6,32.8 13.8,32.3 14.3,32.5 Z"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Arrow pointing through the doorway -->
+    <path d="M 18.6,33.4 L 33.4,33.6"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Arrow head -->
+    <path d="M 30.3,30.4 L 33.4,33.6 L 30.5,36.7"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Sign area above door -->
+    <path d="M 11.4,0.6 L 28.6,0.4 L 28.4,3.5 L 11.6,3.7 Z"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.6"/>
+  </symbol>
+
+</svg>
+
+<header class="global-nav">
+  <a href="../index.html" class="site-name">PMG Digital Personas</a>
+  <nav aria-label="Spec pages">
+    <a href="glossary.html">Glossary</a>
+    <a href="lifecycle.html">Lifecycle</a>
+    <a href="governance.html">Governance</a>
+    <a href="citation-binding.html">Citation Binding</a>
+    <a href="novel-approaches.html">Novel Approaches</a>
+    <a href="ambiguities.html">Ambiguities</a>
+  </nav>
+</header>
+
+<main class="wrap">
+  <header class="page-header">
+    <div class="kicker">Reference</div>
+    <h1>Glossary</h1>
+    <p class="page-intro">Shared vocabulary for the PMG Digital Persona spec. Every term is defined in plain language, cross-linked to the pages that use it, and grounded in decisions from the ambiguity ledger. If two people read the spec and picture different things, the glossary is where we fix that.</p>
+  </header>
+
+  <nav class="section-nav" aria-label="On this page">
+    <a href="#letter-a">A</a>
+    <a href="#letter-c">C</a>
+    <a href="#letter-d">D</a>
+    <a href="#letter-g">G</a>
+    <a href="#letter-i">I</a>
+    <a href="#letter-k">K</a>
+    <a href="#letter-p">P</a>
+    <a href="#letter-q">Q</a>
+    <a href="#letter-r">R</a>
+    <a href="#letter-s">S</a>
+    <a href="#letter-t">T</a>
+    <a href="#letter-v">V</a>
+  </nav>
+
+  <!-- ============================================================
+       A
+       ============================================================ -->
+  <section class="section" id="letter-a">
+    <h2>A</h2>
+
+    <article class="definition-card" id="term-archive" data-reveal>
+      <h3 class="term">Archive</h3>
+      <p class="definition">The encrypted, versioned collection of everything the decedent chose to preserve. Think of it as a curated time capsule: every item in it was placed there deliberately, and every item carries its own consent record.</p>
+      <div class="meta-row">
+        <span class="meta-label">Also known as</span>
+        <span class="meta-value">Personal archive, data vault</span>
+      </div>
+      <div class="meta-row">
+        <span class="meta-label">Not to be confused with</span>
+        <span class="meta-value">Backup (an archive is curated and consented, not automatic)</span>
+      </div>
+      <div class="cross-links">
+        <a href="#term-artifact" class="pill">Artifact</a>
+        <a href="#term-consent-scope" class="pill">Consent scope</a>
+        <a href="#term-sealed-compute" class="pill">Sealed compute</a>
+        <a href="ambiguities.html#entry-2-1" class="pill">Ambiguity 2.1</a>
+      </div>
+
+      <!-- Vignette: Archive -->
+      <div class="panel-sequence" style="margin-top:20px">
+        <div class="panel" data-reveal>
+          <svg viewBox="0 0 60 100" width="60" height="100" aria-hidden="true"><use href="#fig-author"/></svg>
+          <p class="caption">The author selects what goes in.</p>
+        </div>
+        <div class="panel" data-reveal>
+          <svg viewBox="0 0 80 70" width="80" height="70" aria-hidden="true"><use href="#prop-state"/></svg>
+          <p class="caption">Items are sealed and versioned.</p>
+        </div>
+        <div class="panel" data-reveal>
+          <svg viewBox="0 0 60 100" width="60" height="100" aria-hidden="true"><use href="#fig-trustee-holding"/></svg>
+          <p class="caption">The trustee holds a key share.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="definition-card" id="term-artifact" data-reveal>
+      <h3 class="term">Artifact</h3>
+      <p class="definition">A single item in the archive: a journal entry, a voice clip, a photo, a message thread. Each artifact is content-addressed (identified by its hash) and carries its own consent record with four independent dimensions.</p>
+      <div class="meta-row">
+        <span class="meta-label">Not to be confused with</span>
+        <span class="meta-value">A "file." Artifacts have consent metadata, version history, and canonical representations that ordinary files do not.</span>
+      </div>
+      <div class="cross-links">
+        <a href="#term-archive" class="pill">Archive</a>
+        <a href="#term-citation" class="pill">Citation</a>
+        <a href="#term-consent-scope" class="pill">Consent scope</a>
+      </div>
+
+      <!-- Vignette: Artifact -->
+      <div class="panel-sequence" style="margin-top:20px">
+        <div class="panel" data-reveal>
+          <svg viewBox="0 0 60 100" width="60" height="100" aria-hidden="true"><use href="#fig-author"/></svg>
+          <p class="caption">Author creates content</p>
+        </div>
+        <div class="panel" data-reveal>
+          <svg viewBox="0 0 30 35" width="40" height="47" aria-hidden="true"><use href="#prop-claim"/></svg>
+          <p class="caption">Packaged as artifact</p>
+        </div>
+        <div class="panel" data-reveal>
+          <svg viewBox="0 0 60 100" width="60" height="100" aria-hidden="true"><use href="#fig-reviewer"/></svg>
+          <p class="caption">Reviewer verifies</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="definition-card" id="term-auditor" data-reveal>
+      <h3 class="term">Auditor</h3>
+      <p class="definition">A party permitted to inspect response bundles and logs under defined conditions. Auditors verify that the system is doing what it claims. Their access is time-bounded, scope-bounded, and always logged.</p>
+      <div class="meta-row">
+        <span class="meta-label">Not to be confused with</span>
+        <span class="meta-value">Trustee (auditors inspect; trustees govern). Also not the same as a requestor with elevated access.</span>
+      </div>
+      <div class="cross-links">
+        <a href="#term-response-bundle" class="pill">Response bundle</a>
+        <a href="#term-transparency-log" class="pill">Transparency log</a>
+        <a href="#term-trustee" class="pill">Trustee</a>
+      </div>
+
+      <!-- Vignette: Auditor -->
+      <div class="panel-sequence" style="margin-top:20px">
+        <div class="panel" data-reveal>
+          <svg viewBox="0 0 60 100" width="60" height="100" aria-hidden="true"><use href="#fig-reviewer-checking"/></svg>
+          <p class="caption">Auditor examines records</p>
+        </div>
+        <div class="panel" data-reveal>
+          <svg viewBox="0 0 30 35" width="40" height="47" aria-hidden="true"><use href="#prop-policy"/></svg>
+          <p class="caption">Checks against policy</p>
+        </div>
+        <div class="panel" data-reveal>
+          <svg viewBox="0 0 60 100" width="60" height="100" aria-hidden="true"><use href="#fig-trustee"/></svg>
+          <p class="caption">Reports findings</p>
+        </div>
+      </div>
+    </article>
+
+  </section>
+
+  <!-- ============================================================
+       C
+       ============================================================ -->
+  <section class="section" id="letter-c">
+    <h2>C</h2>
+
+    <article class="definition-card" id="term-category-check" data-reveal>
+      <h3 class="term">Category check</h3>
+      <p class="definition">A pre-retrieval filter that decides whether a question is something the persona should even attempt. Some questions are outside the system's jurisdiction regardless of what the archive contains. The category check catches those before the coverage gate ever runs.</p>
+      <div class="meta-row">
+        <span class="meta-label">Not to be confused with</span>
+        <span class="meta-value">Coverage gate (the category check runs first; the coverage gate handles citation shortfalls for questions that pass)</span>
+      </div>
+      <div class="cross-links">
+        <a href="#term-coverage-gate" class="pill">Coverage gate</a>
+        <a href="#term-persona" class="pill">Persona</a>
+        <a href="ambiguities.html#entry-1-4" class="pill">Ambiguity 1.4</a>
+      </div>
+
+      <!-- Vignette: Category check -->
+      <div class="branch-grid" style="margin-top:20px">
+        <div class="panel-branch met" data-reveal>
+          <svg viewBox="0 0 60 100" width="50" height="83" aria-hidden="true"><use href="#fig-reviewer-checking"/></svg>
+          <div class="branch-label">Met</div>
+          <p class="caption">Category verified</p>
+        </div>
+        <div class="panel-branch not-met" data-reveal>
+          <svg viewBox="0 0 60 100" width="50" height="83" aria-hidden="true"><use href="#fig-reviewer-checking"/></svg>
+          <div class="branch-label">Not met</div>
+          <p class="caption">Category missing</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="definition-card" id="term-circuit-breaker" data-reveal>
+      <h3 class="term">Circuit breaker</h3>
+      <p class="definition">The emergency suspension mechanism. Any single trustee can pull it at any time to immediately halt all persona activity. Lifting it again requires a quorum, so stopping the system is easy and restarting it is hard. That asymmetry is intentional.</p>
+      <div class="meta-row">
+        <span class="meta-label">Also known as</span>
+        <span class="meta-value">Emergency suspension, trustee suspension trigger</span>
+      </div>
+      <div class="cross-links">
+        <a href="#term-trustee" class="pill">Trustee</a>
+        <a href="#term-quorum" class="pill">Quorum</a>
+        <a href="#term-kill-switch" class="pill">Kill switch</a>
+        <a href="governance.html" class="pill">Governance</a>
+      </div>
+
+      <!-- Vignette: Circuit breaker -->
+      <div class="panel-sequence" style="margin-top:20px">
+        <div class="panel" data-reveal>
+          <svg viewBox="0 0 80 70" width="80" height="70" aria-hidden="true"><use href="#prop-state"/></svg>
+          <p class="caption">System operating</p>
+        </div>
+        <div class="panel" data-reveal>
+          <svg viewBox="0 0 40 60" width="40" height="60" aria-hidden="true"><use href="#prop-transition"/></svg>
+          <p class="caption">Threshold breached</p>
+        </div>
+        <div class="panel" data-reveal>
+          <svg viewBox="0 0 60 100" width="60" height="100" aria-hidden="true"><use href="#fig-trustee-holding"/></svg>
+          <p class="caption">Circuit breaker trips</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="definition-card" id="term-citation" data-reveal>
+      <h3 class="term">Citation</h3>
+      <p class="definition">A machine-verifiable, stable link from something the persona said back to a specific passage in the archive. Every citation contains four required fields: artifact ID, archive version, a canonical span pointing to the exact source passage, and a relation label declaring how the claim uses the source.</p>
+      <div class="meta-row">
+        <span class="meta-label">Not to be confused with</span>
+        <span class="meta-value">A vague attribution ("based on journal entries"). A citation must point to a specific location.</span>
+      </div>
+      <div class="cross-links">
+        <a href="#term-claim" class="pill">Claim</a>
+        <a href="#term-display-citation" class="pill">Display citation</a>
+        <a href="#term-coverage-gate" class="pill">Coverage gate</a>
+        <a href="citation-binding.html" class="pill">Citation Binding</a>
+        <a href="ambiguities.html#entry-1-1" class="pill">Ambiguity 1.1</a>
+      </div>
+
+      <!-- Vignette: Citation -->
+      <div class="panel-sequence" style="margin-top:20px">
+        <div class="panel" data-reveal>
+          <svg viewBox="0 0 30 35" width="40" height="47" aria-hidden="true"><use href="#prop-claim"/></svg>
+          <p class="caption">A claim is made.</p>
+        </div>
+        <div class="panel" data-reveal>
+          <svg viewBox="0 0 25 30" width="35" height="42" aria-hidden="true"><use href="#prop-citation"/></svg>
+          <p class="caption">A citation tag links it to source.</p>
+        </div>
+        <div class="panel" data-reveal>
+          <svg viewBox="0 0 60 100" width="60" height="100" aria-hidden="true"><use href="#fig-reviewer-checking"/></svg>
+          <p class="caption">The reviewer checks the link.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="definition-card" id="term-claim" data-reveal>
+      <h3 class="term">Claim</h3>
+      <p class="definition">A discrete statement in a persona's output that can be individually supported or refused based on citations. The system segments every response into claims before the coverage gate evaluates them, so each piece stands or falls on its own evidence.</p>
+      <div class="cross-links">
+        <a href="#term-citation" class="pill">Citation</a>
+        <a href="#term-coverage-gate" class="pill">Coverage gate</a>
+        <a href="#term-response-bundle" class="pill">Response bundle</a>
+      </div>
+
+      <!-- Vignette: Claim -->
+      <div class="panel-sequence" style="margin-top:20px">
+        <div class="panel" data-reveal>
+          <svg viewBox="0 0 60 100" width="60" height="100" aria-hidden="true"><use href="#fig-author-pointing"/></svg>
+          <p class="caption">Author makes assertion</p>
+        </div>
+        <div class="panel" data-reveal>
+          <svg viewBox="0 0 30 35" width="40" height="47" aria-hidden="true"><use href="#prop-claim"/></svg>
+          <p class="caption">Claim is recorded</p>
+        </div>
+        <div class="panel" data-reveal>
+          <svg viewBox="0 0 60 100" width="60" height="100" aria-hidden="true"><use href="#fig-reviewer-checking"/></svg>
+          <p class="caption">Claim awaits review</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="definition-card" id="term-consent-scope" data-reveal>
+      <h3 class="term">Consent scope</h3>
+      <p class="definition">The boundary of what the decedent authorized for inclusion and surfacing. Consent is per-artifact with four independent dimensions: inclusion, surfacing, display, and existence disclosure. Each can be set independently, and defaults are restrictive. After death, consent can only get tighter, never looser.</p>
+      <div class="meta-row">
+        <span class="meta-label">Also known as</span>
+        <span class="meta-value">Consent record, consent envelope</span>
+      </div>
+      <div class="cross-links">
+        <a href="#term-inclusion-consent" class="pill">Inclusion consent</a>
+        <a href="#term-surfacing-consent" class="pill">Surfacing consent</a>
+        <a href="#term-display-consent" class="pill">Display consent</a>
+        <a href="ambiguities.html#entry-2-1" class="pill">Ambiguity 2.1</a>
+      </div>
+
+      <!-- Vignette: Consent scope -->
+      <div class="panel-spotlight" style="margin-top:20px" data-reveal>
+        <svg viewBox="0 0 60 100" width="80" height="133" aria-hidden="true"><use href="#fig-trustee-holding"/></svg>
+        <p class="caption">Scope bounds what consent covers</p>
+      </div>
+    </article>
+
+    <article class="definition-card" id="term-coverage-gate" data-reveal>
+      <h3 class="term">Coverage gate</h3>
+      <p class="definition">The mechanism that evaluates each claim against its citation support and decides what to do when support falls short. It enforces a four-rung ladder: supported, narrowed, labeled, or refused. The system walks down the ladder and never skips a rung.</p>
+      <div class="meta-row">
+        <span class="meta-label">Not to be confused with</span>
+        <span class="meta-value">Category check (which filters question types before retrieval even begins)</span>
+      </div>
+      <div class="cross-links">
+        <a href="#term-coverage-ladder" class="pill">Coverage ladder</a>
+        <a href="#term-claim" class="pill">Claim</a>
+        <a href="#term-citation" class="pill">Citation</a>
+        <a href="citation-binding.html" class="pill">Citation Binding</a>
+        <a href="ambiguities.html#entry-1-2" class="pill">Ambiguity 1.2</a>
+      </div>
+
+      <!-- Vignette: Coverage gate branching outcome -->
+      <div class="branch-grid" style="margin-top:20px">
+        <div class="panel-branch met" data-reveal>
+          <svg viewBox="0 0 60 100" width="50" height="83" aria-hidden="true"><use href="#fig-reader-receiving"/></svg>
+          <div class="branch-label">Supported</div>
+          <p class="caption">Citations check out. The response is delivered.</p>
+        </div>
+        <div class="panel-branch not-met" data-reveal>
+          <svg viewBox="0 0 60 100" width="50" height="83" aria-hidden="true"><use href="#fig-reviewer"/></svg>
+          <div class="branch-label">Refused</div>
+          <p class="caption">Not enough evidence. The persona declines.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="definition-card" id="term-coverage-ladder" data-reveal>
+      <h3 class="term">Coverage ladder</h3>
+      <p class="definition">The four rungs of the coverage gate, evaluated per-claim: supported (fully cited), narrowed (unsupported claims stripped), labeled (inference clearly marked), and refused (not enough evidence to say anything useful). Each rung has a name so logs and auditors can track exactly how the system performed.</p>
+      <div class="cross-links">
+        <a href="#term-coverage-gate" class="pill">Coverage gate</a>
+        <a href="ambiguities.html#entry-1-2" class="pill">Ambiguity 1.2</a>
+      </div>
+
+      <!-- Vignette: Coverage ladder -->
+      <div class="panel-sequence" style="margin-top:20px">
+        <div class="panel" data-reveal>
+          <svg viewBox="0 0 30 35" width="40" height="47" aria-hidden="true"><use href="#prop-policy"/></svg>
+          <p class="caption">Minimal coverage</p>
+        </div>
+        <div class="panel" data-reveal>
+          <svg viewBox="0 0 30 35" width="40" height="47" aria-hidden="true"><use href="#prop-policy"/></svg>
+          <p class="caption">Standard coverage</p>
+        </div>
+        <div class="panel" data-reveal>
+          <svg viewBox="0 0 30 35" width="40" height="47" aria-hidden="true"><use href="#prop-policy"/></svg>
+          <p class="caption">Full coverage</p>
+        </div>
+      </div>
+    </article>
+
+  </section>
+
+  <!-- ============================================================
+       D
+       ============================================================ -->
+  <section class="section" id="letter-d">
+    <h2>D</h2>
+
+    <article class="definition-card" id="term-decedent" data-reveal>
+      <h3 class="term">Decedent</h3>
+      <p class="definition">The person whose archive and persona exist. While alive, they configure consent, select trustees, and set governance conditions. After death, their decisions are immutable; no one can expand what they authorized.</p>
+      <div class="meta-row">
+        <span class="meta-label">Not to be confused with</span>
+        <span class="meta-value">The persona itself. The decedent is the person; the persona is a governed system that works with what they left behind.</span>
+      </div>
+      <div class="cross-links">
+        <a href="#term-persona" class="pill">Persona</a>
+        <a href="#term-archive" class="pill">Archive</a>
+        <a href="#term-trustee" class="pill">Trustee</a>
+      </div>
+
+      <!-- Vignette: Decedent -->
+      <div class="panel-spotlight" style="margin-top:20px" data-reveal>
+        <svg viewBox="0 0 60 100" width="80" height="133" aria-hidden="true"><use href="#fig-author"/></svg>
+        <p class="caption">Persona of a deceased person</p>
+      </div>
+    </article>
+
+    <article class="definition-card" id="term-delay-window" data-reveal>
+      <h3 class="term">Delay window</h3>
+      <p class="definition">The mandatory waiting period between verified death and persona release. Only clean time counts; disputes and suspensions pause the clock. The decedent sets the duration while alive, and the system enforces a minimum. Nobody outside the trustee circle knows the clock is running.</p>
+      <div class="meta-row">
+        <span class="meta-label">Also known as</span>
+        <span class="meta-value">Waiting period, release delay, cooling period</span>
+      </div>
+      <div class="cross-links">
+        <a href="#term-release" class="pill">Release</a>
+        <a href="#term-trustee" class="pill">Trustee</a>
+        <a href="lifecycle.html" class="pill">Lifecycle</a>
+      </div>
+
+      <!-- Vignette: Delay window -->
+      <div class="panel-sequence" style="margin-top:20px">
+        <div class="panel" data-reveal>
+          <svg viewBox="0 0 80 70" width="80" height="70" aria-hidden="true"><use href="#prop-state"/></svg>
+          <p class="caption">Request submitted</p>
+        </div>
+        <div class="panel" data-reveal>
+          <svg viewBox="0 0 40 60" width="40" height="60" aria-hidden="true"><use href="#prop-transition"/></svg>
+          <p class="caption">Delay window ticking</p>
+        </div>
+        <div class="panel" data-reveal>
+          <svg viewBox="0 0 80 70" width="80" height="70" aria-hidden="true"><use href="#prop-state"/></svg>
+          <p class="caption">Window closes</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="definition-card" id="term-did" data-reveal>
+      <h3 class="term">DID (Decentralized Identifier)</h3>
+      <p class="definition">A stable, self-owned identifier for a person, organization, or system component. DIDs do not depend on a central authority. In this system, decedents, trustees, and requestors are all represented by DIDs, making identity claims auditable by machines, not just lawyers.</p>
+      <div class="meta-row">
+        <span class="meta-label">Also known as</span>
+        <span class="meta-value">Decentralized identifier (W3C standard)</span>
+      </div>
+      <div class="cross-links">
+        <a href="#term-verifiable-credential" class="pill">Verifiable credential</a>
+        <a href="#term-trustee" class="pill">Trustee</a>
+        <a href="novel-approaches.html" class="pill">Novel Approaches</a>
+      </div>
+
+      <!-- Vignette: DID -->
+      <div class="panel-sequence" style="margin-top:20px">
+        <div class="panel" data-reveal>
+          <svg viewBox="0 0 60 100" width="60" height="100" aria-hidden="true"><use href="#fig-author"/></svg>
+          <p class="caption">Identity created</p>
+        </div>
+        <div class="panel" data-reveal>
+          <svg viewBox="0 0 25 25" width="35" height="35" aria-hidden="true"><use href="#prop-binding"/></svg>
+          <p class="caption">DID bound to keys</p>
+        </div>
+        <div class="panel" data-reveal>
+          <svg viewBox="0 0 60 100" width="60" height="100" aria-hidden="true"><use href="#fig-reader-receiving"/></svg>
+          <p class="caption">Resolved by reader</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="definition-card" id="term-display-citation" data-reveal>
+      <h3 class="term">Display citation</h3>
+      <p class="definition">The filtered, simplified version of a citation that a requestor actually sees. It shows a relation label ("their words," "paraphrased," "interpreted from"), a short excerpt, and an opaque handle like "Source A" that only resolves within that one response. The real artifact ID stays hidden in the response bundle.</p>
+      <div class="meta-row">
+        <span class="meta-label">Not to be confused with</span>
+        <span class="meta-value">The full citation (which lives in the response bundle and is available only to auditors)</span>
+      </div>
+      <div class="cross-links">
+        <a href="#term-citation" class="pill">Citation</a>
+        <a href="#term-response-bundle" class="pill">Response bundle</a>
+        <a href="ambiguities.html#entry-1-3" class="pill">Ambiguity 1.3</a>
+      </div>
+
+      <!-- Vignette: Display citation -->
+      <div class="panel-sequence" style="margin-top:20px">
+        <div class="panel" data-reveal>
+          <svg viewBox="0 0 25 30" width="35" height="42" aria-hidden="true"><use href="#prop-citation"/></svg>
+          <p class="caption">Citation shown</p>
+        </div>
+        <div class="panel" data-reveal>
+          <svg viewBox="0 0 60 100" width="60" height="100" aria-hidden="true"><use href="#fig-reader"/></svg>
+          <p class="caption">Reader sees source</p>
+        </div>
+        <div class="panel" data-reveal>
+          <svg viewBox="0 0 60 100" width="60" height="100" aria-hidden="true"><use href="#fig-author-pointing"/></svg>
+          <p class="caption">Author credited</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="definition-card" id="term-display-consent" data-reveal>
+      <h3 class="term">Display consent</h3>
+      <p class="definition">Permission for excerpts of an artifact to appear in citations shown to requestors. An artifact can be surfaced (used to support a claim internally) but have its content withheld from display. This is the third of four consent dimensions, and it defaults to off.</p>
+      <div class="cross-links">
+        <a href="#term-consent-scope" class="pill">Consent scope</a>
+        <a href="#term-inclusion-consent" class="pill">Inclusion consent</a>
+        <a href="#term-surfacing-consent" class="pill">Surfacing consent</a>
+        <a href="ambiguities.html#entry-2-1" class="pill">Ambiguity 2.1</a>
+      </div>
+
+      <!-- Vignette: Display consent -->
+      <div class="branch-grid" style="margin-top:20px">
+        <div class="panel-branch met" data-reveal>
+          <svg viewBox="0 0 60 100" width="50" height="83" aria-hidden="true"><use href="#fig-reader-receiving"/></svg>
+          <div class="branch-label">Met</div>
+          <p class="caption">Consent given</p>
+        </div>
+        <div class="panel-branch not-met" data-reveal>
+          <svg viewBox="0 0 60 100" width="50" height="83" aria-hidden="true"><use href="#fig-reader"/></svg>
+          <div class="branch-label">Not met</div>
+          <p class="caption">Consent withheld</p>
+        </div>
+      </div>
+    </article>
+
+  </section>
+
+  <!-- ============================================================
+       G
+       ============================================================ -->
+  <section class="section" id="letter-g">
+    <h2>G</h2>
+
+    <article class="definition-card" id="term-governance-condition" data-reveal>
+      <h3 class="term">Governance condition</h3>
+      <p class="definition">Any prerequisite that must be satisfied before an action is permitted. Governance conditions are the "if" in every "if-then" the system enforces: verified death, elapsed delay, trustee quorum, requestor identity check. They are machine-readable, versioned, and logged.</p>
+      <div class="cross-links">
+        <a href="#term-policy" class="pill">Policy</a>
+        <a href="#term-quorum" class="pill">Quorum</a>
+        <a href="#term-trustee" class="pill">Trustee</a>
+        <a href="governance.html" class="pill">Governance</a>
+      </div>
+
+      <!-- Vignette: Governance condition -->
+      <div class="panel-sequence" style="margin-top:20px">
+        <div class="panel" data-reveal>
+          <svg viewBox="0 0 30 35" width="40" height="47" aria-hidden="true"><use href="#prop-policy"/></svg>
+          <p class="caption">Condition defined</p>
+        </div>
+        <div class="panel" data-reveal>
+          <svg viewBox="0 0 60 100" width="60" height="100" aria-hidden="true"><use href="#fig-trustee-holding"/></svg>
+          <p class="caption">Trustee enforces</p>
+        </div>
+        <div class="panel" data-reveal>
+          <svg viewBox="0 0 80 70" width="80" height="70" aria-hidden="true"><use href="#prop-state"/></svg>
+          <p class="caption">State evaluated</p>
+        </div>
+      </div>
+    </article>
+
+  </section>
+
+  <!-- ============================================================
+       I
+       ============================================================ -->
+  <section class="section" id="letter-i">
+    <h2>I</h2>
+
+    <article class="definition-card" id="term-inclusion-consent" data-reveal>
+      <h3 class="term">Inclusion consent</h3>
+      <p class="definition">Permission for an artifact to exist in the archive at all. This is the gate at ingestion; it is binary. The artifact is either in or out, and inclusion happens only through an explicit add action by the decedent or an explicit, revocable capture rule they enabled while alive. Passive import is not consent.</p>
+      <div class="cross-links">
+        <a href="#term-consent-scope" class="pill">Consent scope</a>
+        <a href="#term-surfacing-consent" class="pill">Surfacing consent</a>
+        <a href="#term-display-consent" class="pill">Display consent</a>
+        <a href="ambiguities.html#entry-2-1" class="pill">Ambiguity 2.1</a>
+      </div>
+
+      <!-- Vignette: Inclusion consent -->
+      <div class="branch-grid" style="margin-top:20px">
+        <div class="panel-branch met" data-reveal>
+          <svg viewBox="0 0 60 100" width="50" height="83" aria-hidden="true"><use href="#fig-author"/></svg>
+          <div class="branch-label">Met</div>
+          <p class="caption">Author consents</p>
+        </div>
+        <div class="panel-branch not-met" data-reveal>
+          <svg viewBox="0 0 60 100" width="50" height="83" aria-hidden="true"><use href="#fig-author-pointing"/></svg>
+          <div class="branch-label">Not met</div>
+          <p class="caption">Author declines</p>
+        </div>
+      </div>
+    </article>
+
+  </section>
+
+  <!-- ============================================================
+       K
+       ============================================================ -->
+  <section class="section" id="letter-k">
+    <h2>K</h2>
+
+    <article class="definition-card" id="term-kill-switch" data-reveal>
+      <h3 class="term">Kill switch</h3>
+      <p class="definition">The decedent's ability to revoke the entire archive while alive: triggering deletion of all artifacts, destruction of all key material, and notification to trustees that their shares are void. The consent log and structural metadata survive for audit, but the content is gone. This is real deletion, not soft-delete.</p>
+      <div class="meta-row">
+        <span class="meta-label">Not to be confused with</span>
+        <span class="meta-value">Circuit breaker (which pauses the system; the kill switch destroys it)</span>
+      </div>
+      <div class="cross-links">
+        <a href="#term-circuit-breaker" class="pill">Circuit breaker</a>
+        <a href="#term-archive" class="pill">Archive</a>
+        <a href="#term-consent-scope" class="pill">Consent scope</a>
+      </div>
+
+      <!-- Vignette: Kill switch -->
+      <div class="panel-spotlight" style="margin-top:20px" data-reveal>
+        <svg viewBox="0 0 60 100" width="80" height="133" aria-hidden="true"><use href="#fig-trustee-holding"/></svg>
+        <p class="caption">Immediate termination trigger</p>
+      </div>
+    </article>
+
+  </section>
+
+  <!-- ============================================================
+       P
+       ============================================================ -->
+  <section class="section" id="letter-p">
+    <h2>P</h2>
+
+    <article class="definition-card" id="term-persona" data-reveal>
+      <h3 class="term">Persona</h3>
+      <p class="definition">The governed system that generates responses grounded in the archive. It is not the decedent. It does not claim to be. It speaks as a steward of the archive, citing sources and declining when evidence is thin. Think of it as a careful librarian with a voice, not a chatbot pretending to be someone.</p>
+      <div class="meta-row">
+        <span class="meta-label">Not to be confused with</span>
+        <span class="meta-value">The decedent, an AI assistant, or a memorial chatbot. The persona is explicitly not the person.</span>
+      </div>
+      <div class="cross-links">
+        <a href="#term-decedent" class="pill">Decedent</a>
+        <a href="#term-archive" class="pill">Archive</a>
+        <a href="#term-coverage-gate" class="pill">Coverage gate</a>
+        <a href="lifecycle.html" class="pill">Lifecycle</a>
+      </div>
+
+      <!-- Vignette: Persona -->
+      <div class="panel-sequence" style="margin-top:20px">
+        <div class="panel" data-reveal>
+          <svg viewBox="0 0 60 100" width="60" height="100" aria-hidden="true"><use href="#fig-author"/></svg>
+          <p class="caption">Person creates persona</p>
+        </div>
+        <div class="panel" data-reveal>
+          <svg viewBox="0 0 25 25" width="35" height="35" aria-hidden="true"><use href="#prop-binding"/></svg>
+          <p class="caption">Bound to identity</p>
+        </div>
+        <div class="panel" data-reveal>
+          <svg viewBox="0 0 60 100" width="60" height="100" aria-hidden="true"><use href="#fig-reader-receiving"/></svg>
+          <p class="caption">Audience views persona</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="definition-card" id="term-policy" data-reveal>
+      <h3 class="term">Policy</h3>
+      <p class="definition">A versioned, machine-readable rule governing system behavior. Policies cover everything from release timing to citation thresholds to requestor access tiers. They are signed, hash-addressed, and logged to the transparency log. Changes require governance approval and leave a trail.</p>
+      <div class="meta-row">
+        <span class="meta-label">Also known as</span>
+        <span class="meta-value">Policy bundle, governance policy</span>
+      </div>
+      <div class="cross-links">
+        <a href="#term-governance-condition" class="pill">Governance condition</a>
+        <a href="#term-transparency-log" class="pill">Transparency log</a>
+        <a href="governance.html" class="pill">Governance</a>
+      </div>
+
+      <!-- Vignette: Policy -->
+      <div class="panel-sequence" style="margin-top:20px">
+        <div class="panel" data-reveal>
+          <svg viewBox="0 0 60 100" width="60" height="100" aria-hidden="true"><use href="#fig-trustee"/></svg>
+          <p class="caption">Trustee drafts rules</p>
+        </div>
+        <div class="panel" data-reveal>
+          <svg viewBox="0 0 30 35" width="40" height="47" aria-hidden="true"><use href="#prop-policy"/></svg>
+          <p class="caption">Policy documented</p>
+        </div>
+        <div class="panel" data-reveal>
+          <svg viewBox="0 0 60 100" width="60" height="100" aria-hidden="true"><use href="#fig-reviewer-checking"/></svg>
+          <p class="caption">Validator checks</p>
+        </div>
+      </div>
+    </article>
+
+  </section>
+
+  <!-- ============================================================
+       Q
+       ============================================================ -->
+  <section class="section" id="letter-q">
+    <h2>Q</h2>
+
+    <article class="definition-card" id="term-quorum" data-reveal>
+      <h3 class="term">Quorum</h3>
+      <p class="definition">The minimum number of trustees who must agree before a governed action can proceed. Different actions require different thresholds: a single trustee can suspend the system, but key assembly requires a supermajority. The principle is simple; the more irreversible the action, the higher the bar.</p>
+      <div class="meta-row">
+        <span class="meta-label">Not to be confused with</span>
+        <span class="meta-value">Unanimous consent. Most actions need a defined fraction of trustees, not all of them.</span>
+      </div>
+      <div class="cross-links">
+        <a href="#term-trustee" class="pill">Trustee</a>
+        <a href="#term-governance-condition" class="pill">Governance condition</a>
+        <a href="governance.html" class="pill">Governance</a>
+      </div>
+
+      <!-- Vignette: Quorum -->
+      <div class="panel-sequence" style="margin-top:20px">
+        <div class="panel" data-reveal>
+          <svg viewBox="0 0 60 100" width="60" height="100" aria-hidden="true"><use href="#fig-trustee"/></svg>
+          <p class="caption">Single trustee</p>
+        </div>
+        <div class="panel" data-reveal>
+          <svg viewBox="0 0 60 100" width="60" height="100" aria-hidden="true"><use href="#fig-reviewer"/></svg>
+          <p class="caption">Trustees gather</p>
+        </div>
+        <div class="panel" data-reveal>
+          <svg viewBox="0 0 80 70" width="80" height="70" aria-hidden="true"><use href="#prop-state"/></svg>
+          <p class="caption">Quorum reached</p>
+        </div>
+      </div>
+    </article>
+
+  </section>
+
+  <!-- ============================================================
+       R
+       ============================================================ -->
+  <section class="section" id="letter-r">
+    <h2>R</h2>
+
+    <article class="definition-card" id="term-release" data-reveal>
+      <h3 class="term">Release</h3>
+      <p class="definition">The moment the persona becomes available for interaction. Release is not automatic; it requires that the delay window has elapsed, the trustee quorum has assembled key shares, and all governance conditions are met. Delay completion alone does not activate anything.</p>
+      <div class="cross-links">
+        <a href="#term-delay-window" class="pill">Delay window</a>
+        <a href="#term-quorum" class="pill">Quorum</a>
+        <a href="#term-persona" class="pill">Persona</a>
+        <a href="lifecycle.html" class="pill">Lifecycle</a>
+      </div>
+
+      <!-- Vignette: Release -->
+      <div class="panel-sequence" style="margin-top:20px">
+        <div class="panel" data-reveal>
+          <svg viewBox="0 0 80 70" width="80" height="70" aria-hidden="true"><use href="#prop-state"/></svg>
+          <p class="caption">Release prepared</p>
+        </div>
+        <div class="panel" data-reveal>
+          <svg viewBox="0 0 40 60" width="40" height="60" aria-hidden="true"><use href="#prop-transition"/></svg>
+          <p class="caption">Approval granted</p>
+        </div>
+        <div class="panel" data-reveal>
+          <svg viewBox="0 0 60 100" width="60" height="100" aria-hidden="true"><use href="#fig-reader-receiving"/></svg>
+          <p class="caption">Content released</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="definition-card" id="term-requestor" data-reveal>
+      <h3 class="term">Requestor</h3>
+      <p class="definition">Someone seeking to interact with a persona. Requestors are identified, verified, and assigned an access tier set by the decedent's policy. Different tiers see different levels of citation detail. The persona treats every requestor the same way structurally; only the tier changes what they can see.</p>
+      <div class="cross-links">
+        <a href="#term-persona" class="pill">Persona</a>
+        <a href="#term-display-citation" class="pill">Display citation</a>
+        <a href="#term-verifiable-credential" class="pill">Verifiable credential</a>
+      </div>
+
+      <!-- Vignette: Requestor -->
+      <div class="panel-sequence" style="margin-top:20px">
+        <div class="panel" data-reveal>
+          <svg viewBox="0 0 60 100" width="60" height="100" aria-hidden="true"><use href="#fig-reader"/></svg>
+          <p class="caption">Requestor asks</p>
+        </div>
+        <div class="panel" data-reveal>
+          <svg viewBox="0 0 30 35" width="40" height="47" aria-hidden="true"><use href="#prop-claim"/></svg>
+          <p class="caption">Request submitted</p>
+        </div>
+        <div class="panel" data-reveal>
+          <svg viewBox="0 0 60 100" width="60" height="100" aria-hidden="true"><use href="#fig-trustee-holding"/></svg>
+          <p class="caption">Trustee reviews</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="definition-card" id="term-response-bundle" data-reveal>
+      <h3 class="term">Response bundle</h3>
+      <p class="definition">The signed package containing the persona's output, every citation, coverage metadata, the active policy version, model identifiers, and a transparency log proof. It is the system of record for what was generated and why. Bundles are immutable once issued.</p>
+      <div class="meta-row">
+        <span class="meta-label">Also known as</span>
+        <span class="meta-value">Proof-carrying bundle, signed bundle</span>
+      </div>
+      <div class="cross-links">
+        <a href="#term-citation" class="pill">Citation</a>
+        <a href="#term-transparency-log" class="pill">Transparency log</a>
+        <a href="#term-auditor" class="pill">Auditor</a>
+        <a href="citation-binding.html" class="pill">Citation Binding</a>
+      </div>
+
+      <!-- Vignette: Response bundle -->
+      <div class="panel-sequence" style="margin-top:20px">
+        <div class="panel" data-reveal>
+          <svg viewBox="0 0 30 35" width="40" height="47" aria-hidden="true"><use href="#prop-claim"/></svg>
+          <p class="caption">The persona writes a response.</p>
+        </div>
+        <div class="panel" data-reveal>
+          <svg viewBox="0 0 25 25" width="35" height="35" aria-hidden="true"><use href="#prop-binding"/></svg>
+          <p class="caption">The bundle is sealed and signed.</p>
+        </div>
+        <div class="panel" data-reveal>
+          <svg viewBox="0 0 60 100" width="60" height="100" aria-hidden="true"><use href="#fig-reader-receiving"/></svg>
+          <p class="caption">The requestor receives a verified package.</p>
+        </div>
+      </div>
+    </article>
+
+  </section>
+
+  <!-- ============================================================
+       S
+       ============================================================ -->
+  <section class="section" id="letter-s">
+    <h2>S</h2>
+
+    <article class="definition-card" id="term-sealed-compute" data-reveal>
+      <h3 class="term">Sealed compute</h3>
+      <p class="definition">The principle that decryption and inference happen inside an attested boundary (a trusted execution environment, hardware security module, or similar) so that plaintext archive content is never exposed to the operator. The reconstructed key lives only in enclave memory and is zeroed after use. Suspension destroys all active key material.</p>
+      <div class="meta-row">
+        <span class="meta-label">Also known as</span>
+        <span class="meta-value">Attested boundary, trusted execution environment (TEE)</span>
+      </div>
+      <div class="cross-links">
+        <a href="#term-archive" class="pill">Archive</a>
+        <a href="#term-trustee" class="pill">Trustee</a>
+        <a href="novel-approaches.html" class="pill">Novel Approaches</a>
+      </div>
+
+      <!-- Vignette: Sealed compute -->
+      <div class="panel-spotlight" style="margin-top:20px" data-reveal>
+        <svg viewBox="0 0 25 25" width="80" height="80" aria-hidden="true"><use href="#prop-binding"/></svg>
+        <p class="caption">Computation without data exposure</p>
+      </div>
+    </article>
+
+    <article class="definition-card" id="term-surfacing-consent" data-reveal>
+      <h3 class="term">Surfacing consent</h3>
+      <p class="definition">Permission for an artifact to be used by the persona when generating responses. An artifact can exist in the archive for preservation but be marked as unavailable to the persona engine. Surfacing consent can be further scoped by requestor tier. It defaults to off.</p>
+      <div class="cross-links">
+        <a href="#term-consent-scope" class="pill">Consent scope</a>
+        <a href="#term-inclusion-consent" class="pill">Inclusion consent</a>
+        <a href="#term-display-consent" class="pill">Display consent</a>
+        <a href="ambiguities.html#entry-2-1" class="pill">Ambiguity 2.1</a>
+      </div>
+
+      <!-- Vignette: Surfacing consent -->
+      <div class="branch-grid" style="margin-top:20px">
+        <div class="panel-branch met" data-reveal>
+          <svg viewBox="0 0 60 100" width="50" height="83" aria-hidden="true"><use href="#fig-trustee"/></svg>
+          <div class="branch-label">Met</div>
+          <p class="caption">Surfacing approved</p>
+        </div>
+        <div class="panel-branch not-met" data-reveal>
+          <svg viewBox="0 0 60 100" width="50" height="83" aria-hidden="true"><use href="#fig-trustee-holding"/></svg>
+          <div class="branch-label">Not met</div>
+          <p class="caption">Surfacing blocked</p>
+        </div>
+      </div>
+    </article>
+
+  </section>
+
+  <!-- ============================================================
+       T
+       ============================================================ -->
+  <section class="section" id="letter-t">
+    <h2>T</h2>
+
+    <article class="definition-card" id="term-third-party-protection" data-reveal>
+      <h3 class="term">Third-party protection</h3>
+      <p class="definition">The set of rules governing content that identifies or substantially concerns someone other than the decedent. Third-party content falls into three tiers: cleared (the person consented), anonymized (identifying details replaced with stable pseudonyms), or sealed (cannot be meaningfully anonymized). The default is sealed.</p>
+      <div class="cross-links">
+        <a href="#term-consent-scope" class="pill">Consent scope</a>
+        <a href="#term-decedent" class="pill">Decedent</a>
+        <a href="ambiguities.html#entry-2-2" class="pill">Ambiguity 2.2</a>
+      </div>
+
+      <!-- Vignette: Third-party protection -->
+      <div class="panel-sequence" style="margin-top:20px">
+        <div class="panel" data-reveal>
+          <svg viewBox="0 0 60 100" width="60" height="100" aria-hidden="true"><use href="#fig-reader"/></svg>
+          <p class="caption">Third party identified</p>
+        </div>
+        <div class="panel" data-reveal>
+          <svg viewBox="0 0 30 35" width="40" height="47" aria-hidden="true"><use href="#prop-policy"/></svg>
+          <p class="caption">Protections applied</p>
+        </div>
+        <div class="panel" data-reveal>
+          <svg viewBox="0 0 60 100" width="60" height="100" aria-hidden="true"><use href="#fig-trustee-holding"/></svg>
+          <p class="caption">Guardian ensures safety</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="definition-card" id="term-transparency-log" data-reveal>
+      <h3 class="term">Transparency log</h3>
+      <p class="definition">An append-only event log with cryptographic inclusion and consistency proofs. Every important event is recorded here: archive changes, policy updates, response bundles, credential verifications, release decisions. Independent monitors can watch for anomalies. The log is not publicly visible; it is available to auditors and trustees under governance conditions.</p>
+      <div class="meta-row">
+        <span class="meta-label">Also known as</span>
+        <span class="meta-value">Audit log, verifiable log</span>
+      </div>
+      <div class="cross-links">
+        <a href="#term-auditor" class="pill">Auditor</a>
+        <a href="#term-response-bundle" class="pill">Response bundle</a>
+        <a href="#term-policy" class="pill">Policy</a>
+      </div>
+
+      <!-- Vignette: Transparency log -->
+      <div class="panel-sequence" style="margin-top:20px">
+        <div class="panel" data-reveal>
+          <svg viewBox="0 0 40 60" width="40" height="60" aria-hidden="true"><use href="#prop-transition"/></svg>
+          <p class="caption">Action occurs</p>
+        </div>
+        <div class="panel" data-reveal>
+          <svg viewBox="0 0 80 70" width="80" height="70" aria-hidden="true"><use href="#prop-state"/></svg>
+          <p class="caption">Entry logged</p>
+        </div>
+        <div class="panel" data-reveal>
+          <svg viewBox="0 0 60 100" width="60" height="100" aria-hidden="true"><use href="#fig-reviewer-checking"/></svg>
+          <p class="caption">Auditor reviews log</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="definition-card" id="term-trustee" data-reveal>
+      <h3 class="term">Trustee</h3>
+      <p class="definition">An independent entity holding a cryptographic share of the archive key. Trustees are governors with constrained authority, not owners. They can always suspend the system and participate in quorum actions. They can never unilaterally activate the persona, expand consent, or view the archive directly.</p>
+      <div class="meta-row">
+        <span class="meta-label">Not to be confused with</span>
+        <span class="meta-value">A legal trustee or estate executor (though the roles may overlap). Also not the same as an auditor.</span>
+      </div>
+      <div class="cross-links">
+        <a href="#term-quorum" class="pill">Quorum</a>
+        <a href="#term-circuit-breaker" class="pill">Circuit breaker</a>
+        <a href="#term-sealed-compute" class="pill">Sealed compute</a>
+        <a href="governance.html" class="pill">Governance</a>
+      </div>
+
+      <!-- Vignette: Trustee holding a key share -->
+      <div class="panel-spotlight" style="margin-top:20px" data-reveal>
+        <svg viewBox="0 0 60 100" width="80" height="133" aria-hidden="true"><use href="#fig-trustee-holding"/></svg>
+        <p class="caption">A trustee holds one share. They can stop the system alone, but they cannot start it alone.</p>
+      </div>
+    </article>
+
+  </section>
+
+  <!-- ============================================================
+       V
+       ============================================================ -->
+  <section class="section" id="letter-v">
+    <h2>V</h2>
+
+    <article class="definition-card" id="term-verifiable-credential" data-reveal>
+      <h3 class="term">Verifiable credential</h3>
+      <p class="definition">A digitally signed, machine-checkable claim about a person or organization. In this system, death attestations, relationship proofs, and trustee agreements are all expressed as verifiable credentials. They follow the W3C standard, so any conforming verifier can check them.</p>
+      <div class="meta-row">
+        <span class="meta-label">Also known as</span>
+        <span class="meta-value">VC (W3C Verifiable Credentials Data Model)</span>
+      </div>
+      <div class="cross-links">
+        <a href="#term-did" class="pill">DID</a>
+        <a href="#term-requestor" class="pill">Requestor</a>
+        <a href="#term-trustee" class="pill">Trustee</a>
+        <a href="novel-approaches.html" class="pill">Novel Approaches</a>
+      </div>
+
+      <!-- Vignette: Verifiable credential -->
+      <div class="panel-sequence" style="margin-top:20px">
+        <div class="panel" data-reveal>
+          <svg viewBox="0 0 60 100" width="60" height="100" aria-hidden="true"><use href="#fig-author-pointing"/></svg>
+          <p class="caption">Issuer creates credential</p>
+        </div>
+        <div class="panel" data-reveal>
+          <svg viewBox="0 0 25 25" width="35" height="35" aria-hidden="true"><use href="#prop-binding"/></svg>
+          <p class="caption">Cryptographically signed</p>
+        </div>
+        <div class="panel" data-reveal>
+          <svg viewBox="0 0 60 100" width="60" height="100" aria-hidden="true"><use href="#fig-reviewer-checking"/></svg>
+          <p class="caption">Verifier confirms</p>
+        </div>
+      </div>
+    </article>
+
+  </section>
+
+  <!-- ============================================================
+       Page navigation
+       ============================================================ -->
+  <nav class="page-nav" aria-label="Page navigation">
+    <span></span>
+    <a href="lifecycle.html" class="next">Next: Lifecycle</a>
+  </nav>
+</main>
+
+<a href="#" class="back-to-top" aria-label="Back to top" hidden>&uarr;</a>
+<script src="../motion.js" defer></script>
+</body>
+</html>

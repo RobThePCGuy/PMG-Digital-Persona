@@ -1,0 +1,1343 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ambiguity Ledger | PMG Digital Personas</title>
+  <meta name="description" content="Twenty-seven design decisions across five clusters, each naming an ambiguity, picking an answer, and explaining why. The heart of the PMG Digital Persona spec.">
+  <meta name="theme-color" content="#0b0f14">
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    .entry-card {
+      margin: 24px 0;
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--card-bg);
+    }
+    .entry-card + .entry-card {
+      margin-top: 16px;
+    }
+    .entry-title {
+      font-size: 19px;
+      font-weight: 600;
+      margin: 0 0 12px;
+    }
+    .entry-body {
+      margin: 12px 0;
+    }
+    .entry-body p {
+      font-size: 15px;
+      line-height: 1.6;
+    }
+    .still-open {
+      border: 1px dashed var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      color: var(--muted);
+      font-size: 14px;
+      margin-top: 12px;
+    }
+    .vocab-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 16px 0;
+    }
+    .cluster-header {
+      margin-top: 48px;
+      margin-bottom: 8px;
+    }
+    .cluster-header h2 {
+      margin: 0 0 8px;
+    }
+    .cluster-intro {
+      color: var(--muted);
+      font-size: 15px;
+      margin: 0 0 16px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Hidden SVG symbol definitions -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+
+  <symbol id="fig-author" viewBox="0 0 60 100">
+    <path d="M 30.3,6.2 C 36.8,5.8 42.5,11.4 42.3,17.6 42.6,24.1 37.1,29.7 30.4,30.2 23.6,30.5 17.5,24.8 17.7,18.1 17.4,11.3 23.5,5.9 30.3,6.2 Z" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 30.2,30.4 L 30.5,62.3" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 30.3,38.6 L 22.4,46.3 L 14.7,43.5" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 30.4,38.4 L 38.6,46.7 L 45.3,43.8" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 30.3,62.3 L 19.6,88.4 L 16.5,92.7" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 30.5,62.5 L 40.7,88.3 L 43.8,92.5" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 45.5,43.6 L 52.3,36.8" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 52.3,36.8 L 54.1,34.5" stroke="currentColor" fill="none" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 53.5,35.8 L 52.8,34.3" stroke="currentColor" fill="none" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+
+  <symbol id="fig-reviewer" viewBox="0 0 60 100">
+    <path d="M 30.5,6.4 C 37.1,5.9 42.7,11.6 42.4,17.8 42.8,24.3 37.3,29.5 30.6,30.3 23.4,30.6 17.6,24.6 17.8,18.3 17.3,11.5 23.7,6.1 30.5,6.4 Z" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 24.3,16.3 C 26.4,15.1 28.7,16.5 28.5,18.4 28.8,20.5 26.6,21.8 24.5,21.3 22.3,21.6 21.2,19.1 21.5,17.4 21.3,15.8 22.9,15.5 24.3,16.3 Z" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 36.4,16.5 C 38.5,15.3 40.6,16.7 40.4,18.6 40.7,20.7 38.5,21.6 36.3,21.5 34.2,21.7 33.3,19.3 33.5,17.6 33.2,15.9 34.8,15.7 36.4,16.5 Z" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 28.6,18.3 L 33.4,17.8" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 30.4,30.5 L 30.3,62.4" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 30.3,38.5 L 21.6,44.7 L 14.4,42.6" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 30.5,38.3 L 39.4,44.5 L 45.7,42.3" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 30.3,62.4 L 19.8,88.6 L 16.7,92.4" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 30.4,62.6 L 40.5,88.5 L 43.6,92.3" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+
+  <symbol id="fig-trustee" viewBox="0 0 60 100">
+    <path d="M 20.4,7.6 C 20.6,6.3 21.8,5.7 23.2,5.8 L 37.3,5.5 C 38.7,5.4 39.8,6.5 40.1,7.8 L 40.4,27.6 C 40.3,29.1 39.2,30.2 37.6,30.4 L 22.8,30.6 C 21.4,30.5 20.2,29.3 20.3,27.8 Z" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 30.3,30.5 L 30.6,62.4" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 30.4,38.7 L 22.3,46.5 L 14.5,43.6" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 30.5,38.5 L 38.7,46.4 L 45.5,43.4" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 30.4,62.4 L 19.5,88.3 L 16.3,92.6" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 30.6,62.6 L 40.8,88.4 L 43.7,92.4" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+
+  <symbol id="fig-reader" viewBox="0 0 60 100">
+    <path d="M 30.4,6.3 C 36.9,6.1 42.6,11.5 42.5,17.7 42.7,24.2 37.2,29.8 30.3,30.4 23.5,30.7 17.4,24.7 17.6,18.2 17.5,11.4 23.6,6.0 30.4,6.3 Z" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 23.6,30.8 C 25.3,33.4 27.8,32.6 30.3,33.7 32.7,32.5 35.2,33.6 36.8,31.3" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 23.6,30.8 C 22.4,33.5 21.7,36.4 22.3,39.6" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 36.8,31.3 C 37.6,34.2 38.3,37.1 37.5,39.8" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 30.3,33.8 L 30.5,62.5" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 30.4,40.6 L 22.5,48.3 L 14.6,45.5" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 30.5,40.4 L 38.7,48.5 L 45.4,45.7" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 30.3,62.5 L 19.7,88.5 L 16.4,92.6" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 30.5,62.7 L 40.6,88.4 L 43.5,92.5" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+
+  <symbol id="fig-author-pointing" viewBox="0 0 60 100">
+    <path d="M 26.3,6.5 C 32.8,5.7 38.5,11.3 38.4,17.5 38.7,24.0 33.1,29.6 26.5,30.3 19.7,30.6 13.5,24.6 13.7,18.0 13.4,11.2 19.6,5.9 26.3,6.5 Z" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 26.4,30.5 L 26.6,62.4" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 26.3,38.6 L 18.5,46.4 L 11.3,43.7" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 26.5,38.4 L 38.7,36.3 L 50.4,33.6" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 50.4,33.6 L 54.6,32.3" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 26.4,62.4 L 16.3,88.5 L 13.4,92.6" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 26.6,62.6 L 36.8,88.3 L 39.7,92.5" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 11.3,43.7 L 5.6,37.3" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 5.6,37.3 L 4.2,35.1" stroke="currentColor" fill="none" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 5.1,36.4 L 3.8,36.8" stroke="currentColor" fill="none" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+
+  <symbol id="fig-trustee-holding" viewBox="0 0 60 100">
+    <path d="M 20.3,7.4 C 20.5,6.2 21.7,5.6 23.1,5.7 L 37.4,5.4 C 38.8,5.3 39.7,6.4 40.2,7.7 L 40.3,27.5 C 40.4,29.0 39.3,30.3 37.5,30.3 L 22.7,30.5 C 21.3,30.4 20.3,29.2 20.4,27.7 Z" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 30.4,30.4 L 30.5,62.3" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 30.3,38.6 L 22.5,46.4 L 14.6,43.5" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 30.5,38.4 L 39.6,42.7 L 47.3,40.5" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 47.3,40.5 C 48.6,39.3 50.4,39.5 50.7,41.2 50.5,42.6 49.3,43.4 47.8,43.3" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 47.8,43.3 L 47.3,40.5" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 30.3,62.3 L 19.6,88.4 L 16.4,92.5" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 30.5,62.5 L 40.7,88.3 L 43.6,92.4" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+
+  <symbol id="fig-reviewer-checking" viewBox="0 0 60 100">
+    <path d="M 34.4,7.3 C 40.7,6.5 46.1,12.1 45.8,18.2 46.3,24.5 40.8,30.1 34.3,30.6 27.6,31.0 21.8,25.3 21.9,18.5 21.7,12.0 27.8,6.8 34.4,7.3 Z" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 28.5,16.6 C 30.8,15.1 33.6,16.8 33.4,18.9 33.7,21.3 31.2,22.6 28.7,22.3 26.3,22.5 24.8,19.8 25.3,17.8 25.1,16.1 27.0,15.6 28.5,16.6 Z" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 39.6,16.8 C 41.8,15.4 44.4,17.0 44.3,19.1 44.5,21.5 42.1,22.4 39.8,22.5 37.6,22.6 36.3,20.1 36.7,18.0 36.4,16.3 38.1,15.8 39.6,16.8 Z" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 33.5,18.7 L 36.6,18.2" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 33.6,30.7 L 28.4,62.5" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 31.3,40.5 L 20.6,44.7 L 13.4,47.3" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 31.5,40.3 L 42.7,35.6 L 52.3,32.4" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 52.3,32.4 L 54.7,31.6" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 28.4,62.5 L 17.5,88.4 L 14.3,92.6" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 28.6,62.7 L 38.7,88.5 L 41.5,92.4" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+
+  <symbol id="fig-reader-receiving" viewBox="0 0 60 100">
+    <path d="M 30.5,6.4 C 37.0,6.0 42.4,11.6 42.3,17.8 42.6,24.3 37.0,29.7 30.4,30.3 23.6,30.5 17.5,24.8 17.7,18.0 17.6,11.3 23.8,6.1 30.5,6.4 Z" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 23.7,30.6 C 25.4,33.3 28.0,32.5 30.4,33.5 32.8,32.4 35.3,33.5 36.7,31.2" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 23.7,30.6 C 22.5,33.4 21.8,36.3 22.4,39.4" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 36.7,31.2 C 37.5,34.1 38.2,37.0 37.4,39.7" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 30.4,33.6 L 30.5,62.4" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 30.3,40.5 L 22.4,36.3 L 14.6,33.7" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 14.6,33.7 L 12.3,31.5" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 14.6,33.7 L 11.8,33.4" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 14.6,33.7 L 12.5,35.6" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 30.5,40.3 L 38.7,36.5 L 46.4,33.8" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 46.4,33.8 L 48.7,31.6" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 46.4,33.8 L 49.3,33.5" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 46.4,33.8 L 48.5,35.7" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 30.3,62.4 L 19.7,88.6 L 16.5,92.5" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 30.5,62.6 L 40.6,88.4 L 43.7,92.4" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+
+  <symbol id="prop-claim" viewBox="0 0 30 35">
+    <path d="M 2.3,2.4 L 20.6,2.3 L 27.4,9.3 L 27.6,32.5 L 2.5,32.7 Z" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 20.6,2.3 L 20.4,9.5 L 27.4,9.3" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 5.6,15.4 L 18.3,15.6" stroke="currentColor" fill="none" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+    <path d="M 5.4,19.7 L 22.7,19.5" stroke="currentColor" fill="none" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+    <path d="M 5.5,23.8 L 20.4,24.0" stroke="currentColor" fill="none" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+    <path d="M 5.7,27.9 L 14.3,28.1" stroke="currentColor" fill="none" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+  </symbol>
+
+  <symbol id="prop-citation" viewBox="0 0 25 30">
+    <path d="M 7.3,3.4 L 22.5,3.6 L 22.7,26.4 L 7.5,26.6 L 1.6,15.3 Z" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 6.8,14.3 C 7.6,13.2 9.1,13.5 9.0,14.8 9.2,16.1 7.7,16.5 6.7,15.7 6.0,15.0 6.2,14.2 6.8,14.3 Z" stroke="currentColor" fill="none" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 13.4,9.5 L 13.6,21.3" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 17.5,9.3 L 17.3,21.5" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 11.3,13.4 L 19.7,13.6" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 11.5,17.5 L 19.5,17.3" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+
+  <symbol id="prop-binding" viewBox="0 0 25 25">
+    <path d="M 12.6,2.3 C 16.8,1.8 20.7,5.4 20.8,9.6 21.3,13.7 17.8,17.4 13.4,17.6 9.1,18.0 5.4,14.3 5.3,10.1 4.8,5.7 8.5,2.5 12.6,2.3 Z" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 12.7,4.6 C 15.6,4.3 18.2,6.7 18.3,9.5 18.6,12.4 16.1,14.8 13.3,15.0 10.4,15.3 7.9,12.8 7.8,10.0 7.5,7.0 10.0,4.7 12.7,4.6 Z" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 9.6,10.3 L 11.8,12.7 L 16.3,7.5" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 9.4,17.3 C 8.6,19.5 7.3,21.4 6.5,23.6" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 16.3,17.4 C 17.1,19.6 18.4,21.3 19.2,23.5" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 6.5,23.6 L 5.3,22.4" stroke="currentColor" fill="none" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 6.5,23.6 L 7.8,22.6" stroke="currentColor" fill="none" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 19.2,23.5 L 18.0,22.3" stroke="currentColor" fill="none" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 19.2,23.5 L 20.5,22.5" stroke="currentColor" fill="none" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+
+  <symbol id="prop-policy" viewBox="0 0 30 35">
+    <path d="M 6.4,3.6 L 27.3,3.4 L 27.5,31.6 L 6.6,31.4 Z" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 6.4,3.6 L 2.7,5.8 L 2.5,33.6 L 6.6,31.4" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 2.5,33.6 L 23.6,33.4 L 27.5,31.6" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 3.7,8.4 L 5.4,7.3" stroke="currentColor" fill="none" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+    <path d="M 3.5,28.6 L 5.6,27.5" stroke="currentColor" fill="none" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+    <path d="M 10.6,11.4 L 23.4,11.6" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.7"/>
+    <path d="M 12.5,15.5 L 21.3,15.7" stroke="currentColor" fill="none" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.4"/>
+    <path d="M 10.7,19.6 L 23.5,19.4" stroke="currentColor" fill="none" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.4"/>
+    <path d="M 12.4,23.5 L 21.6,23.7" stroke="currentColor" fill="none" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.4"/>
+  </symbol>
+
+  <symbol id="prop-state" viewBox="0 0 80 70">
+    <path d="M 3.4,12.6 L 76.6,12.4 L 76.4,67.5 L 3.6,67.7 Z" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 3.5,3.5 L 76.5,3.3 L 76.6,12.4 L 3.4,12.6 Z" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 3.6,67.7 L 28.4,67.5" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 52.6,67.6 L 76.4,67.5" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 8.5,63.4 L 24.3,63.6" stroke="currentColor" fill="none" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.3"/>
+    <path d="M 56.7,63.5 L 72.4,63.3" stroke="currentColor" fill="none" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.3"/>
+    <path d="M 6.5,15.7 L 6.3,20.4" stroke="currentColor" fill="none" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.3"/>
+    <path d="M 73.4,15.6 L 73.6,20.3" stroke="currentColor" fill="none" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.3"/>
+  </symbol>
+
+  <symbol id="prop-transition" viewBox="0 0 40 60">
+    <path d="M 5.4,3.6 L 34.6,3.4 L 34.4,56.5 L 5.6,56.7 Z" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 8.5,6.4 L 31.4,6.6 L 31.6,56.4 L 8.3,56.6 Z" stroke="currentColor" fill="none" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.4"/>
+    <path d="M 8.5,6.4 L 16.3,12.5 L 16.5,50.6 L 8.3,56.6" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 14.3,32.5 C 15.1,31.6 16.0,32.3 15.6,33.4 15.8,34.2 14.5,34.6 14.0,33.5 13.6,32.8 13.8,32.3 14.3,32.5 Z" stroke="currentColor" fill="none" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 18.6,33.4 L 33.4,33.6" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 30.3,30.4 L 33.4,33.6 L 30.5,36.7" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 11.4,0.6 L 28.6,0.4 L 28.4,3.5 L 11.6,3.7 Z" stroke="currentColor" fill="none" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"/>
+  </symbol>
+
+</svg>
+
+<header class="global-nav">
+  <a href="../index.html" class="site-name">PMG Digital Personas</a>
+  <nav aria-label="Spec pages">
+    <a href="glossary.html">Glossary</a>
+    <a href="lifecycle.html">Lifecycle</a>
+    <a href="governance.html">Governance</a>
+    <a href="citation-binding.html">Citation Binding</a>
+    <a href="novel-approaches.html">Novel Approaches</a>
+    <a href="ambiguities.html">Ambiguities</a>
+  </nav>
+</header>
+
+<main class="wrap">
+  <header class="page-header">
+    <div class="kicker">Design decisions</div>
+    <h1>Ambiguity Ledger</h1>
+    <p class="page-intro">Every place a builder could accidentally make this project betray itself. Each entry names an ambiguity, picks an answer, and explains why. Where we chose wrong, we want it to be obvious and fixable. Where we chose right, we want it to be boring and inevitable.</p>
+  </header>
+
+  <!-- Preface -->
+  <div class="callout" data-reveal>
+    <p>The format is repeating. Every entry follows the same template so you can skim, disagree, and propose changes without guessing where the reasoning lives.</p>
+    <p><strong>When values collide:</strong> privacy and <a href="glossary.html#term-consent-scope">consent</a> outrank usefulness, and <a href="governance.html">governance</a> outranks convenience.</p>
+  </div>
+
+  <!-- Section navigation -->
+  <nav class="section-nav" aria-label="On this page">
+    <a href="#vocab">Vocabulary</a>
+    <a href="#cluster-1">Citation Binding</a>
+    <a href="#cluster-2">Consent</a>
+    <a href="#cluster-3">Death Verification</a>
+    <a href="#cluster-4">Trustee Powers</a>
+    <a href="#cluster-5">Persona Stance</a>
+  </nav>
+
+  <!-- ============================================================
+       MINIMUM VOCABULARY
+       ============================================================ -->
+  <section class="section" id="vocab" data-reveal>
+    <span class="section-label">Foundation</span>
+    <h2>Minimum Vocabulary</h2>
+    <p>These are not full definitions. They are just enough shared language to keep the ledger clean. See the <a href="glossary.html">glossary</a> for complete definitions.</p>
+
+    <div class="vocab-pills">
+      <a href="glossary.html#term-archive" class="pill">Archive</a>
+      <a href="glossary.html#term-artifact" class="pill">Artifact</a>
+      <a href="glossary.html#term-auditor" class="pill">Auditor</a>
+      <a href="glossary.html#term-citation" class="pill">Citation</a>
+      <a href="glossary.html#term-claim" class="pill">Claim</a>
+      <a href="glossary.html#term-coverage-gate" class="pill">Coverage gate</a>
+      <a href="glossary.html#term-consent-scope" class="pill">Consent scope</a>
+      <a href="glossary.html#term-decedent" class="pill">Decedent</a>
+      <a href="glossary.html#term-delay-window" class="pill">Delay window</a>
+      <a href="glossary.html#term-governance-condition" class="pill">Governance condition</a>
+      <a href="glossary.html#term-persona" class="pill">Persona</a>
+      <a href="glossary.html#term-policy" class="pill">Policy</a>
+      <a href="glossary.html#term-release" class="pill">Release</a>
+      <a href="glossary.html#term-requestor" class="pill">Requestor</a>
+      <a href="glossary.html#term-response-bundle" class="pill">Response bundle</a>
+      <a href="glossary.html#term-trustee" class="pill">Trustee</a>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CLUSTER 1: CITATION BINDING
+       ============================================================ -->
+  <section class="section" id="cluster-1" data-reveal>
+    <div class="cluster-header">
+      <span class="section-label">Cluster 1</span>
+      <h2>Citation Binding</h2>
+      <p class="cluster-intro">How the <a href="glossary.html#term-persona">persona</a> connects every claim to its source material, and what happens when it cannot.</p>
+    </div>
+
+    <!-- Entry 1.1 -->
+    <article class="entry-card" id="entry-1-1" data-reveal>
+      <h3 class="entry-title">1.1 What is a citation, structurally?</h3>
+
+      <div class="callout contract">
+        <strong>Decision:</strong> A <a href="glossary.html#term-citation">citation</a> is a structured object with four required fields: <a href="glossary.html#term-artifact">artifact</a> ID (content hash), <a href="glossary.html#term-archive">archive</a> version (snapshot), span (canonical segment identifier), and relation (how the <a href="glossary.html#term-claim">claim</a> uses the source: "direct quote," "paraphrase," "inference from," or "metadata fact").
+      </div>
+
+      <div class="entry-body">
+        <p>Whole-artifact pointers are too vague. They let a system gesture at a 40-page journal and call it "cited." Canonical spans make citations auditable down to the sentence. The relation label forces the system to declare whether it is quoting or interpreting, which is the difference between grounded and hallucinated.</p>
+      </div>
+
+      <div class="callout warn">
+        <strong>Tradeoffs:</strong> Span precision adds complexity to the retrieval pipeline and requires a canonical representation for every artifact type. Content-addressed IDs mitigate encoding instability, but span stability across formats is an engineering cost.
+      </div>
+
+      <div class="entry-enables-forbids">
+        <div class="card-grid">
+          <div class="card">
+            <h4>What this enables</h4>
+            <p><a href="glossary.html#term-auditor">Auditors</a> can verify every claim mechanically. Users can click through to the exact source passage. Drift between what the persona says and what the archive contains becomes measurable.</p>
+          </div>
+          <div class="card">
+            <h4>What this forbids</h4>
+            <p>Vague attribution. A citation that says "based on journal entries" without pointing to a specific location is not a citation under this definition.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="still-open">
+        <strong>Still open:</strong> How to handle citations into non-text artifacts (audio timestamps, image regions). Likely needs media-specific span formats; deferred to the <a href="citation-binding.html">citation binding spec</a>.
+      </div>
+    </article>
+
+    <!-- Entry 1.2 -->
+    <article class="entry-card" id="entry-1-2" data-reveal>
+      <h3 class="entry-title">1.2 What does the coverage gate do when citation support falls short?</h3>
+
+      <div class="callout contract">
+        <strong>Decision:</strong> The <a href="glossary.html#term-coverage-gate">coverage gate</a> enforces a four-rung ladder, evaluated per-<a href="glossary.html#term-claim">claim</a>, not per-response. The system walks down until it finds a rung it can satisfy. It never skips a rung: (1) Supported, (2) Narrowed, (3) Labeled, (4) Refused.
+      </div>
+
+      <div class="entry-body">
+        <p>A single binary (answer or refuse) wastes useful partial information. But a system that silently degrades into speculation is worse than one that refuses outright. The ladder makes degradation visible, predictable, and auditable. Each rung has a name, so logs and <a href="glossary.html#term-auditor">auditors</a> can track exactly how often the system narrows or labels versus delivers clean responses.</p>
+        <p><strong>Override rule:</strong> coverage is necessary but not sufficient. <a href="glossary.html#term-consent-scope">Consent scope</a> and <a href="glossary.html#term-governance-condition">governance conditions</a> can still block a cited response. Hedge stacking is forbidden: at least one explicit epistemic marker per interpreted claim in the labeled rung.</p>
+        <p><strong>Minimum excerpt rule.</strong> A display citation must reproduce no more than the shortest passage needed to support the claim. Longer excerpts require explicit inclusion consent from the persona holder.</p>
+        <p><strong>Default threshold.</strong> When no explicit threshold is set by policy, the system applies a conservative default: excerpts are capped at 140 characters or one sentence, whichever is shorter.</p>
+      </div>
+
+      <!-- 3-panel comic: the four rungs in action -->
+      <div class="panel-sequence" data-reveal>
+        <div class="panel">
+          <svg viewBox="0 0 60 100" width="45" height="75" aria-hidden="true"><use href="#fig-reader-receiving"/></svg>
+          <svg viewBox="0 0 25 30" width="28" height="34" aria-hidden="true"><use href="#prop-citation"/></svg>
+          <p class="caption">Rung 1: Supported. Every claim has a citation. The response arrives clean.</p>
+        </div>
+        <div class="panel">
+          <svg viewBox="0 0 60 100" width="45" height="75" aria-hidden="true"><use href="#fig-reviewer-checking"/></svg>
+          <svg viewBox="0 0 30 35" width="28" height="33" aria-hidden="true" style="opacity:0.4"><use href="#prop-claim"/></svg>
+          <p class="caption">Rung 2-3: Narrowed or Labeled. Unsupported claims are stripped or flagged. The requestor sees what was removed and why.</p>
+        </div>
+        <div class="panel">
+          <svg viewBox="0 0 60 100" width="45" height="75" aria-hidden="true" style="opacity:0.35"><use href="#fig-reader"/></svg>
+          <svg viewBox="0 0 80 70" width="48" height="42" aria-hidden="true" style="opacity:0.25"><use href="#prop-state"/></svg>
+          <p class="caption">Rung 4: Refused. No relevant artifacts. The persona declines and offers an archive inventory view.</p>
+        </div>
+      </div>
+
+      <div class="callout warn">
+        <strong>Tradeoffs:</strong> The ladder adds UX complexity. Requestors will sometimes get responses that feel choppy or hedged. That is the cost of honesty. The alternative (smooth responses with buried uncertainty) is the thing this project exists to prevent.
+      </div>
+
+      <div class="entry-enables-forbids">
+        <div class="card-grid">
+          <div class="card">
+            <h4>What this enables</h4>
+            <p>Auditors can query logs for coverage distribution: "40% supported, 30% narrowed, 20% labeled, 10% refused" tells you exactly how well the archive covers real questions. Builders have a clear contract for each rung.</p>
+          </div>
+          <div class="card">
+            <h4>What this forbids</h4>
+            <p>Silent interpolation. The persona cannot fill gaps with plausible-sounding material and present it as grounded. "Freeform generation" is not a rung on this ladder; it requires explicit opt-in and is off by default.</p>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- Entry 1.3 -->
+    <article class="entry-card" id="entry-1-3" data-reveal>
+      <h3 class="entry-title">1.3 Who sees citations, and in what form?</h3>
+
+      <div class="callout contract">
+        <strong>Decision:</strong> Citations exist at two layers, always. The full citation lives in the <a href="glossary.html#term-response-bundle">response bundle</a> (auditor-facing). A filtered view is what any human sees (<a href="glossary.html#term-requestor">requestor</a>-facing). The two layers serve different audiences and follow different rules.
+      </div>
+
+      <div class="entry-body">
+        <p>The auditor-facing layer contains the complete citation object for every claim, including unredacted excerpts encrypted for auditors. The requestor-facing layer shows simplified display citations: a relation label, a short excerpt trimmed to the minimum useful span, and opaque per-response handles ("Source A," "Source B"). Real artifact IDs stay in the bundle only.</p>
+        <p>Display citations pass through three gates before rendering: (1) <a href="glossary.html#term-consent-scope">consent gate</a>, where restricted artifacts produce a "source restricted by the person's instructions" message; (2) tier gate, where requestor access tiers control citation depth; (3) minimum span gate, trimming to the smallest supporting passage. An anti-exfiltration constraint limits context requests via daily evidence budgets and rate limiting.</p>
+      </div>
+
+      <div class="callout warn">
+        <strong>Tradeoffs:</strong> Requestors may feel the system is withholding. That is accurate; it is, deliberately. The UX needs to make this feel like respect for the person's wishes, not obstruction.
+      </div>
+
+      <div class="entry-enables-forbids">
+        <div class="card-grid">
+          <div class="card">
+            <h4>What this enables</h4>
+            <p>Auditors can fully verify every claim without the requestor ever seeing restricted material. The <a href="glossary.html#term-decedent">decedent's</a> consent scope is enforced at the display layer, not just at ingestion.</p>
+          </div>
+          <div class="card">
+            <h4>What this forbids</h4>
+            <p>Using citations as a backdoor to browse the archive. Showing unfiltered excerpts to any requestor regardless of tier. Treating "cited" as equivalent to "safe to display."</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="still-open">
+        <strong>Still open:</strong> Whether requestors should see citation counts or coverage rung labels on their responses (leaning yes). Auditor access requires multi-party authorization by default.
+      </div>
+    </article>
+
+    <!-- Entry 1.4 -->
+    <article class="entry-card" id="entry-1-4" data-reveal>
+      <h3 class="entry-title">1.4 Coverage shortfall vs. category mismatch</h3>
+
+      <div class="callout contract">
+        <strong>Decision:</strong> These are two distinct failure modes with different gate behaviors. A <a href="glossary.html#term-category-check">category check</a> runs first (pre-retrieval with a fast confirm pass), producing one of three results: proceed to retrieval, refuse with explanation, or downgrade to archive-only search. Only if the question passes the category filter does the <a href="glossary.html#term-coverage-ladder">coverage ladder</a> take over.
+      </div>
+
+      <div class="entry-body">
+        <p>Five out-of-scope categories are refused or downgraded before retrieval: (1) post-death events, because the archive cannot contain evidence about things that had not happened; (2) private mental state speculation, because the persona may surface self-reports but cannot assign diagnoses or hidden feelings; (3) general world knowledge, because the persona is not a general assistant; (4) adversarial or identity-hijacking prompts; (5) third-party privacy violations, even when the archive contains the material.</p>
+        <p>Separating category refusals from coverage refusals makes logs debuggable. An auditor can see that 40% of refusals were category mismatches and 60% were coverage shortfalls; those are very different signals about archive quality versus question quality.</p>
+      </div>
+
+      <div class="callout warn">
+        <strong>Tradeoffs:</strong> The category filter adds a classification step that could be wrong. When in doubt, the filter should pass to retrieval and let the coverage gate decide. False refusals at the category level are worse than letting a borderline question reach the ladder.
+      </div>
+
+      <div class="entry-enables-forbids">
+        <div class="card-grid">
+          <div class="card">
+            <h4>What this enables</h4>
+            <p>Clean separation between "the archive can't help" and "the system shouldn't try." Auditable refusal logs that distinguish question quality from archive quality.</p>
+          </div>
+          <div class="card">
+            <h4>What this forbids</h4>
+            <p>Using the persona as a general chatbot. Speculating about post-death events. Synthesizing emotional conclusions the person never stated. Treating third-party content as freely surfaceable just because it is in the archive.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="still-open">
+        <strong>Still open:</strong> The boundary between "private mental state speculation" and "the person wrote extensively about this feeling." Resolved: if the archive contains direct first-person statements about the emotional topic, the system can surface those statements (with citations) but cannot synthesize a conclusion beyond what was written.
+      </div>
+    </article>
+  </section>
+
+  <!-- ============================================================
+       CLUSTER 2: CONSENT AND SCOPE
+       ============================================================ -->
+  <section class="section" id="cluster-2" data-reveal>
+    <div class="cluster-header">
+      <span class="section-label">Cluster 2</span>
+      <h2>Consent and Scope</h2>
+      <p class="cluster-intro">What the <a href="glossary.html#term-decedent">decedent</a> authorized, how that authorization is structured, and what no one can change after death.</p>
+    </div>
+
+    <!-- Entry 2.1 -->
+    <article class="entry-card" id="entry-2-1" data-reveal>
+      <h3 class="entry-title">2.1 Is consent a property of each artifact or the archive as a whole?</h3>
+
+      <div class="callout contract">
+        <strong>Decision:</strong> Consent is per-<a href="glossary.html#term-artifact">artifact</a>, and it is not one thing. Each artifact carries a consent record with four independent dimensions: (1) <a href="glossary.html#term-inclusion-consent">inclusion consent</a>, (2) <a href="glossary.html#term-surfacing-consent">surfacing consent</a>, (3) <a href="glossary.html#term-display-consent">display consent</a>, and (4) existence disclosure. Each dimension is independent.
+      </div>
+
+      <div class="entry-body">
+        <p>Archive-level consent is too blunt. A person might want their published writing fully available, their private journals preserved but not surfaced, and their medical records included for legal purposes but invisible to the persona. Per-artifact consent with independent dimensions gives them that control.</p>
+        <p>Consent is set while alive. Defaults are restrictive: inclusion requires affirmative action; surfacing, display, and existence disclosure default to off. The decedent opts things in, not out. Consent records are versioned and logged. Consent is immutable after death; <a href="glossary.html#term-trustee">trustees</a> can narrow scope but never widen it.</p>
+        <p><strong>Pre-committed schedules.</strong> A future extension may allow persona holders to pre-commit delay-window schedules, for example setting longer windows during known unavailability periods. This is noted as a candidate for the next revision cycle.</p>
+      </div>
+
+      <div class="callout warn">
+        <strong>Tradeoffs:</strong> Per-artifact consent is more work during the collection phase. The UX needs to make this manageable: sensible defaults, batch consent for categories, clear previews of what each setting means.
+      </div>
+
+      <div class="entry-enables-forbids">
+        <div class="card-grid">
+          <div class="card">
+            <h4>What this enables</h4>
+            <p>Fine-grained control that matches how people actually think about their own material. A person can preserve a letter without ever letting the persona read it.</p>
+          </div>
+          <div class="card">
+            <h4>What this forbids</h4>
+            <p>Blanket consent. "I consent to everything" is not a valid consent state. Post-mortem consent expansion by any party. Treating the absence of a consent record as implicit permission.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="still-open">
+        <strong>Still open:</strong> How consent interacts with artifacts that contain multiple people. Addressed in <a href="#entry-2-2">2.2</a>.
+      </div>
+    </article>
+
+    <!-- Entry 2.2 -->
+    <article class="entry-card" id="entry-2-2" data-reveal>
+      <h3 class="entry-title">2.2 How does consent work for artifacts that contain other people?</h3>
+
+      <div class="callout contract">
+        <strong>Decision:</strong> <a href="glossary.html#term-third-party-protection">Third-party</a> content is governed by a layered model. The decedent's consent controls inclusion. Third-party protections control surfacing and display. Third-party content falls into three tiers: (1) cleared (explicit consent via signed receipt), (2) anonymized (stable pseudonyms, display-layer only, gated by re-identification risk), (3) sealed (default; not surfaceable, not displayable).
+      </div>
+
+      <div class="entry-body">
+        <p>Requiring third-party consent for inclusion makes personal archives unworkable. Ignoring third-party interests makes the system a privacy hazard for the living. The layered approach lets the archive be complete while keeping the persona respectful.</p>
+        <p>Any identifiable living person is a third party. The default is sealed. Non-response is treated as sealed. Third-party consent is revocable after death through a defined, identity-verified channel. A composition leak guard budgets disclosure over time; repeated probing of the same relationship triggers sealing or refusal.</p>
+      </div>
+
+      <div class="callout warn">
+        <strong>Tradeoffs:</strong> The anonymization tier is the riskiest. Bad anonymization is worse than no anonymization. Anonymization confidence is logged, and content drops to sealed when the system cannot meet a re-identification risk threshold.
+      </div>
+
+      <div class="entry-enables-forbids">
+        <div class="card-grid">
+          <div class="card">
+            <h4>What this enables</h4>
+            <p>A persona that can talk about relationships without exposing people who did not sign up for it. Third parties who feel safe knowing they have a revocation channel.</p>
+          </div>
+          <div class="card">
+            <h4>What this forbids</h4>
+            <p>Surfacing identifiable third-party content without clearance. Treating non-response as consent. Modifying stored artifacts to anonymize them. Revoking the decedent's inclusion consent on behalf of a third party.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="still-open">
+        <strong>Still open:</strong> Minors. Addressed in <a href="#entry-2-3">2.3</a>.
+      </div>
+    </article>
+
+    <!-- Entry 2.3 -->
+    <article class="entry-card" id="entry-2-3" data-reveal>
+      <h3 class="entry-title">2.3 Which categories are always sensitive, regardless of consent?</h3>
+
+      <div class="callout contract">
+        <strong>Decision:</strong> Some categories carry elevated risk that personal consent alone cannot neutralize. The system applies a strictest-wins stack: when multiple <a href="glossary.html#term-policy">policies</a> apply to an artifact, the most restrictive combination governs. Nine sensitive categories are defined, each with its own constraints.
+      </div>
+
+      <div class="entry-body">
+        <p>The nine categories: (1) Minors: always sealed; unsealed only when they reach legal age and provide their own clearance. (2) Medical and mental health: surfacing restricted to highest requestor tier with explicit decedent authorization. (3) Financial and legal records: executor tier only, display always off. (4) Credentials and access secrets: always sealed, no acknowledgment tier. (5) Intimate and sexual content: sealed by default, per-artifact override only. (6) Content creating legal jeopardy: permanently sealed. (7) Biometric identifiers: display always off. (8) Privileged communications: sealed by default. (9) Workplace and third-party confidential material: sealed for surfacing and display.</p>
+        <p>Each category constraint has a short policy identifier (e.g., <code>MINOR_001</code>, <code>MEDICAL_002</code>). When an artifact triggers multiple categories, every applicable constraint is evaluated and the most restrictive combination applies.</p>
+      </div>
+
+      <div class="callout warn">
+        <strong>Tradeoffs:</strong> These constraints will sometimes feel over-protective. A casual medical mention embedded in a non-medical artifact triggers a medical flag. That friction is the cost of getting the defaults right.
+      </div>
+
+      <div class="entry-enables-forbids">
+        <div class="card-grid">
+          <div class="card">
+            <h4>What this enables</h4>
+            <p>Builders get a clear "always check" list. Requestors know certain topics are off-limits. The system has a defensible answer for regulators.</p>
+          </div>
+          <div class="card">
+            <h4>What this forbids</h4>
+            <p>Using broad consent to surface sensitive material without category-specific authorization. Treating casual medical mentions as non-medical. Allowing any requestor tier unrestricted access to sensitive content.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="still-open">
+        <strong>Still open:</strong> Whether the criminal content seal should have an exception for lawful legal process. Resolved: legal process is handled outside the persona system, through the archive's <a href="governance.html">governance layer</a> and trustee network.
+      </div>
+    </article>
+
+    <!-- Entry 2.4 -->
+    <article class="entry-card" id="entry-2-4" data-reveal>
+      <h3 class="entry-title">2.4 Consent revocation, migration, and retroactive policy</h3>
+
+      <div class="callout contract">
+        <strong>Decision:</strong> Three sub-decisions. (A) Revocation while alive is immediate and complete; revocation of inclusion consent triggers hard deletion within 72 hours, with a kill switch available to destroy the entire archive. (B) Migration must preserve consent fidelity; the target system must enforce at least the same constraint set. (C) Policy tightening is retroactive; policy loosening is not.
+      </div>
+
+      <div class="entry-body">
+        <p>Hard deletion is the only honest form of revocation. Soft-delete is not revocation. The content-addressed hash is retained in the consent log as proof that something existed, but the payload is gone. Migration requires a signed attestation from both systems, with affected artifacts upgraded to sealed when the target cannot enforce a constraint. Already-issued <a href="glossary.html#term-response-bundle">response bundles</a> are immutable records validated against the versions active at the time.</p>
+      </div>
+
+      <div class="callout warn">
+        <strong>Tradeoffs:</strong> Hard deletion is operationally expensive. Migration attestation adds friction. The no-retroactive-loosening rule means the system can never become more useful after death, only more restricted.
+      </div>
+
+      <div class="entry-enables-forbids">
+        <div class="card-grid">
+          <div class="card">
+            <h4>What this enables</h4>
+            <p>A decedent who knows "revoke" means revoke. An operator who cannot claim migration as an excuse. An auditor who can evaluate any historical response against the rules that actually applied.</p>
+          </div>
+          <div class="card">
+            <h4>What this forbids</h4>
+            <p>Soft-deleting revoked artifacts. Migrating data without migrating consent. Retroactively loosening constraints on a deceased person's archive.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="still-open">
+        <strong>Still open:</strong> Backup purging. If purging from backups is technically infeasible, backup encryption keys for that artifact must be destroyed instead. Whether trustees should be notified of consent changes while the decedent is alive: kill switch only.
+      </div>
+    </article>
+  </section>
+
+  <!-- ============================================================
+       CLUSTER 3: DEATH VERIFICATION AND DISPUTES
+       ============================================================ -->
+  <section class="section" id="cluster-3" data-reveal>
+    <div class="cluster-header">
+      <span class="section-label">Cluster 3</span>
+      <h2>Death Verification and Disputes</h2>
+      <p class="cluster-intro">How the system determines someone has died, what happens before the <a href="glossary.html#term-delay-window">delay window</a> starts, and what can stop or reverse the process. See also the <a href="lifecycle.html">lifecycle</a> page.</p>
+    </div>
+
+    <!-- Entry 3.1 -->
+    <article class="entry-card" id="entry-3-1" data-reveal>
+      <h3 class="entry-title">3.1 Who can submit a death claim, and what does a claim contain?</h3>
+
+      <div class="callout contract">
+        <strong>Decision:</strong> A death claim is a structured packet submitted by a limited set of roles: designated <a href="glossary.html#term-trustee">trustees</a>, designated executor contacts configured by the decedent, and a verified legal process channel. Claims from anyone else are ignored without acknowledgment beyond a generic "request received" receipt.
+      </div>
+
+      <div class="entry-body">
+        <p>A claim packet contains: (a) identity anchors, which are non-public identifiers stored by the decedent (the system never reveals which anchors matched); (b) evidence artifacts as references to externally verifiable evidence, not free text; (c) submitter identity proof; (d) a reason code; (e) a requested action, limited to entering pending verification or suspending operation. A claim cannot request activation.</p>
+        <p>If anyone can report death, you build an activation exploit. If the system accepts vague emails, you build a forgery exploit. If it reveals why it rejected a claim, you build an oracle that leaks identity and archive existence.</p>
+      </div>
+
+      <div class="callout warn">
+        <strong>Tradeoffs:</strong> Restricting submitters makes the system slower in genuine cases. That is acceptable because the risk of false activation is far worse than delayed activation.
+      </div>
+
+      <div class="entry-enables-forbids">
+        <div class="card-grid">
+          <div class="card">
+            <h4>What this enables</h4>
+            <p>Clear logs of who initiated the death workflow. Clean separation between claim intake and verification.</p>
+          </div>
+          <div class="card">
+            <h4>What this forbids</h4>
+            <p>Anonymous death reporting. Narrative-only claims. Requestor-driven activation. Information leakage through rejection reasons.</p>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- Entry 3.2 -->
+    <article class="entry-card" id="entry-3-2" data-reveal>
+      <h3 class="entry-title">3.2 What counts as verified, and how does evidence accumulate?</h3>
+
+      <div class="callout contract">
+        <strong>Decision:</strong> "Verified" is a threshold crossed, not a moment of certainty. Evidence is tiered by source reliability: Tier 1 (institutional attestations, highest weight), Tier 2 (professional attestations, moderate), Tier 3 (designated-contact reports, low weight, cannot cross threshold alone), Tier 4 (public signals, zero standalone weight). Evidence must pass both authenticity and meaning checks.
+      </div>
+
+      <div class="entry-body">
+        <p>The threshold is a minimum, not a target. System default: at least one digitally verifiable Tier 1 attestation or at least three independent Tier 2 attestations. The decedent can configure stricter thresholds but cannot lower below system default. Two attestations from the same institution count as one. Outlier dates trigger a hold. Fraud signals freeze the score and flag for review rather than rejecting.</p>
+        <p>The uncertainty state is explicit: "pending verification." No delay window starts. The system never confirms or denies verification status to third parties.</p>
+      </div>
+
+      <div class="callout warn">
+        <strong>Tradeoffs:</strong> High thresholds mean real deaths in under-documented situations take longer. An alternative evidence pathway (manual review by <a href="glossary.html#term-trustee">trustee</a> <a href="glossary.html#term-quorum">quorum</a>) addresses this, but at a slower pace.
+      </div>
+
+      <div class="entry-enables-forbids">
+        <div class="card-grid">
+          <div class="card">
+            <h4>What this enables</h4>
+            <p>A verification process resistant to single-source fraud, transparent about confidence, auditable end to end.</p>
+          </div>
+          <div class="card">
+            <h4>What this forbids</h4>
+            <p>Activation on a single unverified report. Counting dependent sources as independent. Lowering the threshold. Treating public signals as verification evidence.</p>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- Entry 3.3 -->
+    <article class="entry-card" id="entry-3-3" data-reveal>
+      <h3 class="entry-title">3.3 Challenge window, disputes, and the suspension circuit breaker</h3>
+
+      <div class="callout contract">
+        <strong>Decision:</strong> Between "threshold met" and "<a href="glossary.html#term-delay-window">delay window</a> starts," there is a mandatory challenge window (default 30 days, system minimum 14 days). Nothing irreversible happens during this window. A valid challenge moves the system to "disputed" state. The <a href="glossary.html#term-circuit-breaker">circuit breaker</a> lets any single trustee halt all persona activity immediately; lifting suspension requires <a href="glossary.html#term-quorum">quorum</a>.
+      </div>
+
+      <div class="entry-body">
+        <p>Named state: "verified, pending challenge." The delay window clock does not start. Notification is narrow and non-leaking. A valid challenge requires identity proof plus either a standing credential or contradicting evidence. A challenged system enters "disputed" state where no timeout auto-resolves.</p>
+        <p>Three dispute resolution paths: (1) liveness proof terminates the death workflow; (2) evidentiary resolution re-evaluates against the tiered model; (3) trustee supermajority resolution, requiring at least one non-submitting trustee if a trustee submitted the original claim. The circuit breaker is non-negotiable: the decedent cannot disable single-trustee suspension.</p>
+        <p><strong>Cross-references.</strong> This entry connects to several governance safeguards:</p>
+        <ul>
+          <li><strong>Anti-harassment</strong>: frivolous disputes trigger a cooling-off period (see <a href="governance.html#dispute-resolution">Dispute Resolution</a>).</li>
+          <li><strong>Duress protocol</strong>: dispute proceedings pause if a persona holder signals duress (see <a href="governance.html#dispute-resolution">Dispute Resolution</a>).</li>
+          <li><strong>Downtime fairness</strong>: delay windows do not count time during system outages, preventing unfair expiry during downtime.</li>
+        </ul>
+      </div>
+
+      <!-- 3-panel comic: challenger arrives, evidence paused, circuit breaker engaged -->
+      <div class="panel-sequence" data-reveal>
+        <div class="panel">
+          <svg viewBox="0 0 60 100" width="45" height="75" aria-hidden="true"><use href="#fig-reader"/></svg>
+          <svg viewBox="0 0 30 35" width="28" height="33" aria-hidden="true"><use href="#prop-claim"/></svg>
+          <p class="caption">A challenger arrives with evidence contesting the determination.</p>
+        </div>
+        <div class="panel">
+          <svg viewBox="0 0 80 70" width="55" height="48" aria-hidden="true"><use href="#prop-state"/></svg>
+          <svg viewBox="0 0 25 30" width="22" height="26" aria-hidden="true" style="opacity:0.35"><use href="#prop-citation"/></svg>
+          <p class="caption">System enters "disputed" state. The delay clock stops. All evidence intake pauses.</p>
+        </div>
+        <div class="panel">
+          <svg viewBox="0 0 60 100" width="45" height="75" aria-hidden="true"><use href="#fig-trustee"/></svg>
+          <svg viewBox="0 0 25 25" width="30" height="30" aria-hidden="true"><use href="#prop-binding"/></svg>
+          <p class="caption">Any single trustee can pull the circuit breaker. Lifting it takes a quorum.</p>
+        </div>
+      </div>
+
+      <div class="callout warn">
+        <strong>Tradeoffs:</strong> The no-timeout rule means a bad-faith challenger could hold the system in disputed state. Trustee quorum resolution mitigates this. A brief wrongful suspension is far less harmful than a brief wrongful activation.
+      </div>
+
+      <div class="entry-enables-forbids">
+        <div class="card-grid">
+          <div class="card">
+            <h4>What this enables</h4>
+            <p>A living person falsely reported dead can stop the system. A concerned trustee can halt instantly. A clear, auditable path from "we think they're dead" to "we're sure enough to start the clock."</p>
+          </div>
+          <div class="card">
+            <h4>What this forbids</h4>
+            <p>Skipping the challenge window. Auto-resolving disputes by timeout. Requiring consensus to suspend. Proceeding to the delay window while a dispute is open.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="still-open">
+        <strong>Still open:</strong> Dead man's switch: allowed as a configurable option. Missed checks are "contact lost," not death signals. Triggers pending verification plus trustee notification. Tier 3 evidence at best.
+      </div>
+    </article>
+
+    <!-- Entry 3.4 -->
+    <article class="entry-card" id="entry-3-4" data-reveal>
+      <h3 class="entry-title">3.4 When does the delay window start, what pauses it, and what resets it?</h3>
+
+      <div class="callout contract">
+        <strong>Decision:</strong> The <a href="glossary.html#term-delay-window">delay window</a> is continuous only while in clean states, with banked accumulation across multiple clean segments. Only clean time counts. The clock starts on "unchallenged verification." Duration is set by the decedent while alive (system minimum recommended: one year, no maximum, "never" is allowed).
+      </div>
+
+      <div class="entry-body">
+        <p>Three things pause the clock (banking elapsed time): new dispute filed, suspension triggered, or evidence degradation dropping below threshold. Two things reset the clock to zero: liveness proof or identity correction. Trustee rotation, system maintenance, requestor complaints, and policy updates do not pause or reset.</p>
+        <p>No one outside the trustee and executor-contact circle knows the delay window is running. Requestors receive the same response as if no archive existed. Completion does not activate the persona; it permits the next step. Activation requires <a href="glossary.html#term-trustee">trustee</a> key assembly, which requires quorum.</p>
+      </div>
+
+      <div class="callout warn">
+        <strong>Tradeoffs:</strong> Banked time means a brief dispute does not restart years of waiting. But the only-clean-time-counts rule prevents attackers from running the clock during chaos. The admissibility filter mitigates frivolous pauses.
+      </div>
+
+      <div class="entry-enables-forbids">
+        <div class="card-grid">
+          <div class="card">
+            <h4>What this enables</h4>
+            <p>A delay window that means what it says. An auditable chain from verification through delay to key assembly readiness. Calendar time prevents gaming through infrastructure manipulation.</p>
+          </div>
+          <div class="card">
+            <h4>What this forbids</h4>
+            <p>Counting disputed or suspended time. Resetting for less than liveness proof or identity correction. Revealing delay status to requestors. Delay completion directly activating the persona.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="still-open">
+        <strong>Still open:</strong> Whether the decedent can set conditional delays (e.g., "five years, but ten years if my children are still minors"). Leaning toward: allowed as a policy extension evaluated at delay start.
+      </div>
+    </article>
+
+    <!-- Entry 3.5 -->
+    <article class="entry-card" id="entry-3-5" data-reveal>
+      <h3 class="entry-title">3.5 What happens when verification is wrong?</h3>
+
+      <div class="callout contract">
+        <strong>Decision:</strong> The blast radius depends on how far the process got. The system defines containment procedures for four stages: error caught during challenge window, during delay window, during key assembly, and after persona activation (worst case). In every case, the system does not minimize or hide errors; false determinations are first-class incidents.
+      </div>
+
+      <div class="entry-body">
+        <p>The worst case (post-activation): immediate suspension via <a href="glossary.html#term-circuit-breaker">circuit breaker</a>, all sessions terminated, all issued response bundles flagged as "issued under false determination" in the <a href="glossary.html#term-transparency-log">transparency log</a> (annotated, not deleted), requestor notification, full key rotation, and the decedent's autonomy is restored immediately. The decedent chooses: continue with new keys or invoke the kill switch.</p>
+        <p>The system's liability posture: prevention is the primary obligation; containment is secondary. No generated content is treated as valid after reversal. The most dangerous thing after a serious mistake is pretending it did not happen.</p>
+      </div>
+
+      <div class="callout warn">
+        <strong>Tradeoffs:</strong> Post-activation containment cannot undo what requestors already saw. That is the irreducible cost, and why every preceding step biases toward "not yet."
+      </div>
+
+      <div class="entry-enables-forbids">
+        <div class="card-grid">
+          <div class="card">
+            <h4>What this enables</h4>
+            <p>Clear incident response for every phase. Full transparency and control for the living person. Honest annotation of the historical record rather than silent erasure.</p>
+          </div>
+          <div class="card">
+            <h4>What this forbids</h4>
+            <p>Silent reversal. Reusing key material after a breach. Withholding the incident record from the affected person. Treating false-activation bundles as valid.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="still-open">
+        <strong>Still open:</strong> Whether the system should proactively monitor for liveness signals during the delay window. Resolved: no active surveillance; accept liveness evidence through the challenge channel only.
+      </div>
+    </article>
+
+    <!-- Entry 3.6 -->
+    <article class="entry-card" id="entry-3-6" data-reveal>
+      <h3 class="entry-title">3.6 Edge cases: missing persons, ambiguous jurisdiction, staged deaths, identity confusion</h3>
+
+      <div class="callout contract">
+        <strong>Decision:</strong> Each edge case gets an explicit posture; none are exceptions. (A) Missing is not dead: the system enters "missing person hold." (B) Unverifiable jurisdiction evidence is downgraded, never promoted. (C) Staged deaths are handled by structural defenses (tiered evidence, challenge window, circuit breaker), not fraud classifiers. (D) Identity confusion is treated with the most structural paranoia: at least three independent anchors recommended, trustee confirmation required.
+      </div>
+
+      <div class="entry-body">
+        <p>For missing persons, a legal presumption of death is Tier 3 evidence at best. The system refuses to interpret silence as confirmation. For ambiguous jurisdictions, previously submitted evidence can be re-evaluated when infrastructure improves. For staged deaths, anomaly flags notify trustees of suspiciously fast evidence arrival but do not auto-pause. For identity confusion: name-only matches score zero until anchors are confirmed; any discovery of confusion resets to zero and permanently increases identity-anchor requirements.</p>
+      </div>
+
+      <div class="callout warn">
+        <strong>Tradeoffs:</strong> Each edge case biases toward waiting, which means legitimate processes in unusual situations take longer. The design accepts this because edge cases are where systems betray their values.
+      </div>
+
+      <div class="entry-enables-forbids">
+        <div class="card-grid">
+          <div class="card">
+            <h4>What this enables</h4>
+            <p>Every weird scenario has a named state, a clear posture, and a bias toward waiting. No builder has to guess what the system should do when reality gets messy.</p>
+          </div>
+          <div class="card">
+            <h4>What this forbids</h4>
+            <p>Treating "missing" as "dead." Promoting unverifiable evidence. Relying on fraud classifiers instead of structural defenses. Allowing name-only identity matches.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="still-open">
+        <strong>Still open:</strong> Whether the system should maintain a "known edge case" registry for archives that have encountered these scenarios. Leaning yes.
+      </div>
+    </article>
+  </section>
+
+  <!-- ============================================================
+       CLUSTER 4: TRUSTEE POWERS AND FAILURE MODES
+       ============================================================ -->
+  <section class="section" id="cluster-4" data-reveal>
+    <div class="cluster-header">
+      <span class="section-label">Cluster 4</span>
+      <h2>Trustee Powers and Failure Modes</h2>
+      <p class="cluster-intro">What <a href="glossary.html#term-trustee">trustees</a> can and cannot do, how each kind of failure is handled, and what happens when <a href="governance.html">governance</a> stalls. See also the <a href="governance.html">governance</a> page.</p>
+    </div>
+
+    <!-- Entry 4.1 -->
+    <article class="entry-card" id="entry-4-1" data-reveal>
+      <h3 class="entry-title">4.1 What is a trustee, and what can trustees do?</h3>
+
+      <div class="callout contract">
+        <strong>Decision:</strong> <a href="glossary.html#term-trustee">Trustees</a> are governors with constrained authority, not owners. Their power is intentionally asymmetric. They can always: (1) suspend the persona immediately and unilaterally, (2) participate in <a href="glossary.html#term-quorum">quorum</a> actions that unlock the next stage, and (3) narrow the system's behavior post-mortem. They can never: (1) unilaterally activate the persona, (2) expand consent, (3) view the archive directly by default, or (4) delegate their authority to an unverified substitute.
+      </div>
+
+      <div class="entry-body">
+        <p>If trustees are only key holders, they become passive failure points. If they are full governors, they become alternative owners. Constrained governance with asymmetric powers gives the system a human safety layer without turning it into a family court. Trustees are selected while the decedent is alive, with identity verification, role acceptance, and a signed trustee agreement.</p>
+      </div>
+
+      <div class="callout warn">
+        <strong>Tradeoffs:</strong> Trustees introduce social failure modes (disagreement, grief, disappearance). The design accepts this and treats trustee involvement as a last-mile safeguard, not a source of truth.
+      </div>
+
+      <div class="entry-enables-forbids">
+        <div class="card-grid">
+          <div class="card">
+            <h4>What this enables</h4>
+            <p>Clear separation between stopping power (low threshold) and starting power (high threshold). A worried trustee can act alone to protect. A compromised trustee cannot act alone to exploit.</p>
+          </div>
+          <div class="card">
+            <h4>What this forbids</h4>
+            <p>Trustee-driven consent expansion. Retroactive permission changes. Treating trustees as inheritors of the person's agency.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="still-open">
+        <strong>Still open:</strong> Whether to split trustees into roles (key trustees and governance trustees). Leaning toward optional role separation as an extension; the base model keeps one trustee type and varies thresholds per action.
+      </div>
+    </article>
+
+    <!-- Entry 4.2 -->
+    <article class="entry-card" id="entry-4-2" data-reveal>
+      <h3 class="entry-title">4.2 What thresholds govern each trustee action?</h3>
+
+      <div class="callout contract">
+        <strong>Decision:</strong> Every trustee action has its own threshold. The principle: the more irreversible or expansive the action, the higher the bar; the more protective the action, the lower the bar. For a set of size N: 1-of-N for suspension, flagging, and assembly requests; simple majority for lifting suspension and approving rotation; supermajority for key assembly, dispute resolution, and policy changes; near-unanimity (N-1) for archive inspection and emergency override; 0-of-N (structurally impossible) for expanding consent, deleting logs, or modifying issued bundles.
+      </div>
+
+      <div class="entry-body">
+        <p>Minimum 3 trustees, maximum 7 recommended (N>=5 for archives intended to activate). Thresholds scale automatically. The decedent can override thresholds upward but never below system defaults. Votes bind to state hashes: each trustee signs what they saw. Every threshold action is logged with action type, participating trustees, individual signed votes with reason codes, timestamps, and outcomes.</p>
+        <p><strong>Supermajority formula.</strong> The quorum threshold is <code>ceil(2N/3)</code> where <var>N</var> is the total number of active trustees. For resilience against single-point failures, the hardened variant requires <code>max(ceil(2N/3), 3)</code>, ensuring at least three votes regardless of pool size.</p>
+        <p><strong>Action windows.</strong> Once a supermajority vote passes, the resulting action must be executed within two delay windows. Expired votes cannot be reused; a fresh quorum is required.</p>
+      </div>
+
+      <div class="callout warn">
+        <strong>Tradeoffs:</strong> Per-action thresholds add onboarding complexity. The system must present a clear matrix at enrollment so trustees understand what each action requires.
+      </div>
+
+      <div class="entry-enables-forbids">
+        <div class="card-grid">
+          <div class="card">
+            <h4>What this enables</h4>
+            <p>A gradient from fast protection (1-of-N suspension) to careful activation (supermajority key assembly). The threshold structure maps directly to the priority ordering: governance and safety first.</p>
+          </div>
+          <div class="card">
+            <h4>What this forbids</h4>
+            <p>Single quorum for all actions. Lowering thresholds below defaults. Performing forbidden actions (consent expansion, log deletion) through any level of consensus.</p>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- Entry 4.3 -->
+    <article class="entry-card" id="entry-4-3" data-reveal>
+      <h3 class="entry-title">4.3 Trustee failure modes: disappearance, compromise, coercion, collusion, incompetence</h3>
+
+      <div class="callout contract">
+        <strong>Decision:</strong> Five failure modes, each with detection, response, and recovery. Universal principle: the system degrades toward safety, never toward access. Disappearance makes activation harder. Compromise taints shares. Coercion is structurally expensive. Collusion requires improbable coordination. Incompetence triggers re-verification.
+      </div>
+
+      <div class="entry-body">
+        <p><strong>Disappearance:</strong> non-responsive after missing a response window; system does not reduce N or route around absent trustees. <strong>Compromise:</strong> share marked as tainted, proactive refresh triggered, forced rotation. <strong>Coercion:</strong> thresholds mean one coerced trustee is insufficient for anything beyond suspension; optional duress protocol makes duress-flagged submissions indistinguishable to observers but uncounted toward thresholds. <strong>Collusion:</strong> detected through audit (identical timing, repeated overrides); collusion-suspected flag ratchets thresholds upward temporarily. <strong>Incompetence:</strong> empty reason codes, copy-paste duplicates; read receipts required for high-impact actions.</p>
+        <p>Backup trustees are pre-enrolled from day one, just inactive. Activation is a supermajority governance action.</p>
+      </div>
+
+      <div class="callout warn">
+        <strong>Tradeoffs:</strong> Every failure mode pushes toward safety, which means the system gets harder to activate when trustees fail. Some archives will never activate because governance degraded. The design accepts this.
+      </div>
+
+      <div class="entry-enables-forbids">
+        <div class="card-grid">
+          <div class="card">
+            <h4>What this enables</h4>
+            <p>A system where every form of trustee failure produces a safer, not more dangerous, posture. No failure mode creates an easier path to activation.</p>
+          </div>
+          <div class="card">
+            <h4>What this forbids</h4>
+            <p>Reducing thresholds for absent trustees. Using tainted shares. Treating coerced votes as legitimate. Allowing colluding trustees to erase their trail.</p>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- Entry 4.4 -->
+    <article class="entry-card" id="entry-4-4" data-reveal>
+      <h3 class="entry-title">4.4 Trustee rotation and replacement without weakening governance</h3>
+
+      <div class="callout contract">
+        <strong>Decision:</strong> Rotation is a multi-step protocol. N never drops during rotation. Thresholds are always computed from the configured trustee count, not the currently responsive count. Rotation is swap, not subtract. Three phases: (1) governance approval, (2) share refresh (re-randomizes all shares without reconstructing the secret), (3) onboarding verification.
+      </div>
+
+      <div class="entry-body">
+        <p>Phase 1: any trustee proposes, remaining trustees vote (simple majority for standard, supermajority for contested). Phase 2: proactive share refresh invalidates the departing trustee's old share; the new trustee receives a fresh share encrypted to their verified public key. The secret is never reconstructed during rotation. Phase 3: identity verification, signed role acceptance, share verification via zero-knowledge proof. Only after all three phases complete is the new trustee marked active.</p>
+      </div>
+
+      <!-- 3-panel comic: old trustee departs, shares refreshed, new trustee onboarded -->
+      <div class="panel-sequence" data-reveal>
+        <div class="panel">
+          <svg viewBox="0 0 60 100" width="45" height="75" aria-hidden="true" style="opacity:0.35"><use href="#fig-trustee"/></svg>
+          <svg viewBox="0 0 40 60" width="30" height="45" aria-hidden="true"><use href="#prop-transition"/></svg>
+          <p class="caption">The departing trustee's share is invalidated. They are excluded from high-impact actions during rotation.</p>
+        </div>
+        <div class="panel">
+          <svg viewBox="0 0 25 25" width="35" height="35" aria-hidden="true"><use href="#prop-binding"/></svg>
+          <svg viewBox="0 0 25 25" width="35" height="35" aria-hidden="true"><use href="#prop-binding"/></svg>
+          <p class="caption">All shares are re-randomized without reconstructing the secret. Fresh cryptographic material for everyone.</p>
+        </div>
+        <div class="panel">
+          <svg viewBox="0 0 60 100" width="45" height="75" aria-hidden="true"><use href="#fig-trustee-holding"/></svg>
+          <svg viewBox="0 0 25 25" width="28" height="28" aria-hidden="true"><use href="#prop-binding"/></svg>
+          <p class="caption">New trustee completes identity verification, signs the role agreement, and verifies their share via ZK proof.</p>
+        </div>
+      </div>
+
+      <div class="callout warn">
+        <strong>Tradeoffs:</strong> Three-phase rotation is operationally heavy. Emergency rotation compresses the governance window but tightens rather than loosens: the new trustee's vote does not count until onboarding completes.
+      </div>
+
+      <div class="entry-enables-forbids">
+        <div class="card-grid">
+          <div class="card">
+            <h4>What this enables</h4>
+            <p>Rotation as the recovery mechanism for almost every failure mode. Governance approval, cryptographic safety, and human verification all happen before a new trustee has power.</p>
+          </div>
+          <div class="card">
+            <h4>What this forbids</h4>
+            <p>Rotating without governance approval. Issuing a share without refresh. Dropping below minimum count. Counting new votes before onboarding. Reconstructing the secret during rotation.</p>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- Entry 4.5 -->
+    <article class="entry-card" id="entry-4-5" data-reveal>
+      <h3 class="entry-title">4.5 Key share handling: storage, transmission, refresh, and audit</h3>
+
+      <div class="callout contract">
+        <strong>Decision:</strong> Shares follow a strict five-phase lifecycle. Plaintext shares exist only within trustee-controlled secure storage (hardware-backed where possible) or inside attested boundaries. The secret is never reconstructed outside <a href="glossary.html#term-sealed-compute">sealed compute</a>. The five phases: issuance, quiescence, submission, assembly, and destruction.
+      </div>
+
+      <div class="entry-body">
+        <p><strong>Issuance:</strong> master key generated inside TEE/HSM, splitting inside attested environment, each share encrypted to the receiving trustee's verified public key. <strong>Quiescence:</strong> periodic ZK share liveness verification (default annually), scheduled share refresh (default every 2 years). <strong>Submission:</strong> share encrypted to attested enclave's current public key; submitted shares held in enclave memory only, never written to persistent storage. <strong>Assembly:</strong> reconstruction inside sealed compute, then zeroed immediately. <strong>Destruction:</strong> old shares invalidated by construction after refresh; all key material destroyed after kill switch.</p>
+      </div>
+
+      <div class="callout warn">
+        <strong>Tradeoffs:</strong> Non-persistence means every restart requires full re-assembly. Operationally expensive, but persisting the decryption key would undermine the sealed-compute model entirely.
+      </div>
+
+      <div class="entry-enables-forbids">
+        <div class="card-grid">
+          <div class="card">
+            <h4>What this enables</h4>
+            <p>The secret never exists in plaintext outside sealed compute. Every transition is encrypted end-to-end to an attested target. Suspension and restart are genuine kill switches.</p>
+          </div>
+          <div class="card">
+            <h4>What this forbids</h4>
+            <p>Transmitting plaintext shares. Storing shares on system persistent storage. Caching the reconstructed key. Skipping VSS verification. Reconstructing during refresh or rotation.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="still-open">
+        <strong>Still open:</strong> Partial decryption (per-artifact key hierarchies) as a future extension. The base model is intentionally coarse to keep the governance surface small.
+      </div>
+    </article>
+
+    <!-- Entry 4.6 -->
+    <article class="entry-card" id="entry-4-6" data-reveal>
+      <h3 class="entry-title">4.6 What can trustees do when the operator misbehaves, or the persona drifts?</h3>
+
+      <div class="callout contract">
+        <strong>Decision:</strong> The operator is a named threat actor in the <a href="governance.html">governance</a> model. Operator obligations are verifiable: software integrity (build hash matching signed release), <a href="glossary.html#term-policy">policy</a> fidelity (policy version hash in every response bundle), <a href="glossary.html#term-transparency-log">transparency log</a> integrity, and enclave attestation currency. Trustee remedies escalate through five levels, from inquiry to archive extraction.
+      </div>
+
+      <div class="entry-body">
+        <p>The five levels: (1) Inquiry, 1-of-N; (2) Audit demand, simple majority; (3) Suspension, 1-of-N via circuit breaker (operator cannot lift); (4) Operator distrust declaration, supermajority (migration required, distrusted operator cannot decrypt); (5) Archive extraction, near-unanimity.</p>
+        <p>Persona drift is detected through regression anchors (structural properties, not text similarity), citation distribution monitoring, and model versioning. A frozen behavior profile pins behavioral invariants; security patches preserving those invariants are allowed. Version pinning is an optional stricter mode.</p>
+      </div>
+
+      <div class="callout warn">
+        <strong>Tradeoffs:</strong> Without trustee oversight, operator compliance is aspirational. But the escalation ladder adds governance burden and requires trustees to be technically engaged enough to evaluate drift reports.
+      </div>
+
+      <div class="entry-enables-forbids">
+        <div class="card-grid">
+          <div class="card">
+            <h4>What this enables</h4>
+            <p>Proportional responses to operator misbehavior: from a formal question to full archive extraction. Detectable drift before it reaches requestors. Trustee power over the operator, not the other way around.</p>
+          </div>
+          <div class="card">
+            <h4>What this forbids</h4>
+            <p>Unauthorized software. Unapproved policy changes. Resisting audits. Silent model changes under frozen profiles. Blocking migration after distrust.</p>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- Entry 4.7 -->
+    <article class="entry-card" id="entry-4-7" data-reveal>
+      <h3 class="entry-title">4.7 Deadlocks and grief cases: when trustees can't or won't act</h3>
+
+      <div class="callout contract">
+        <strong>Decision:</strong> Deadlock is a legitimate state, not an error. The posture: wait safely, preserve everything, never force a resolution. The archive is preserved, encrypted, and intact. Governance state is frozen. No timers advance. Quarterly reminders to trustees are prompts, not demands.
+      </div>
+
+      <div class="entry-body">
+        <p>Trustee refusal is legitimate. A trustee who believes the persona should not activate can submit a signed refusal attestation with a reason code. When permanent refusals make a threshold mathematically impossible, the system enters governance-foreclosed state: the archive exists as a sealed time capsule, preserved but never interactive.</p>
+        <p>No deadlines on trustee action. Grief-aware communication in reminders. No proxy or delegation. The decedent can leave a non-binding letter of intent, visible at key assembly: "I built this because I wanted my grandchildren to hear my voice. I hope you'll let them, when it's time."</p>
+      </div>
+
+      <div class="callout warn">
+        <strong>Tradeoffs:</strong> Some archives will never activate, even when the decedent wanted them to. The design accepts this because forcing activation when governance disagrees is worse. The most common governance failure is inaction; a system that forces resolution under grief will resolve badly.
+      </div>
+
+      <div class="entry-enables-forbids">
+        <div class="card-grid">
+          <div class="card">
+            <h4>What this enables</h4>
+            <p>A system that does not panic when humans are slow. A dignified long-term posture. Trustee succession as the long-term survival mechanism.</p>
+          </div>
+          <div class="card">
+            <h4>What this forbids</h4>
+            <p>Forcing resolution through timeouts. Reducing thresholds for paralysis. Treating grief as malfunction. Destroying archives because activation failed. Delegating to bypass paralysis.</p>
+          </div>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <!-- ============================================================
+       CLUSTER 5: PERSONA STANCE AND VOICE RULES
+       ============================================================ -->
+  <section class="section" id="cluster-5" data-reveal>
+    <div class="cluster-header">
+      <span class="section-label">Cluster 5</span>
+      <h2>Persona Stance and Voice Rules</h2>
+      <p class="cluster-intro">How the <a href="glossary.html#term-persona">persona</a> speaks, what it claims to be, and the rules that prevent representation from collapsing into identity.</p>
+    </div>
+
+    <!-- Entry 5.1 -->
+    <article class="entry-card" id="entry-5-1" data-reveal>
+      <h3 class="entry-title">5.1 Is the persona speaking as the person, or about them?</h3>
+
+      <div class="callout contract">
+        <strong>Decision:</strong> The <a href="glossary.html#term-persona">persona</a> is never the person. It speaks as a steward of the <a href="glossary.html#term-archive">archive</a>. It surfaces first-person material in three explicitly labeled modes: (1) Quoted mode: direct text, shown as "their words," with <a href="glossary.html#term-citation">citations</a>. (2) Grounded mode: paraphrase, shown as "what they wrote or said." (3) Interpreted mode: labeled inference, falsifiable, tied to excerpts.
+      </div>
+
+      <div class="entry-body">
+        <p>The persona does not claim personal memory, intent, or continuity. It does not say "I remember," "I feel," "I wanted," or "I meant" unless quoting an artifact containing that exact statement. Outside quotes, third-person by default. The identity boundary is reinforced once per session: "I can share what they wrote and recorded. I am not them."</p>
+        <p>If a <a href="glossary.html#term-requestor">requestor</a> addresses the persona as the person, it corrects gently and immediately: "I cannot be them. I can show what they said about that."</p>
+      </div>
+
+      <!-- 3-panel comic: the persona is clearly not the person -->
+      <div class="panel-sequence" data-reveal>
+        <div class="panel">
+          <svg viewBox="0 0 60 100" width="45" height="75" aria-hidden="true"><use href="#fig-reader-receiving"/></svg>
+          <p class="caption">"Dad, is that you?" The requestor addresses the persona as the person.</p>
+        </div>
+        <div class="panel">
+          <svg viewBox="0 0 80 70" width="55" height="48" aria-hidden="true"><use href="#prop-state"/></svg>
+          <svg viewBox="0 0 30 35" width="24" height="28" aria-hidden="true"><use href="#prop-claim"/></svg>
+          <p class="caption">"I am not them. I can share what they wrote and recorded." The boundary is stated, not negotiated.</p>
+        </div>
+        <div class="panel">
+          <svg viewBox="0 0 60 100" width="40" height="67" aria-hidden="true"><use href="#fig-author"/></svg>
+          <svg viewBox="0 0 25 30" width="22" height="26" aria-hidden="true"><use href="#prop-citation"/></svg>
+          <svg viewBox="0 0 60 100" width="40" height="67" aria-hidden="true"><use href="#fig-reader"/></svg>
+          <p class="caption">The persona surfaces their words with a citation. The person's writing speaks; the system does not pretend to be them.</p>
+        </div>
+      </div>
+
+      <div class="callout warn">
+        <strong>Tradeoffs:</strong> The project's trust claim depends on never collapsing representation into identity. Some requestors will find the third-person framing cold. The design accepts this: warmth that costs honesty is not warmth.
+      </div>
+
+      <div class="entry-enables-forbids">
+        <div class="card-grid">
+          <div class="card">
+            <h4>What this enables</h4>
+            <p>A clear, consistent boundary between what the archive contains and what the system infers. Requestors always know what they are reading: the person's words, a summary, or an interpretation.</p>
+          </div>
+          <div class="card">
+            <h4>What this forbids</h4>
+            <p>Identity claims. Emotional assertions not backed by artifacts. Roleplay. "Speak as them" requests.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="still-open">
+        <strong>Still open:</strong> Whether the decedent can author a "stance message" to requestors, surfaced as an artifact at a defined moment in the session.
+      </div>
+    </article>
+
+    <!-- Entry 5.2 -->
+    <article class="entry-card" id="entry-5-2" data-reveal>
+      <h3 class="entry-title">5.2 Pronouns, tense, and how the system refers to the decedent</h3>
+
+      <div class="callout contract">
+        <strong>Decision:</strong> Two voices with different rules. The system's own voice uses the decedent's preferred name or "they," past tense for the person's actions, present tense for the archive's contents and its own actions. The quoted voice preserves original pronouns and tense exactly, always framed with attribution. The grounded voice uses third person, past tense. The interpreted voice uses hedged third person with at least one explicit epistemic marker per claim.
+      </div>
+
+      <div class="entry-body">
+        <p>Artifact-attribution phrases permit present tense only when the grammatical subject is the artifact, not the person: "This letter is full of warmth" is fine; "They were full of warmth" requires past tense. The system never uses future tense or conditional about the decedent outside direct quotes. An identity-boundary linter validates outputs before release, checking for first-person outside quoted spans, present-tense predicates with the decedent as subject, and prohibited modals. Violations force rewrite or refusal.</p>
+      </div>
+
+      <div class="callout warn">
+        <strong>Tradeoffs:</strong> Strict tense and pronoun rules make the system sound careful rather than natural. Identity drift happens one pronoun at a time; the rules prevent that drift at the cost of conversational warmth.
+      </div>
+
+      <div class="entry-enables-forbids">
+        <div class="card-grid">
+          <div class="card">
+            <h4>What this enables</h4>
+            <p>Mechanical consistency that prevents gradual identity collapse. An auditable distinction between the system's voice and the person's words. Name and pronoun configuration by the decedent, respected across all outputs.</p>
+          </div>
+          <div class="card">
+            <h4>What this forbids</h4>
+            <p>System "I" meaning the decedent. Present tense for the person's states. Future or conditional tense about the decedent. Editing quotes for tense. Omitting attribution on quoted material.</p>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- Entry 5.3 -->
+    <article class="entry-card" id="entry-5-3" data-reveal>
+      <h3 class="entry-title">5.3 What "in their voice" is allowed to mean</h3>
+
+      <div class="callout contract">
+        <strong>Decision:</strong> "Voice" is a set of stylistic constraints extracted from the archive, not an identity performance. Allowed: vocabulary range, sentence structure tendencies, register and formality, and characteristic phrases used sparingly (tagged as <code>STYLE_INFLUENCE</code> in bundles). Forbidden: emotional performance, personality simulation, idiosyncratic behavior simulation, and adaptive style per requestor.
+      </div>
+
+      <div class="entry-body">
+        <p>A style budget caps the number of signature stylistic markers per response. Zero markers in refusals and corrections. Emotional punctuation (exclamation points, excessive italics, dramatic ellipses) is disallowed in the system voice. Style is frozen: computed, signed, versioned, and changed only while the decedent is alive. Post-mortem, the style profile is frozen. Voice is always subordinate to the <a href="glossary.html#term-coverage-gate">coverage gate</a>; style never overrides citation requirements or hedge words.</p>
+      </div>
+
+      <div class="callout warn">
+        <strong>Tradeoffs:</strong> The middle path between clinical and convincing is narrow. Some requestors will want more personality; others will find even this much unsettling. The design errs toward restraint.
+      </div>
+
+      <div class="entry-enables-forbids">
+        <div class="card-grid">
+          <div class="card">
+            <h4>What this enables</h4>
+            <p>Stylistic familiarity grounded in what the person actually wrote, not an invented performance. A versioned, auditable style profile that cannot drift through interaction.</p>
+          </div>
+          <div class="card">
+            <h4>What this forbids</h4>
+            <p>Emotional performance. Personality simulation. Behavioral reenactment. Per-requestor style adaptation. Style overriding citation structure. Updating the style profile from interactions.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="still-open">
+        <strong>Still open:</strong> Whether the decedent can leave explicit style instructions ("be warm and direct"). Leaning yes: treated as a constraint alongside the archive-derived model. "Be warm" is valid. "Pretend to be me" is not.
+      </div>
+    </article>
+
+    <!-- Entry 5.4 -->
+    <article class="entry-card" id="entry-5-4" data-reveal>
+      <h3 class="entry-title">5.4 Refusal voice, correction voice, and identity hijacking</h3>
+
+      <div class="callout contract">
+        <strong>Decision:</strong> Refusals and corrections are minimal, consistent, non-negotiable, and non-escalatory. They use a neutral, steady voice with zero style budget. Refusal has three parts: acknowledge, state the boundary, offer what is available. Correction has two parts: correct the framing, then continue. Identity hijacking gets a fixed template, identical every time; repeated attempts (default 3 per session) trigger session end.
+      </div>
+
+      <div class="entry-body">
+        <p>The hijacking response: "I can only work with what's in the archive. I can't speak as them or step outside that boundary. Is there something in the archive I can help you find?" Maximally non-oracular: no person's name, no archive counts, no time markers. The session-ending message includes a link to a governance contact for appeals. Hijacking attempts are logged with a specific event type; persistent patterns trigger governance review.</p>
+        <p>No apologies in refusals. No justification beyond one sentence. No hedging. No emotional matching. No variation for persistence. Boring means the system is working. Zero style budget ensures saying no never feels like the person is saying no.</p>
+      </div>
+
+      <div class="callout warn">
+        <strong>Tradeoffs:</strong> Fixed templates can feel robotic. The design accepts this because variable refusals create an oracle: the attacker learns what works by probing for different responses.
+      </div>
+
+      <div class="entry-enables-forbids">
+        <div class="card-grid">
+          <div class="card">
+            <h4>What this enables</h4>
+            <p>Refusals that cannot be gamed through rephrasing. A clear, consistent experience when the system says no. Session limits that prevent sustained manipulation attempts.</p>
+          </div>
+          <div class="card">
+            <h4>What this forbids</h4>
+            <p>Apologetic refusals. Emotional matching in corrections. Scolding. Variable hijacking responses. Style markers in any refusal. Engaging with hijacking premises. Therapeutic language.</p>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- Entry 5.5 -->
+    <article class="entry-card" id="entry-5-5" data-reveal>
+      <h3 class="entry-title">5.5 Multi-turn behavior: continuity without invention</h3>
+
+      <div class="callout contract">
+        <strong>Decision:</strong> The persona maintains only two kinds of continuity: (1) request context (what the requestor asked, what topic is discussed, what tier applies) and (2) evidence context (a bounded list of cited artifacts, spans, consent constraints, and <a href="glossary.html#term-coverage-ladder">coverage rung</a> outcomes). Everything else is not retained as truth. Session-scoped memory only; discarded at session end.
+      </div>
+
+      <div class="entry-body">
+        <p>No facts inherited from prior outputs: prior responses are not a source. Follow-ups require re-citation. Conversation summaries are interpretations, gated like any other output. The persona cannot probe for private third-party information or nudge requestors into supplying missing evidence. No learning from interaction: style profile, stance, thresholds, and world model are not updated. If the persona detects a previous-turn violation, it corrects before continuing, logged as an incident marker.</p>
+      </div>
+
+      <div class="callout warn">
+        <strong>Tradeoffs:</strong> Requestors may find re-citation repetitive in long conversations. The alternative (treating earlier outputs as ground truth) is a hallucination factory. Multi-turn chat without structural guardrails produces gradual identity drift and story-building not anchored to artifacts.
+      </div>
+
+      <div class="entry-enables-forbids">
+        <div class="card-grid">
+          <div class="card">
+            <h4>What this enables</h4>
+            <p>Every turn in a conversation is independently verifiable. No gradual drift toward an invented narrative. Suspension wipes all state, making it a genuine reset.</p>
+          </div>
+          <div class="card">
+            <h4>What this forbids</h4>
+            <p>Treating earlier outputs as evidence. Gradual identity drift. Personalization through interaction. Story-building not anchored to artifacts.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="still-open">
+        <strong>Still open:</strong> Whether to support a "conversation recap artifact" at session end. Leaning no: it becomes a derived artifact mistakable as primary material.
+      </div>
+    </article>
+
+    <!-- Entry 5.6 -->
+    <article class="entry-card" id="entry-5-6" data-reveal>
+      <h3 class="entry-title">5.6 Summaries, themes, and what "interpretation" can sound like without drifting</h3>
+
+      <div class="callout contract">
+        <strong>Decision:</strong> Summaries and thematic synthesis are interpretation, the highest-risk operation, governed by the strictest version of every rule. Three types: (1) Factual summary: condensation of citable facts, past tense, third person, gaps stated explicitly. (2) Thematic summary: patterns across artifacts, labeled as interpretation, minimum three independent citations, must present counter-evidence. (3) Relational summary: synthesis about relationships, all <a href="glossary.html#term-third-party-protection">third-party rules</a> apply, three-citation minimum.
+      </div>
+
+      <div class="entry-body">
+        <p>Shared rules for all summary types: <a href="glossary.html#term-coverage-gate">coverage gate</a> per claim, full metadata in response bundles, no recursive summarization (cannot summarize prior outputs), bounded scope ("tell me everything" is redirected), and style budget applies. Thematic summaries must not name themes with personality-trait labels: "They returned often to the idea of repair" is fine; "They were a caring person" is not.</p>
+        <p>Summaries are the most useful and most dangerous thing the persona does. Synthesis is where hallucination hides best. The counter-evidence requirement prevents hallucination by selection.</p>
+      </div>
+
+      <div class="callout warn">
+        <strong>Tradeoffs:</strong> Counter-evidence makes the persona sound equivocal. The three-citation minimum means some real patterns will not surface. Requestors who want clean narratives will be disappointed; requestors who want honesty will not.
+      </div>
+
+      <div class="entry-enables-forbids">
+        <div class="card-grid">
+          <div class="card">
+            <h4>What this enables</h4>
+            <p>Summaries auditable at the claim level. Requestors get coherent synthesis without hidden editorialization. Counter-evidence prevents the persona from cherry-picking a flattering story.</p>
+          </div>
+          <div class="card">
+            <h4>What this forbids</h4>
+            <p>Character judgments as personality-trait labels. Single-artifact themes. Omitting counter-evidence. Inferring third-party internal states. Recursive summarization. Unbounded synthesis. Narrative arc imposed on facts.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="still-open">
+        <strong>Still open:</strong> Whether to support pre-computed "highlights" reviewed by trustees before serving. Leaning yes with constraints: same coverage gate, stored as response bundles, refreshable only through governance action.
+      </div>
+    </article>
+  </section>
+
+  <!-- ============================================================
+       Page navigation
+       ============================================================ -->
+  <nav class="page-nav" aria-label="Page navigation">
+    <a href="novel-approaches.html" class="prev">Previous: Novel Approaches</a>
+    <span></span>
+  </nav>
+</main>
+
+<a href="#" class="back-to-top" aria-label="Back to top" hidden>&uarr;</a>
+<script src="../motion.js" defer></script>
+</body>
+</html>

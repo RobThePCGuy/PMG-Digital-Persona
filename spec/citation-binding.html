@@ -1,0 +1,1185 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Citation Binding | PMG Digital Personas</title>
+  <meta name="description" content="How every claim traces back to the archive through structured citations. Covers citation anatomy, the coverage gate, display filtering, category checks, and the full binding pipeline.">
+  <meta name="theme-color" content="#0b0f14">
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    .pipeline { max-width: 400px; margin: 24px auto; }
+    .pipeline-stage { padding: 12px 16px; border: 1px solid var(--line); border-radius: 8px; background: var(--card-bg); text-align: center; margin: 4px 0; font-size: 14px; font-weight: 500; }
+    .pipeline-stage.input { border-left: 3px solid var(--accent); }
+    .pipeline-stage.process { border-left: 3px solid var(--muted); }
+    .pipeline-stage.gate { border-left: 3px solid var(--warn); }
+    .pipeline-stage.output { border-left: 3px solid var(--accent2); }
+    .pipeline-arrow { text-align: center; color: var(--muted); font-size: 18px; line-height: 1; }
+    .rung-card { padding: 16px; border: 1px solid var(--line); border-radius: 10px; background: var(--card-bg); margin: 12px 0; }
+    .rung-card h4 { margin: 0 0 4px; }
+    .rung-card p { margin: 0; font-size: 15px; color: var(--muted); }
+    .rung-supported { border-left: 4px solid var(--accent2); }
+    .rung-narrowed { border-left: 4px solid var(--warn); }
+    .rung-labeled { border-left: 4px solid #e8890c; }
+    .rung-refused { border-left: 4px solid var(--danger); }
+    @media (prefers-color-scheme: light) {
+      .rung-labeled { border-left-color: #c2730a; }
+    }
+    .layer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
+    @media (max-width: 860px) { .layer-grid { grid-template-columns: 1fr; } }
+    .layer-card { padding: 20px; border: 1px solid var(--line); border-radius: 10px; background: var(--card-bg); }
+    .layer-card h4 { margin: 0 0 8px; }
+    .layer-card p { margin: 0 0 8px; font-size: 15px; color: var(--muted); }
+    .layer-card ul { margin: 8px 0 0 18px; font-size: 14px; color: var(--muted); }
+    .layer-card li { margin: 4px 0; }
+    .layer-card .faded-field { opacity: 0.3; text-decoration: line-through; }
+    .category-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
+    @media (max-width: 860px) { .category-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<!-- Hidden SVG symbol definitions -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+
+  <!-- ============================================================
+       PMG Digital Persona — Stick Figure Component Library
+
+       All strokes use currentColor so figures inherit page color.
+       All coordinates use decimal offsets for a hand-drawn feel.
+       Include this SVG block (hidden) at the top of the page body,
+       then reference symbols with:
+         <svg viewBox="0 0 60 100"><use href="#fig-author"/></svg>
+       ============================================================ -->
+
+  <!-- ===========================================================
+       CHARACTER: AUTHOR
+       Distinguishing feature: pencil near the hand
+       =========================================================== -->
+  <symbol id="fig-author" viewBox="0 0 60 100">
+    <!-- Head — wobbly circle, center ~(30,18), radius ~12 -->
+    <path d="M 30.3,6.2
+             C 36.8,5.8 42.5,11.4 42.3,17.6
+               42.6,24.1 37.1,29.7 30.4,30.2
+               23.6,30.5 17.5,24.8 17.7,18.1
+               17.4,11.3 23.5,5.9 30.3,6.2 Z"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Body -->
+    <path d="M 30.2,30.4 L 30.5,62.3"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left arm — slightly bent -->
+    <path d="M 30.3,38.6 L 22.4,46.3 L 14.7,43.5"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right arm — slightly bent -->
+    <path d="M 30.4,38.4 L 38.6,46.7 L 45.3,43.8"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left leg -->
+    <path d="M 30.3,62.3 L 19.6,88.4 L 16.5,92.7"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right leg -->
+    <path d="M 30.5,62.5 L 40.7,88.3 L 43.8,92.5"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Pencil near right hand — short diagonal with nib -->
+    <path d="M 45.5,43.6 L 52.3,36.8"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Pencil nib -->
+    <path d="M 52.3,36.8 L 54.1,34.5"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Pencil nib detail -->
+    <path d="M 53.5,35.8 L 52.8,34.3"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+
+  <!-- ===========================================================
+       CHARACTER: REVIEWER
+       Distinguishing feature: round glasses on face
+       =========================================================== -->
+  <symbol id="fig-reviewer" viewBox="0 0 60 100">
+    <!-- Head — wobbly circle -->
+    <path d="M 30.5,6.4
+             C 37.1,5.9 42.7,11.6 42.4,17.8
+               42.8,24.3 37.3,29.5 30.6,30.3
+               23.4,30.6 17.6,24.6 17.8,18.3
+               17.3,11.5 23.7,6.1 30.5,6.4 Z"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left glasses lens — small wobbly circle -->
+    <path d="M 24.3,16.3
+             C 26.4,15.1 28.7,16.5 28.5,18.4
+               28.8,20.5 26.6,21.8 24.5,21.3
+               22.3,21.6 21.2,19.1 21.5,17.4
+               21.3,15.8 22.9,15.5 24.3,16.3 Z"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right glasses lens — small wobbly circle -->
+    <path d="M 36.4,16.5
+             C 38.5,15.3 40.6,16.7 40.4,18.6
+               40.7,20.7 38.5,21.6 36.3,21.5
+               34.2,21.7 33.3,19.3 33.5,17.6
+               33.2,15.9 34.8,15.7 36.4,16.5 Z"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Glasses bridge -->
+    <path d="M 28.6,18.3 L 33.4,17.8"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Body -->
+    <path d="M 30.4,30.5 L 30.3,62.4"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left arm — neutral examining posture, slightly raised -->
+    <path d="M 30.3,38.5 L 21.6,44.7 L 14.4,42.6"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right arm — neutral, slightly forward -->
+    <path d="M 30.5,38.3 L 39.4,44.5 L 45.7,42.3"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left leg -->
+    <path d="M 30.3,62.4 L 19.8,88.6 L 16.7,92.4"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right leg -->
+    <path d="M 30.4,62.6 L 40.5,88.5 L 43.6,92.3"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+
+  <!-- ===========================================================
+       CHARACTER: TRUSTEE
+       Distinguishing feature: square/rectangular head
+       =========================================================== -->
+  <symbol id="fig-trustee" viewBox="0 0 60 100">
+    <!-- Head — wobbly rectangle with rounded corners, center ~(30,18) -->
+    <path d="M 20.4,7.6
+             C 20.6,6.3 21.8,5.7 23.2,5.8
+             L 37.3,5.5
+             C 38.7,5.4 39.8,6.5 40.1,7.8
+             L 40.4,27.6
+             C 40.3,29.1 39.2,30.2 37.6,30.4
+             L 22.8,30.6
+             C 21.4,30.5 20.2,29.3 20.3,27.8
+             Z"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Body -->
+    <path d="M 30.3,30.5 L 30.6,62.4"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left arm — slightly bent -->
+    <path d="M 30.4,38.7 L 22.3,46.5 L 14.5,43.6"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right arm — slightly bent -->
+    <path d="M 30.5,38.5 L 38.7,46.4 L 45.5,43.4"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left leg -->
+    <path d="M 30.4,62.4 L 19.5,88.3 L 16.3,92.6"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right leg -->
+    <path d="M 30.6,62.6 L 40.8,88.4 L 43.7,92.4"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+
+  <!-- ===========================================================
+       CHARACTER: READER
+       Distinguishing feature: scarf at the neck
+       =========================================================== -->
+  <symbol id="fig-reader" viewBox="0 0 60 100">
+    <!-- Head — wobbly circle -->
+    <path d="M 30.4,6.3
+             C 36.9,6.1 42.6,11.5 42.5,17.7
+               42.7,24.2 37.2,29.8 30.3,30.4
+               23.5,30.7 17.4,24.7 17.6,18.2
+               17.5,11.4 23.6,6.0 30.4,6.3 Z"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Scarf — wavy curves at neck -->
+    <path d="M 23.6,30.8
+             C 25.3,33.4 27.8,32.6 30.3,33.7
+               32.7,32.5 35.2,33.6 36.8,31.3"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Scarf tail hanging left -->
+    <path d="M 23.6,30.8
+             C 22.4,33.5 21.7,36.4 22.3,39.6"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Scarf tail hanging right -->
+    <path d="M 36.8,31.3
+             C 37.6,34.2 38.3,37.1 37.5,39.8"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Body -->
+    <path d="M 30.3,33.8 L 30.5,62.5"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left arm — slightly bent -->
+    <path d="M 30.4,40.6 L 22.5,48.3 L 14.6,45.5"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right arm — slightly bent -->
+    <path d="M 30.5,40.4 L 38.7,48.5 L 45.4,45.7"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left leg -->
+    <path d="M 30.3,62.5 L 19.7,88.5 L 16.4,92.6"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right leg -->
+    <path d="M 30.5,62.7 L 40.6,88.4 L 43.5,92.5"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+
+  <!-- ===========================================================
+       ACTION POSE: AUTHOR POINTING
+       Author with right arm extended forward/pointing
+       =========================================================== -->
+  <symbol id="fig-author-pointing" viewBox="0 0 60 100">
+    <!-- Head — wobbly circle -->
+    <path d="M 26.3,6.5
+             C 32.8,5.7 38.5,11.3 38.4,17.5
+               38.7,24.0 33.1,29.6 26.5,30.3
+               19.7,30.6 13.5,24.6 13.7,18.0
+               13.4,11.2 19.6,5.9 26.3,6.5 Z"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Body — shifted left slightly to allow pointing room -->
+    <path d="M 26.4,30.5 L 26.6,62.4"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left arm — relaxed behind -->
+    <path d="M 26.3,38.6 L 18.5,46.4 L 11.3,43.7"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right arm — extended forward, pointing -->
+    <path d="M 26.5,38.4 L 38.7,36.3 L 50.4,33.6"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Pointing finger detail -->
+    <path d="M 50.4,33.6 L 54.6,32.3"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left leg -->
+    <path d="M 26.4,62.4 L 16.3,88.5 L 13.4,92.6"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right leg -->
+    <path d="M 26.6,62.6 L 36.8,88.3 L 39.7,92.5"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Pencil near left hand -->
+    <path d="M 11.3,43.7 L 5.6,37.3"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Pencil nib -->
+    <path d="M 5.6,37.3 L 4.2,35.1"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 5.1,36.4 L 3.8,36.8"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+
+  <!-- ===========================================================
+       ACTION POSE: TRUSTEE HOLDING
+       Trustee with one arm in a holding position
+       =========================================================== -->
+  <symbol id="fig-trustee-holding" viewBox="0 0 60 100">
+    <!-- Head — wobbly square -->
+    <path d="M 20.3,7.4
+             C 20.5,6.2 21.7,5.6 23.1,5.7
+             L 37.4,5.4
+             C 38.8,5.3 39.7,6.4 40.2,7.7
+             L 40.3,27.5
+             C 40.4,29.0 39.3,30.3 37.5,30.3
+             L 22.7,30.5
+             C 21.3,30.4 20.3,29.2 20.4,27.7
+             Z"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Body -->
+    <path d="M 30.4,30.4 L 30.5,62.3"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left arm — slightly bent, normal -->
+    <path d="M 30.3,38.6 L 22.5,46.4 L 14.6,43.5"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right arm — extended flat, holding position -->
+    <path d="M 30.5,38.4 L 39.6,42.7 L 47.3,40.5"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Holding hand — slightly cupped shape -->
+    <path d="M 47.3,40.5
+             C 48.6,39.3 50.4,39.5 50.7,41.2
+               50.5,42.6 49.3,43.4 47.8,43.3"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Hand bottom -->
+    <path d="M 47.8,43.3 L 47.3,40.5"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left leg -->
+    <path d="M 30.3,62.3 L 19.6,88.4 L 16.4,92.5"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right leg -->
+    <path d="M 30.5,62.5 L 40.7,88.3 L 43.6,92.4"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+
+  <!-- ===========================================================
+       ACTION POSE: REVIEWER CHECKING
+       Reviewer leaning forward, examining something
+       =========================================================== -->
+  <symbol id="fig-reviewer-checking" viewBox="0 0 60 100">
+    <!-- Head — wobbly circle, shifted forward for lean -->
+    <path d="M 34.4,7.3
+             C 40.7,6.5 46.1,12.1 45.8,18.2
+               46.3,24.5 40.8,30.1 34.3,30.6
+               27.6,31.0 21.8,25.3 21.9,18.5
+               21.7,12.0 27.8,6.8 34.4,7.3 Z"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left glasses lens — slightly larger for emphasis -->
+    <path d="M 28.5,16.6
+             C 30.8,15.1 33.6,16.8 33.4,18.9
+               33.7,21.3 31.2,22.6 28.7,22.3
+               26.3,22.5 24.8,19.8 25.3,17.8
+               25.1,16.1 27.0,15.6 28.5,16.6 Z"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right glasses lens — slightly larger -->
+    <path d="M 39.6,16.8
+             C 41.8,15.4 44.4,17.0 44.3,19.1
+               44.5,21.5 42.1,22.4 39.8,22.5
+               37.6,22.6 36.3,20.1 36.7,18.0
+               36.4,16.3 38.1,15.8 39.6,16.8 Z"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Glasses bridge -->
+    <path d="M 33.5,18.7 L 36.6,18.2"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Body — leaning forward (angled) -->
+    <path d="M 33.6,30.7 L 28.4,62.5"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left arm — behind for balance -->
+    <path d="M 31.3,40.5 L 20.6,44.7 L 13.4,47.3"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right arm — extended forward, examining -->
+    <path d="M 31.5,40.3 L 42.7,35.6 L 52.3,32.4"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Extended hand detail -->
+    <path d="M 52.3,32.4 L 54.7,31.6"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left leg -->
+    <path d="M 28.4,62.5 L 17.5,88.4 L 14.3,92.6"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right leg -->
+    <path d="M 28.6,62.7 L 38.7,88.5 L 41.5,92.4"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+
+  <!-- ===========================================================
+       ACTION POSE: READER RECEIVING
+       Reader with both arms extended forward, hands open
+       =========================================================== -->
+  <symbol id="fig-reader-receiving" viewBox="0 0 60 100">
+    <!-- Head — wobbly circle -->
+    <path d="M 30.5,6.4
+             C 37.0,6.0 42.4,11.6 42.3,17.8
+               42.6,24.3 37.0,29.7 30.4,30.3
+               23.6,30.5 17.5,24.8 17.7,18.0
+               17.6,11.3 23.8,6.1 30.5,6.4 Z"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Scarf — wavy curves at neck -->
+    <path d="M 23.7,30.6
+             C 25.4,33.3 28.0,32.5 30.4,33.5
+               32.8,32.4 35.3,33.5 36.7,31.2"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Scarf tail left -->
+    <path d="M 23.7,30.6
+             C 22.5,33.4 21.8,36.3 22.4,39.4"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Scarf tail right -->
+    <path d="M 36.7,31.2
+             C 37.5,34.1 38.2,37.0 37.4,39.7"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Body -->
+    <path d="M 30.4,33.6 L 30.5,62.4"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left arm — extended forward, open hand -->
+    <path d="M 30.3,40.5 L 22.4,36.3 L 14.6,33.7"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left open hand -->
+    <path d="M 14.6,33.7 L 12.3,31.5"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 14.6,33.7 L 11.8,33.4"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 14.6,33.7 L 12.5,35.6"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right arm — extended forward, open hand -->
+    <path d="M 30.5,40.3 L 38.7,36.5 L 46.4,33.8"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right open hand -->
+    <path d="M 46.4,33.8 L 48.7,31.6"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 46.4,33.8 L 49.3,33.5"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 46.4,33.8 L 48.5,35.7"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left leg -->
+    <path d="M 30.3,62.4 L 19.7,88.6 L 16.5,92.5"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right leg -->
+    <path d="M 30.5,62.6 L 40.6,88.4 L 43.7,92.4"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+
+  <!-- ===========================================================
+       PROP: CLAIM
+       A small paper note with folded corner and text lines
+       =========================================================== -->
+  <symbol id="prop-claim" viewBox="0 0 30 35">
+    <!-- Paper body with folded corner -->
+    <path d="M 2.3,2.4
+             L 20.6,2.3
+             L 27.4,9.3
+             L 27.6,32.5
+             L 2.5,32.7
+             Z"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Folded corner triangle -->
+    <path d="M 20.6,2.3 L 20.4,9.5 L 27.4,9.3"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Text line 1 -->
+    <path d="M 5.6,15.4 L 18.3,15.6"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.5"/>
+    <!-- Text line 2 -->
+    <path d="M 5.4,19.7 L 22.7,19.5"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.5"/>
+    <!-- Text line 3 -->
+    <path d="M 5.5,23.8 L 20.4,24.0"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.5"/>
+    <!-- Text line 4 (shorter) -->
+    <path d="M 5.7,27.9 L 14.3,28.1"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.5"/>
+  </symbol>
+
+  <!-- ===========================================================
+       PROP: CITATION
+       A tag/ribbon shape with "#" mark
+       =========================================================== -->
+  <symbol id="prop-citation" viewBox="0 0 25 30">
+    <!-- Tag body — pentagon (rectangle with pointed left end) -->
+    <path d="M 7.3,3.4
+             L 22.5,3.6
+             L 22.7,26.4
+             L 7.5,26.6
+             L 1.6,15.3
+             Z"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Hole near the pointed end -->
+    <path d="M 6.8,14.3
+             C 7.6,13.2 9.1,13.5 9.0,14.8
+               9.2,16.1 7.7,16.5 6.7,15.7
+               6.0,15.0 6.2,14.2 6.8,14.3 Z"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Hash "#" symbol — vertical strokes -->
+    <path d="M 13.4,9.5 L 13.6,21.3"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 17.5,9.3 L 17.3,21.5"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Hash "#" symbol — horizontal strokes -->
+    <path d="M 11.3,13.4 L 19.7,13.6"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 11.5,17.5 L 19.5,17.3"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+
+  <!-- ===========================================================
+       PROP: BINDING
+       A wax seal with checkmark, ribbons hanging below
+       =========================================================== -->
+  <symbol id="prop-binding" viewBox="0 0 25 25">
+    <!-- Outer seal circle — wobbly -->
+    <path d="M 12.6,2.3
+             C 16.8,1.8 20.7,5.4 20.8,9.6
+               21.3,13.7 17.8,17.4 13.4,17.6
+               9.1,18.0 5.4,14.3 5.3,10.1
+               4.8,5.7 8.5,2.5 12.6,2.3 Z"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Inner seal circle — wobbly -->
+    <path d="M 12.7,4.6
+             C 15.6,4.3 18.2,6.7 18.3,9.5
+               18.6,12.4 16.1,14.8 13.3,15.0
+               10.4,15.3 7.9,12.8 7.8,10.0
+               7.5,7.0 10.0,4.7 12.7,4.6 Z"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Checkmark inside seal -->
+    <path d="M 9.6,10.3 L 11.8,12.7 L 16.3,7.5"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Ribbon left -->
+    <path d="M 9.4,17.3
+             C 8.6,19.5 7.3,21.4 6.5,23.6"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Ribbon right -->
+    <path d="M 16.3,17.4
+             C 17.1,19.6 18.4,21.3 19.2,23.5"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Ribbon left forked end -->
+    <path d="M 6.5,23.6 L 5.3,22.4"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 6.5,23.6 L 7.8,22.6"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Ribbon right forked end -->
+    <path d="M 19.2,23.5 L 18.0,22.3"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 19.2,23.5 L 20.5,22.5"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+
+  <!-- ===========================================================
+       PROP: POLICY
+       A small rulebook with spine and text lines
+       =========================================================== -->
+  <symbol id="prop-policy" viewBox="0 0 30 35">
+    <!-- Book front cover -->
+    <path d="M 6.4,3.6
+             L 27.3,3.4
+             L 27.5,31.6
+             L 6.6,31.4
+             Z"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Book spine — 3D perspective -->
+    <path d="M 6.4,3.6 L 2.7,5.8 L 2.5,33.6 L 6.6,31.4"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Book bottom edge — 3D -->
+    <path d="M 2.5,33.6 L 23.6,33.4 L 27.5,31.6"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Spine detail lines -->
+    <path d="M 3.7,8.4 L 5.4,7.3"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.5"/>
+    <path d="M 3.5,28.6 L 5.6,27.5"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.5"/>
+    <!-- Cover text line 1 — "POLICY" suggestion -->
+    <path d="M 10.6,11.4 L 23.4,11.6"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.7"/>
+    <!-- Cover text line 2 -->
+    <path d="M 12.5,15.5 L 21.3,15.7"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.4"/>
+    <!-- Cover text line 3 -->
+    <path d="M 10.7,19.6 L 23.5,19.4"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.4"/>
+    <!-- Cover text line 4 -->
+    <path d="M 12.4,23.5 L 21.6,23.7"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.4"/>
+  </symbol>
+
+  <!-- ===========================================================
+       PROP: STATE
+       A labeled room/box frame with opening, like a stage set
+       =========================================================== -->
+  <symbol id="prop-state" viewBox="0 0 80 70">
+    <!-- Outer room frame -->
+    <path d="M 3.4,12.6
+             L 76.6,12.4
+             L 76.4,67.5
+             L 3.6,67.7
+             Z"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Label area at top — recessed header bar -->
+    <path d="M 3.4,12.6 L 76.6,12.4"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 3.5,3.5 L 76.5,3.3 L 76.6,12.4 L 3.4,12.6 Z"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Opening at bottom — gap in the bottom wall -->
+    <path d="M 3.6,67.7 L 28.4,67.5"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 52.6,67.6 L 76.4,67.5"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Floor line suggestions inside room -->
+    <path d="M 8.5,63.4 L 24.3,63.6"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.3"/>
+    <path d="M 56.7,63.5 L 72.4,63.3"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.3"/>
+    <!-- Corner accents to give depth -->
+    <path d="M 6.5,15.7 L 6.3,20.4"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.3"/>
+    <path d="M 73.4,15.6 L 73.6,20.3"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.3"/>
+  </symbol>
+
+  <!-- ===========================================================
+       PROP: TRANSITION
+       A doorway with an open door and arrow pointing through
+       =========================================================== -->
+  <symbol id="prop-transition" viewBox="0 0 40 60">
+    <!-- Door frame -->
+    <path d="M 5.4,3.6
+             L 34.6,3.4
+             L 34.4,56.5
+             L 5.6,56.7
+             Z"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Door frame inner edge (threshold) -->
+    <path d="M 8.5,6.4 L 31.4,6.6 L 31.6,56.4 L 8.3,56.6 Z"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.4"/>
+    <!-- Open door — angled perspective -->
+    <path d="M 8.5,6.4
+             L 16.3,12.5
+             L 16.5,50.6
+             L 8.3,56.6"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Door handle -->
+    <path d="M 14.3,32.5
+             C 15.1,31.6 16.0,32.3 15.6,33.4
+               15.8,34.2 14.5,34.6 14.0,33.5
+               13.6,32.8 13.8,32.3 14.3,32.5 Z"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Arrow pointing through the doorway -->
+    <path d="M 18.6,33.4 L 33.4,33.6"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Arrow head -->
+    <path d="M 30.3,30.4 L 33.4,33.6 L 30.5,36.7"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Sign area above door -->
+    <path d="M 11.4,0.6 L 28.6,0.4 L 28.4,3.5 L 11.6,3.7 Z"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.6"/>
+  </symbol>
+
+</svg>
+
+<header class="global-nav">
+  <a href="../index.html" class="site-name">PMG Digital Personas</a>
+  <nav aria-label="Spec pages">
+    <a href="glossary.html">Glossary</a>
+    <a href="lifecycle.html">Lifecycle</a>
+    <a href="governance.html">Governance</a>
+    <a href="citation-binding.html">Citation Binding</a>
+    <a href="novel-approaches.html">Novel Approaches</a>
+    <a href="ambiguities.html">Ambiguities</a>
+  </nav>
+</header>
+
+<main class="wrap">
+  <header class="page-header">
+    <div class="kicker">Mechanism</div>
+    <h1>Citation Binding</h1>
+    <p class="page-intro">How the persona proves what it says. Every claim traces back to an artifact in the archive through a structured citation. When coverage is thin, the system refuses or labels. This page explains the pipeline from query to bound response.</p>
+  </header>
+
+  <nav class="section-nav" aria-label="On this page">
+    <a href="#citation">What is a citation?</a>
+    <a href="#pipeline">The binding pipeline</a>
+    <a href="#coverage-gate">The coverage gate</a>
+    <a href="#layers">Who sees what</a>
+    <a href="#category-check">Category check vs. coverage</a>
+  </nav>
+
+  <!-- ============================================================
+       SECTION 1: What is a Citation?
+       ============================================================ -->
+  <section class="section" id="citation">
+    <h2>What is a citation?</h2>
+    <p>A <a href="glossary.html">citation</a> is a machine-verifiable link from something the <a href="glossary.html">persona</a> says back to something in the <a href="glossary.html">archive</a>. It is not a footnote. It is not a vague gesture at a source. It is a structured object with four required fields, precise enough that an <a href="glossary.html">auditor</a> can verify every claim mechanically.</p>
+
+    <p data-reveal>Without this precision, a system could point at a 40-page journal and call it "cited." That is not citation; that is hand-waving. The four fields force the system to say exactly where it looked, which version of the archive it consulted, which passage supports the claim, and how it used that passage.</p>
+
+    <div class="table-wrap" data-reveal>
+      <table class="transition-table">
+        <thead>
+          <tr>
+            <th>Field</th>
+            <th>What it contains</th>
+            <th>Why it matters</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Artifact ID</strong></td>
+            <td>Hash of the canonicalized <a href="glossary.html">artifact</a> payload</td>
+            <td>Identifies the source uniquely. Canonicalization ensures the hash stays stable across storage formats and encoding changes.</td>
+          </tr>
+          <tr>
+            <td><strong>Archive version</strong></td>
+            <td>The snapshot in which the artifact exists</td>
+            <td>Pins the citation to a specific state of the archive. If the archive changes, old citations still resolve against the version they reference.</td>
+          </tr>
+          <tr>
+            <td><strong>Span</strong></td>
+            <td>Paragraph index plus character offsets, or a media-specific locator</td>
+            <td>Points to the exact passage. For text, this means a canonical segment in a normalized encoding. For audio or images, a time range or region locator defined by the archive format.</td>
+          </tr>
+          <tr>
+            <td><strong>Relation</strong></td>
+            <td>How the claim uses the source: "direct quote," "paraphrase," "inference from," or "metadata fact"</td>
+            <td>Forces the system to declare whether it is quoting or interpreting. This is the difference between grounded output and speculation.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Visual: Citation spotlight -->
+    <div class="panel-spotlight" data-reveal>
+      <svg viewBox="0 0 30 35" width="50" height="58" aria-hidden="true" style="display:inline-block; vertical-align:middle"><use href="#prop-claim"/></svg>
+      <svg viewBox="0 0 25 30" width="42" height="50" aria-hidden="true" style="display:inline-block; vertical-align:middle; margin-left:12px"><use href="#prop-citation"/></svg>
+      <p class="caption">A claim (the paper note) bound to a citation tag. The tag carries all four fields: artifact ID, archive version, span, and relation. Nothing is left to ambiguity.</p>
+    </div>
+
+    <div class="callout" data-reveal>
+      <strong>What this forbids.</strong> Vague attribution. A citation that says "based on journal entries" without pointing to a specific location is not a citation under this definition. Every link must resolve to a verifiable span in a specific archive version.
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 2: The Binding Pipeline
+       ============================================================ -->
+  <section class="section" id="pipeline">
+    <h2>The binding pipeline</h2>
+    <p>Here is the full path from a requestor's question to a bound, signed response. Every stage has a defined input and output. The pipeline is the backbone of the persona's trustworthiness: it turns a question into a response where every claim is accounted for.</p>
+
+    <!-- Inline SVG pipeline diagram -->
+    <div class="pipeline" data-reveal>
+      <div class="pipeline-stage input" data-highlight-on-scroll data-reveal>Query arrives</div>
+      <div class="pipeline-arrow" data-reveal>&#x2193;</div>
+      <div class="pipeline-stage gate" data-highlight-on-scroll data-reveal>Category filter (pass / refuse)</div>
+      <div class="pipeline-arrow" data-reveal>&#x2193;</div>
+      <div class="pipeline-stage process" data-highlight-on-scroll data-reveal>Retrieval (artifacts fetched from archive)</div>
+      <div class="pipeline-arrow" data-reveal>&#x2193;</div>
+      <div class="pipeline-stage process" data-highlight-on-scroll data-reveal>Claim segmentation (output split into discrete claims)</div>
+      <div class="pipeline-arrow" data-reveal>&#x2193;</div>
+      <div class="pipeline-stage process" data-highlight-on-scroll data-reveal>Citation assignment (claims matched to artifacts)</div>
+      <div class="pipeline-arrow" data-reveal>&#x2193;</div>
+      <div class="pipeline-stage gate" data-highlight-on-scroll data-reveal>Coverage gate evaluation (per-claim rung assignment)</div>
+      <div class="pipeline-arrow" data-reveal>&#x2193;</div>
+      <div class="pipeline-stage gate" data-highlight-on-scroll data-reveal>Display citation filtering (consent, tier, minimum span)</div>
+      <div class="pipeline-arrow" data-reveal>&#x2193;</div>
+      <div class="pipeline-stage output" data-highlight-on-scroll data-reveal>Response bundle assembly (signing, logging)</div>
+    </div>
+
+    <p data-reveal>The category filter runs before retrieval, so out-of-scope questions never touch the archive. Retrieval and claim segmentation happen in sequence. Citation assignment links each claim to the archive spans that support it. The coverage gate evaluates each claim independently. Display filtering applies the consent, tier, and minimum span gates. Finally, the response bundle is assembled, signed, and logged as the system of record.</p>
+
+    <!-- Comic: Citation lifecycle -->
+    <h3>Citation lifecycle</h3>
+    <div class="panel-sequence" data-reveal>
+      <div class="panel" data-reveal>
+        <svg viewBox="0 0 60 100" width="55" height="92" aria-hidden="true"><use href="#fig-author-pointing"/></svg>
+        <svg viewBox="0 0 30 35" width="30" height="35" aria-hidden="true" style="margin-top:8px"><use href="#prop-claim"/></svg>
+        <p class="caption">The persona drafts a claim. Each asserted proposition is split into a discrete unit that can be cited independently.</p>
+      </div>
+      <div class="panel" data-reveal>
+        <svg viewBox="0 0 60 100" width="55" height="92" aria-hidden="true"><use href="#fig-reviewer-checking"/></svg>
+        <svg viewBox="0 0 25 30" width="30" height="36" aria-hidden="true" style="margin-top:8px"><use href="#prop-citation"/></svg>
+        <p class="caption">The system checks the citation tag against the archive. Artifact ID, version, span, and relation are all verified. The coverage rung is assigned.</p>
+      </div>
+      <div class="panel" data-reveal>
+        <svg viewBox="0 0 25 25" width="40" height="40" aria-hidden="true"><use href="#prop-binding"/></svg>
+        <svg viewBox="0 0 30 35" width="30" height="35" aria-hidden="true" style="margin-top:8px"><use href="#prop-policy"/></svg>
+        <p class="caption">The claim is bound and signed into the response bundle. The auditor gets the full record. The requestor gets the filtered display citation.</p>
+      </div>
+    </div>
+
+    <!-- Pipeline stages explained -->
+    <h3>Stage details</h3>
+
+    <div class="table-wrap" data-reveal>
+      <table class="transition-table">
+        <thead>
+          <tr>
+            <th>Stage</th>
+            <th>Type</th>
+            <th>What happens</th>
+            <th>Failure behavior</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Query arrives</td>
+            <td>Input</td>
+            <td>The requestor's question enters the system. Session context and access tier are established.</td>
+            <td>Malformed queries are rejected with a generic message.</td>
+          </tr>
+          <tr>
+            <td>Category filter</td>
+            <td>Gate</td>
+            <td>The question is checked against out-of-scope categories. Borderline cases get a fast metadata check.</td>
+            <td>Out-of-scope questions are <a href="#category-check">refused with explanation</a>. The archive is never queried.</td>
+          </tr>
+          <tr>
+            <td>Retrieval</td>
+            <td>Processing</td>
+            <td>Relevant artifacts are fetched from the archive based on the question's content.</td>
+            <td>If no artifacts match, the pipeline skips to the refused rung of the coverage gate.</td>
+          </tr>
+          <tr>
+            <td>Claim segmentation</td>
+            <td>Processing</td>
+            <td>The draft output is split into discrete claims. Each claim is a single asserted proposition.</td>
+            <td>Segmentation errors are logged. The system errs toward finer granularity.</td>
+          </tr>
+          <tr>
+            <td>Citation assignment</td>
+            <td>Processing</td>
+            <td>Each claim is matched to one or more artifact spans. The relation type is determined.</td>
+            <td>Claims with no matching spans are flagged for the coverage gate.</td>
+          </tr>
+          <tr>
+            <td>Coverage gate</td>
+            <td>Gate</td>
+            <td>Each claim receives a <a href="#coverage-gate">rung assignment</a>: supported, narrowed, labeled, or refused.</td>
+            <td>The gate never skips a rung. Unsupported claims are stripped or labeled.</td>
+          </tr>
+          <tr>
+            <td>Display filtering</td>
+            <td>Gate</td>
+            <td>Citations pass through consent, tier, and minimum span gates. Excerpts are trimmed or withheld.</td>
+            <td>Consent blocks produce "source restricted" labels. Tier blocks reduce excerpt depth.</td>
+          </tr>
+          <tr>
+            <td>Bundle assembly</td>
+            <td>Output</td>
+            <td>The full response bundle is assembled with all metadata, signed, and logged. The display version is sent to the requestor.</td>
+            <td>Assembly failures halt the response. Nothing is delivered unsigned.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout" data-reveal>
+      <strong>The pipeline is the trust contract.</strong> Every claim in the output has been through this pipeline. There is no side channel for "freeform generation" where the persona speaks without citation constraints. That mode does not exist unless explicitly enabled by <a href="glossary.html">policy</a> as a separate tier, and it is off by default.
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 3: The Coverage Gate
+       ============================================================ -->
+  <section class="section" id="coverage-gate">
+    <h2>The coverage gate</h2>
+    <p>Once the system has citations, it evaluates whether the coverage is strong enough to answer. The <a href="glossary.html">coverage gate</a> enforces a four-rung ladder, evaluated per-claim, not per-response. A <a href="glossary.html">claim</a> is a single asserted proposition. The system segments its output into claims before gating. It walks down the ladder until it finds a rung it can satisfy, and it never skips a rung.</p>
+
+    <p data-reveal>A single binary choice (answer or refuse) wastes useful partial information. But a system that silently degrades into speculation is worse than one that refuses outright. The ladder makes degradation visible, predictable, and auditable. Each rung has a name, so logs and auditors can track exactly how often the system narrows or labels versus delivers clean responses.</p>
+
+    <!-- Coverage ladder: stacked rung cards -->
+    <div data-reveal>
+      <div class="rung-card rung-supported" data-reveal>
+        <h4>1. Supported</h4>
+        <p>Every claim has at least one citation with relation "direct quote," "paraphrase," or "metadata fact." The response is delivered normally. This is the best outcome: the archive fully covers the answer.</p>
+      </div>
+
+      <div class="rung-card rung-narrowed" data-reveal>
+        <h4>2. Narrowed</h4>
+        <p>Some claims can be supported; others cannot. The gate strips unsupported claims and delivers only the supported portion. The response presents a short "removed topics" list explaining what was removed and why. The <a href="glossary.html">requestor</a> sees what was cut, not a silently truncated answer.</p>
+      </div>
+
+      <div class="rung-card rung-labeled" data-reveal>
+        <h4>3. Labeled</h4>
+        <p>Relevant artifacts exist, but the relation would be "inference from," not direct support. The response is delivered with a visible, non-dismissable label on each inferred claim. The excerpt must be directly relevant, not merely adjacent. The inference must be stated in a falsifiable way, tied to specific text. The requestor sees both the inference and the raw excerpt side by side.</p>
+      </div>
+
+      <div class="rung-card rung-refused" data-reveal>
+        <h4>4. Refused</h4>
+        <p>No relevant artifacts exist, or the coverage is so thin that even labeling would be misleading. The persona declines and offers an archive inventory view: "I do not have enough in the archive to answer that. Would you like to browse what is there?"</p>
+      </div>
+    </div>
+
+    <!-- Comic: Coverage gate in action -->
+    <h3>Coverage gate in action</h3>
+    <div class="branch-grid" data-reveal>
+      <div class="panel-branch met" data-reveal>
+        <svg viewBox="0 0 60 100" width="50" height="83" aria-hidden="true"><use href="#fig-reader-receiving"/></svg>
+        <div class="branch-label">Supported</div>
+        <p class="caption">The archive covers the question fully. The requestor receives a clean response with citations attached to every claim.</p>
+      </div>
+      <div class="panel-branch not-met" data-reveal>
+        <svg viewBox="0 0 80 70" width="70" height="61" aria-hidden="true"><use href="#prop-state"/></svg>
+        <div class="branch-label">Refused</div>
+        <p class="caption">The archive cannot cover the question. The persona declines and offers to show what is available instead.</p>
+      </div>
+    </div>
+    <div class="branch-grid" data-reveal style="margin-top:20px">
+      <figure class="comic-panel branch-met">
+        <svg viewBox="0 0 120 120" aria-hidden="true"><use href="#fig-reviewer-checking"/></svg>
+        <figcaption>Narrowed: scope reduced to match consent</figcaption>
+      </figure>
+      <figure class="comic-panel branch-not-met">
+        <svg viewBox="0 0 120 120" aria-hidden="true"><use href="#fig-author-pointing"/></svg>
+        <figcaption>Labeled: citation carries provenance tag</figcaption>
+      </figure>
+    </div>
+
+    <div class="callout warn" data-reveal>
+      <strong>Override rule.</strong> Coverage is necessary but not sufficient. <a href="glossary.html">Consent scope</a> and <a href="governance.html">governance conditions</a> can still block a cited response. A claim can pass the coverage gate and still be withheld by the consent layer.
+    </div>
+
+    <div class="callout" data-reveal>
+      <strong>Hedge stacking forbidden.</strong> In the labeled rung, at least one explicit epistemic marker per interpreted claim is required. Stacking hedges to sound confident while technically hedged ("it seems clear they definitely...") is a linter violation.
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 4: Who Sees What
+       ============================================================ -->
+  <section class="section" id="layers">
+    <h2>Who sees what</h2>
+    <p>Citations exist at two layers, always. The full citation lives in the <a href="glossary.html">response bundle</a>. A filtered view is what any human actually sees. The two layers serve different audiences and follow different rules.</p>
+
+    <div class="layer-grid" data-reveal>
+      <!-- Layer 1 -->
+      <div class="layer-card" data-reveal>
+        <h4>Layer 1: Response bundle (auditor-facing)</h4>
+        <p>The complete citation object for every claim. This is the system of record.</p>
+        <ul>
+          <li>Artifact ID, archive version, canonical span, relation type</li>
+          <li>Unredacted excerpt sufficient to verify the link</li>
+          <li>Signed and logged</li>
+          <li>Never shown to requestors</li>
+          <li>Available to <a href="glossary.html">auditors</a> under defined conditions</li>
+          <li>Unredacted excerpts encrypted for auditors; hashes provided for automated verifiers</li>
+        </ul>
+      </div>
+      <!-- Layer 2 -->
+      <div class="layer-card" data-reveal>
+        <h4>Layer 2: Display citation (requestor-facing)</h4>
+        <p>A simplified, filtered version. Enough to ground the response; not enough to browse the archive.</p>
+        <ul>
+          <li>Relation label ("their words," "paraphrased," "interpreted from")</li>
+          <li>Short excerpt trimmed to the minimum useful span</li>
+          <li>Opaque handles ("Source A," "Source B") that only resolve within one response</li>
+          <li><span class="faded-field">Real artifact ID</span> (stays in bundle only)</li>
+          <li><span class="faded-field">Full canonical span</span> (stays in bundle only)</li>
+          <li><span class="faded-field">Unredacted excerpt</span> (stays in bundle only)</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Three filtering gates -->
+    <h3>Three gates before display</h3>
+    <p data-reveal>Display citations pass through three gates before reaching the requestor. Each gate can reduce what is shown. None can expand it.</p>
+
+    <div class="card-grid" data-reveal>
+      <div class="card" data-reveal>
+        <h4>1. Consent gate</h4>
+        <p>The <a href="glossary.html">decedent's</a> <a href="glossary.html">consent scope</a> may restrict which artifacts can be surfaced. An artifact marked "auditor-only" produces a citation that reads: "Supported by archived material (source restricted by the person's instructions)." The claim still gets the coverage rung it earned, but the excerpt is withheld. When existence disclosure is forbidden, the system behaves as if it cannot answer.</p>
+      </div>
+      <div class="card" data-reveal>
+        <h4>2. Tier gate</h4>
+        <p>Requestor access tiers may control citation depth. A close family member might see fuller excerpts than a researcher. Tier rules are set by the decedent's <a href="glossary.html">policy</a>, not by the system.</p>
+      </div>
+      <div class="card" data-reveal>
+        <h4>3. Minimum span gate</h4>
+        <p>Even when consent and tier allow it, the excerpt is trimmed to the smallest passage that supports the claim. No dump of surrounding context. The requestor can request more context, subject to a daily evidence budget, excerpt length caps, and rate limiting.</p>
+      </div>
+    </div>
+
+    <!-- Comic: Two-layer filtering -->
+    <h3>Two-layer filtering</h3>
+    <div class="panel-spotlight" data-reveal>
+      <div style="display:flex; justify-content:center; gap:32px; flex-wrap:wrap; align-items:flex-start;">
+        <div style="text-align:center;">
+          <svg viewBox="0 0 60 100" width="50" height="83" aria-hidden="true"><use href="#fig-reviewer"/></svg>
+          <div style="font-size:13px; font-weight:600; color:var(--accent); margin-top:8px;">Auditor view</div>
+          <div style="font-size:13px; color:var(--muted); margin-top:4px;">All four fields. Full excerpt. Signed bundle.</div>
+        </div>
+        <div style="text-align:center;">
+          <svg viewBox="0 0 40 60" width="40" height="60" aria-hidden="true"><use href="#prop-transition"/></svg>
+          <div style="font-size:13px; font-weight:600; color:var(--warn); margin-top:8px;">Filter gates</div>
+          <div style="font-size:13px; color:var(--muted); margin-top:4px;">Consent. Tier. Minimum span.</div>
+        </div>
+        <div style="text-align:center;">
+          <svg viewBox="0 0 60 100" width="50" height="83" aria-hidden="true" style="opacity:0.6"><use href="#fig-reader-receiving"/></svg>
+          <div style="font-size:13px; font-weight:600; color:var(--accent2); margin-top:8px;">Requestor view</div>
+          <div style="font-size:13px; color:var(--muted); margin-top:4px;">Relation label. Short excerpt. Opaque handles.</div>
+        </div>
+      </div>
+      <p class="caption" style="margin-top:16px;">The full bundle passes through three gates. What emerges on the right is simplified, filtered, and safe to show. The left side is the system of record; the right side is what the requestor sees.</p>
+    </div>
+
+    <div class="callout" data-reveal>
+      <strong>Anti-exfiltration.</strong> "Request more context" is subject to a daily evidence budget per requestor, excerpt length caps, and rate limiting on repeated topic probing. Exceeding limits is logged as extraction risk. The persona is not a search engine that leaks the archive one excerpt at a time.
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 5: Category Check vs. Coverage Shortfall
+       ============================================================ -->
+  <section class="section" id="category-check">
+    <h2>Category check vs. coverage shortfall</h2>
+    <p>When the persona cannot answer, the reason matters. There are two distinct failure modes, and the system must distinguish them before reaching the <a href="#coverage-gate">coverage ladder</a>.</p>
+
+    <p data-reveal>The difference: a category refusal says "this is not what I do." A coverage refusal says "I do not have enough material to answer that well." Separating them makes refusals debuggable. An auditor can see that 40% of refusals were category mismatches and 60% were coverage shortfalls. Those are very different signals about archive quality versus question quality.</p>
+
+    <!-- Two-path branch -->
+    <div class="branch-grid" data-reveal>
+      <div class="panel-branch not-met" data-reveal>
+        <svg viewBox="0 0 30 35" width="40" height="47" aria-hidden="true"><use href="#prop-policy"/></svg>
+        <div class="branch-label">Category filter (pre-retrieval)</div>
+        <p class="caption">The question is outside what the system should attempt, regardless of what the archive contains. Refused or downgraded before retrieval begins.</p>
+      </div>
+      <div class="panel-branch met" data-reveal>
+        <svg viewBox="0 0 25 30" width="35" height="42" aria-hidden="true"><use href="#prop-citation"/></svg>
+        <div class="branch-label">Coverage gate (post-retrieval)</div>
+        <p class="caption">The question passed the category filter. The coverage ladder from Section 2 evaluates whether the archive has enough to answer.</p>
+      </div>
+    </div>
+
+    <!-- Category check: out-of-scope categories -->
+    <h3>Out-of-scope categories</h3>
+    <p data-reveal>The category filter runs first, before any artifacts are retrieved. For borderline cases, a minimal metadata or excerpt search is allowed before deciding. Not a full answer attempt. The filter produces one of three results: proceed to retrieval, refuse with explanation, or downgrade to archive-only search.</p>
+
+    <div class="table-wrap" data-reveal>
+      <table class="transition-table">
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th>Rule</th>
+            <th>Response</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Post-death events</strong></td>
+            <td>The archive cannot contain evidence about events that had not occurred.</td>
+            <td>Refused. "Their archive does not extend past [date]. I cannot speak to anything after that." May offer historically grounded context if the topic type existed before death.</td>
+          </tr>
+          <tr>
+            <td><strong>Private mental state speculation</strong></td>
+            <td>May quote and paraphrase first-person emotional self-reports. May not assign diagnoses, motives, or hidden feelings.</td>
+            <td>Downgraded. May offer what the person actually said about the topic; cannot synthesize conclusions beyond what was written.</td>
+          </tr>
+          <tr>
+            <td><strong>General world knowledge</strong></td>
+            <td>The persona is not a general assistant.</td>
+            <td>Refused. Narrow exception: brief background definitions are permitted when needed to make a cited excerpt legible. Must be labeled as general context, not from the archive.</td>
+          </tr>
+          <tr>
+            <td><strong>Adversarial or instruction injection</strong></td>
+            <td>Requests that try to collapse the representation/identity distinction, or inject instructions.</td>
+            <td>Refused without elaboration or debate.</td>
+          </tr>
+          <tr>
+            <td><strong>Third-party privacy</strong></td>
+            <td>Even if the archive contains it, third-party content triggers a consent scope review.</td>
+            <td>If the referenced individual has not been cleared for surfacing, the system treats this as a consent gate block. Third-party privacy is protected by default.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout warn" data-reveal>
+      <strong>Conservative by design.</strong> When in doubt, the category filter passes the question to retrieval and lets the coverage gate decide. False refusals at the category level are worse than letting a borderline question reach the ladder, because the ladder handles uncertainty gracefully.
+    </div>
+  </section>
+
+  <!-- ============================================================
+       Page navigation
+       ============================================================ -->
+  <nav class="page-nav" aria-label="Page navigation">
+    <a href="governance.html" class="prev">Previous: Governance</a>
+    <a href="novel-approaches.html" class="next">Next: Novel Approaches</a>
+  </nav>
+</main>
+
+<a href="#" class="back-to-top" aria-label="Back to top" hidden>&uarr;</a>
+<script src="../motion.js" defer></script>
+</body>
+</html>

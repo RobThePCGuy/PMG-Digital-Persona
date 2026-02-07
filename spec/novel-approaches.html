@@ -1,0 +1,1088 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Novel Approaches | PMG Digital Personas</title>
+  <meta name="description" content="Five design choices that distinguish post-mortem-governed digital personas from typical memorial systems: policy as code, local-first archives, verifiable audit trails, model drift containment, and challenge channels.">
+  <meta name="theme-color" content="#0b0f14">
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    .approach-number {
+      display: inline-block;
+      width: 32px;
+      height: 32px;
+      line-height: 32px;
+      text-align: center;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      background: rgba(106,166,255,.12);
+      color: var(--accent);
+      margin-right: 10px;
+      vertical-align: middle;
+    }
+    .approach-section h2 {
+      display: flex;
+      align-items: center;
+    }
+    .aspect-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 4px;
+      margin-top: 20px;
+    }
+    .aspect-label:first-of-type {
+      margin-top: 16px;
+    }
+    .honesty-cue {
+      border: 2px solid var(--warn);
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin-bottom: 32px;
+      background: rgba(255,210,122,.06);
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--text);
+    }
+    @media (prefers-color-scheme: light) {
+      .honesty-cue { background: rgba(154,107,0,.04); }
+    }
+    .vignette-scene {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      gap: 16px;
+      flex-wrap: wrap;
+      padding: 12px 0;
+    }
+    .vignette-scene svg {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Hidden SVG symbol definitions -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+
+  <!-- ============================================================
+       PMG Digital Persona — Stick Figure Component Library
+
+       All strokes use currentColor so figures inherit page color.
+       All coordinates use decimal offsets for a hand-drawn feel.
+       Include this SVG block (hidden) at the top of the page body,
+       then reference symbols with:
+         <svg viewBox="0 0 60 100"><use href="#fig-author"/></svg>
+       ============================================================ -->
+
+  <!-- ===========================================================
+       CHARACTER: AUTHOR
+       Distinguishing feature: pencil near the hand
+       =========================================================== -->
+  <symbol id="fig-author" viewBox="0 0 60 100">
+    <!-- Head — wobbly circle, center ~(30,18), radius ~12 -->
+    <path d="M 30.3,6.2
+             C 36.8,5.8 42.5,11.4 42.3,17.6
+               42.6,24.1 37.1,29.7 30.4,30.2
+               23.6,30.5 17.5,24.8 17.7,18.1
+               17.4,11.3 23.5,5.9 30.3,6.2 Z"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Body -->
+    <path d="M 30.2,30.4 L 30.5,62.3"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left arm — slightly bent -->
+    <path d="M 30.3,38.6 L 22.4,46.3 L 14.7,43.5"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right arm — slightly bent -->
+    <path d="M 30.4,38.4 L 38.6,46.7 L 45.3,43.8"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left leg -->
+    <path d="M 30.3,62.3 L 19.6,88.4 L 16.5,92.7"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right leg -->
+    <path d="M 30.5,62.5 L 40.7,88.3 L 43.8,92.5"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Pencil near right hand — short diagonal with nib -->
+    <path d="M 45.5,43.6 L 52.3,36.8"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Pencil nib -->
+    <path d="M 52.3,36.8 L 54.1,34.5"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Pencil nib detail -->
+    <path d="M 53.5,35.8 L 52.8,34.3"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+
+  <!-- ===========================================================
+       CHARACTER: REVIEWER
+       Distinguishing feature: round glasses on face
+       =========================================================== -->
+  <symbol id="fig-reviewer" viewBox="0 0 60 100">
+    <!-- Head — wobbly circle -->
+    <path d="M 30.5,6.4
+             C 37.1,5.9 42.7,11.6 42.4,17.8
+               42.8,24.3 37.3,29.5 30.6,30.3
+               23.4,30.6 17.6,24.6 17.8,18.3
+               17.3,11.5 23.7,6.1 30.5,6.4 Z"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left glasses lens — small wobbly circle -->
+    <path d="M 24.3,16.3
+             C 26.4,15.1 28.7,16.5 28.5,18.4
+               28.8,20.5 26.6,21.8 24.5,21.3
+               22.3,21.6 21.2,19.1 21.5,17.4
+               21.3,15.8 22.9,15.5 24.3,16.3 Z"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right glasses lens — small wobbly circle -->
+    <path d="M 36.4,16.5
+             C 38.5,15.3 40.6,16.7 40.4,18.6
+               40.7,20.7 38.5,21.6 36.3,21.5
+               34.2,21.7 33.3,19.3 33.5,17.6
+               33.2,15.9 34.8,15.7 36.4,16.5 Z"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Glasses bridge -->
+    <path d="M 28.6,18.3 L 33.4,17.8"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Body -->
+    <path d="M 30.4,30.5 L 30.3,62.4"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left arm — neutral examining posture, slightly raised -->
+    <path d="M 30.3,38.5 L 21.6,44.7 L 14.4,42.6"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right arm — neutral, slightly forward -->
+    <path d="M 30.5,38.3 L 39.4,44.5 L 45.7,42.3"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left leg -->
+    <path d="M 30.3,62.4 L 19.8,88.6 L 16.7,92.4"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right leg -->
+    <path d="M 30.4,62.6 L 40.5,88.5 L 43.6,92.3"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+
+  <!-- ===========================================================
+       CHARACTER: TRUSTEE
+       Distinguishing feature: square/rectangular head
+       =========================================================== -->
+  <symbol id="fig-trustee" viewBox="0 0 60 100">
+    <!-- Head — wobbly rectangle with rounded corners, center ~(30,18) -->
+    <path d="M 20.4,7.6
+             C 20.6,6.3 21.8,5.7 23.2,5.8
+             L 37.3,5.5
+             C 38.7,5.4 39.8,6.5 40.1,7.8
+             L 40.4,27.6
+             C 40.3,29.1 39.2,30.2 37.6,30.4
+             L 22.8,30.6
+             C 21.4,30.5 20.2,29.3 20.3,27.8
+             Z"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Body -->
+    <path d="M 30.3,30.5 L 30.6,62.4"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left arm — slightly bent -->
+    <path d="M 30.4,38.7 L 22.3,46.5 L 14.5,43.6"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right arm — slightly bent -->
+    <path d="M 30.5,38.5 L 38.7,46.4 L 45.5,43.4"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left leg -->
+    <path d="M 30.4,62.4 L 19.5,88.3 L 16.3,92.6"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right leg -->
+    <path d="M 30.6,62.6 L 40.8,88.4 L 43.7,92.4"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+
+  <!-- ===========================================================
+       CHARACTER: READER
+       Distinguishing feature: scarf at the neck
+       =========================================================== -->
+  <symbol id="fig-reader" viewBox="0 0 60 100">
+    <!-- Head — wobbly circle -->
+    <path d="M 30.4,6.3
+             C 36.9,6.1 42.6,11.5 42.5,17.7
+               42.7,24.2 37.2,29.8 30.3,30.4
+               23.5,30.7 17.4,24.7 17.6,18.2
+               17.5,11.4 23.6,6.0 30.4,6.3 Z"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Scarf — wavy curves at neck -->
+    <path d="M 23.6,30.8
+             C 25.3,33.4 27.8,32.6 30.3,33.7
+               32.7,32.5 35.2,33.6 36.8,31.3"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Scarf tail hanging left -->
+    <path d="M 23.6,30.8
+             C 22.4,33.5 21.7,36.4 22.3,39.6"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Scarf tail hanging right -->
+    <path d="M 36.8,31.3
+             C 37.6,34.2 38.3,37.1 37.5,39.8"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Body -->
+    <path d="M 30.3,33.8 L 30.5,62.5"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left arm — slightly bent -->
+    <path d="M 30.4,40.6 L 22.5,48.3 L 14.6,45.5"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right arm — slightly bent -->
+    <path d="M 30.5,40.4 L 38.7,48.5 L 45.4,45.7"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left leg -->
+    <path d="M 30.3,62.5 L 19.7,88.5 L 16.4,92.6"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right leg -->
+    <path d="M 30.5,62.7 L 40.6,88.4 L 43.5,92.5"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+
+  <!-- ===========================================================
+       ACTION POSE: AUTHOR POINTING
+       Author with right arm extended forward/pointing
+       =========================================================== -->
+  <symbol id="fig-author-pointing" viewBox="0 0 60 100">
+    <!-- Head — wobbly circle -->
+    <path d="M 26.3,6.5
+             C 32.8,5.7 38.5,11.3 38.4,17.5
+               38.7,24.0 33.1,29.6 26.5,30.3
+               19.7,30.6 13.5,24.6 13.7,18.0
+               13.4,11.2 19.6,5.9 26.3,6.5 Z"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Body — shifted left slightly to allow pointing room -->
+    <path d="M 26.4,30.5 L 26.6,62.4"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left arm — relaxed behind -->
+    <path d="M 26.3,38.6 L 18.5,46.4 L 11.3,43.7"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right arm — extended forward, pointing -->
+    <path d="M 26.5,38.4 L 38.7,36.3 L 50.4,33.6"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Pointing finger detail -->
+    <path d="M 50.4,33.6 L 54.6,32.3"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left leg -->
+    <path d="M 26.4,62.4 L 16.3,88.5 L 13.4,92.6"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right leg -->
+    <path d="M 26.6,62.6 L 36.8,88.3 L 39.7,92.5"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Pencil near left hand -->
+    <path d="M 11.3,43.7 L 5.6,37.3"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Pencil nib -->
+    <path d="M 5.6,37.3 L 4.2,35.1"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 5.1,36.4 L 3.8,36.8"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+
+  <!-- ===========================================================
+       ACTION POSE: TRUSTEE HOLDING
+       Trustee with one arm in a holding position
+       =========================================================== -->
+  <symbol id="fig-trustee-holding" viewBox="0 0 60 100">
+    <!-- Head — wobbly square -->
+    <path d="M 20.3,7.4
+             C 20.5,6.2 21.7,5.6 23.1,5.7
+             L 37.4,5.4
+             C 38.8,5.3 39.7,6.4 40.2,7.7
+             L 40.3,27.5
+             C 40.4,29.0 39.3,30.3 37.5,30.3
+             L 22.7,30.5
+             C 21.3,30.4 20.3,29.2 20.4,27.7
+             Z"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Body -->
+    <path d="M 30.4,30.4 L 30.5,62.3"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left arm — slightly bent, normal -->
+    <path d="M 30.3,38.6 L 22.5,46.4 L 14.6,43.5"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right arm — extended flat, holding position -->
+    <path d="M 30.5,38.4 L 39.6,42.7 L 47.3,40.5"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Holding hand — slightly cupped shape -->
+    <path d="M 47.3,40.5
+             C 48.6,39.3 50.4,39.5 50.7,41.2
+               50.5,42.6 49.3,43.4 47.8,43.3"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Hand bottom -->
+    <path d="M 47.8,43.3 L 47.3,40.5"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left leg -->
+    <path d="M 30.3,62.3 L 19.6,88.4 L 16.4,92.5"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right leg -->
+    <path d="M 30.5,62.5 L 40.7,88.3 L 43.6,92.4"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+
+  <!-- ===========================================================
+       ACTION POSE: REVIEWER CHECKING
+       Reviewer leaning forward, examining something
+       =========================================================== -->
+  <symbol id="fig-reviewer-checking" viewBox="0 0 60 100">
+    <!-- Head — wobbly circle, shifted forward for lean -->
+    <path d="M 34.4,7.3
+             C 40.7,6.5 46.1,12.1 45.8,18.2
+               46.3,24.5 40.8,30.1 34.3,30.6
+               27.6,31.0 21.8,25.3 21.9,18.5
+               21.7,12.0 27.8,6.8 34.4,7.3 Z"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left glasses lens — slightly larger for emphasis -->
+    <path d="M 28.5,16.6
+             C 30.8,15.1 33.6,16.8 33.4,18.9
+               33.7,21.3 31.2,22.6 28.7,22.3
+               26.3,22.5 24.8,19.8 25.3,17.8
+               25.1,16.1 27.0,15.6 28.5,16.6 Z"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right glasses lens — slightly larger -->
+    <path d="M 39.6,16.8
+             C 41.8,15.4 44.4,17.0 44.3,19.1
+               44.5,21.5 42.1,22.4 39.8,22.5
+               37.6,22.6 36.3,20.1 36.7,18.0
+               36.4,16.3 38.1,15.8 39.6,16.8 Z"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Glasses bridge -->
+    <path d="M 33.5,18.7 L 36.6,18.2"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Body — leaning forward (angled) -->
+    <path d="M 33.6,30.7 L 28.4,62.5"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left arm — behind for balance -->
+    <path d="M 31.3,40.5 L 20.6,44.7 L 13.4,47.3"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right arm — extended forward, examining -->
+    <path d="M 31.5,40.3 L 42.7,35.6 L 52.3,32.4"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Extended hand detail -->
+    <path d="M 52.3,32.4 L 54.7,31.6"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left leg -->
+    <path d="M 28.4,62.5 L 17.5,88.4 L 14.3,92.6"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right leg -->
+    <path d="M 28.6,62.7 L 38.7,88.5 L 41.5,92.4"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+
+  <!-- ===========================================================
+       ACTION POSE: READER RECEIVING
+       Reader with both arms extended forward, hands open
+       =========================================================== -->
+  <symbol id="fig-reader-receiving" viewBox="0 0 60 100">
+    <!-- Head — wobbly circle -->
+    <path d="M 30.5,6.4
+             C 37.0,6.0 42.4,11.6 42.3,17.8
+               42.6,24.3 37.0,29.7 30.4,30.3
+               23.6,30.5 17.5,24.8 17.7,18.0
+               17.6,11.3 23.8,6.1 30.5,6.4 Z"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Scarf — wavy curves at neck -->
+    <path d="M 23.7,30.6
+             C 25.4,33.3 28.0,32.5 30.4,33.5
+               32.8,32.4 35.3,33.5 36.7,31.2"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Scarf tail left -->
+    <path d="M 23.7,30.6
+             C 22.5,33.4 21.8,36.3 22.4,39.4"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Scarf tail right -->
+    <path d="M 36.7,31.2
+             C 37.5,34.1 38.2,37.0 37.4,39.7"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Body -->
+    <path d="M 30.4,33.6 L 30.5,62.4"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left arm — extended forward, open hand -->
+    <path d="M 30.3,40.5 L 22.4,36.3 L 14.6,33.7"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left open hand -->
+    <path d="M 14.6,33.7 L 12.3,31.5"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 14.6,33.7 L 11.8,33.4"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 14.6,33.7 L 12.5,35.6"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right arm — extended forward, open hand -->
+    <path d="M 30.5,40.3 L 38.7,36.5 L 46.4,33.8"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right open hand -->
+    <path d="M 46.4,33.8 L 48.7,31.6"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 46.4,33.8 L 49.3,33.5"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 46.4,33.8 L 48.5,35.7"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left leg -->
+    <path d="M 30.3,62.4 L 19.7,88.6 L 16.5,92.5"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right leg -->
+    <path d="M 30.5,62.6 L 40.6,88.4 L 43.7,92.4"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+
+  <!-- ===========================================================
+       PROP: CLAIM
+       A small paper note with folded corner and text lines
+       =========================================================== -->
+  <symbol id="prop-claim" viewBox="0 0 30 35">
+    <!-- Paper body with folded corner -->
+    <path d="M 2.3,2.4
+             L 20.6,2.3
+             L 27.4,9.3
+             L 27.6,32.5
+             L 2.5,32.7
+             Z"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Folded corner triangle -->
+    <path d="M 20.6,2.3 L 20.4,9.5 L 27.4,9.3"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Text line 1 -->
+    <path d="M 5.6,15.4 L 18.3,15.6"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.5"/>
+    <!-- Text line 2 -->
+    <path d="M 5.4,19.7 L 22.7,19.5"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.5"/>
+    <!-- Text line 3 -->
+    <path d="M 5.5,23.8 L 20.4,24.0"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.5"/>
+    <!-- Text line 4 (shorter) -->
+    <path d="M 5.7,27.9 L 14.3,28.1"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.5"/>
+  </symbol>
+
+  <!-- ===========================================================
+       PROP: CITATION
+       A tag/ribbon shape with "#" mark
+       =========================================================== -->
+  <symbol id="prop-citation" viewBox="0 0 25 30">
+    <!-- Tag body — pentagon (rectangle with pointed left end) -->
+    <path d="M 7.3,3.4
+             L 22.5,3.6
+             L 22.7,26.4
+             L 7.5,26.6
+             L 1.6,15.3
+             Z"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Hole near the pointed end -->
+    <path d="M 6.8,14.3
+             C 7.6,13.2 9.1,13.5 9.0,14.8
+               9.2,16.1 7.7,16.5 6.7,15.7
+               6.0,15.0 6.2,14.2 6.8,14.3 Z"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Hash "#" symbol — vertical strokes -->
+    <path d="M 13.4,9.5 L 13.6,21.3"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 17.5,9.3 L 17.3,21.5"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Hash "#" symbol — horizontal strokes -->
+    <path d="M 11.3,13.4 L 19.7,13.6"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 11.5,17.5 L 19.5,17.3"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+
+  <!-- ===========================================================
+       PROP: BINDING
+       A wax seal with checkmark, ribbons hanging below
+       =========================================================== -->
+  <symbol id="prop-binding" viewBox="0 0 25 25">
+    <!-- Outer seal circle — wobbly -->
+    <path d="M 12.6,2.3
+             C 16.8,1.8 20.7,5.4 20.8,9.6
+               21.3,13.7 17.8,17.4 13.4,17.6
+               9.1,18.0 5.4,14.3 5.3,10.1
+               4.8,5.7 8.5,2.5 12.6,2.3 Z"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Inner seal circle — wobbly -->
+    <path d="M 12.7,4.6
+             C 15.6,4.3 18.2,6.7 18.3,9.5
+               18.6,12.4 16.1,14.8 13.3,15.0
+               10.4,15.3 7.9,12.8 7.8,10.0
+               7.5,7.0 10.0,4.7 12.7,4.6 Z"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Checkmark inside seal -->
+    <path d="M 9.6,10.3 L 11.8,12.7 L 16.3,7.5"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Ribbon left -->
+    <path d="M 9.4,17.3
+             C 8.6,19.5 7.3,21.4 6.5,23.6"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Ribbon right -->
+    <path d="M 16.3,17.4
+             C 17.1,19.6 18.4,21.3 19.2,23.5"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Ribbon left forked end -->
+    <path d="M 6.5,23.6 L 5.3,22.4"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 6.5,23.6 L 7.8,22.6"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Ribbon right forked end -->
+    <path d="M 19.2,23.5 L 18.0,22.3"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 19.2,23.5 L 20.5,22.5"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+
+  <!-- ===========================================================
+       PROP: POLICY
+       A small rulebook with spine and text lines
+       =========================================================== -->
+  <symbol id="prop-policy" viewBox="0 0 30 35">
+    <!-- Book front cover -->
+    <path d="M 6.4,3.6
+             L 27.3,3.4
+             L 27.5,31.6
+             L 6.6,31.4
+             Z"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Book spine — 3D perspective -->
+    <path d="M 6.4,3.6 L 2.7,5.8 L 2.5,33.6 L 6.6,31.4"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Book bottom edge — 3D -->
+    <path d="M 2.5,33.6 L 23.6,33.4 L 27.5,31.6"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Spine detail lines -->
+    <path d="M 3.7,8.4 L 5.4,7.3"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.5"/>
+    <path d="M 3.5,28.6 L 5.6,27.5"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.5"/>
+    <!-- Cover text line 1 — "POLICY" suggestion -->
+    <path d="M 10.6,11.4 L 23.4,11.6"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.7"/>
+    <!-- Cover text line 2 -->
+    <path d="M 12.5,15.5 L 21.3,15.7"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.4"/>
+    <!-- Cover text line 3 -->
+    <path d="M 10.7,19.6 L 23.5,19.4"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.4"/>
+    <!-- Cover text line 4 -->
+    <path d="M 12.4,23.5 L 21.6,23.7"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.4"/>
+  </symbol>
+
+  <!-- ===========================================================
+       PROP: STATE
+       A labeled room/box frame with opening, like a stage set
+       =========================================================== -->
+  <symbol id="prop-state" viewBox="0 0 80 70">
+    <!-- Outer room frame -->
+    <path d="M 3.4,12.6
+             L 76.6,12.4
+             L 76.4,67.5
+             L 3.6,67.7
+             Z"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Label area at top — recessed header bar -->
+    <path d="M 3.4,12.6 L 76.6,12.4"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 3.5,3.5 L 76.5,3.3 L 76.6,12.4 L 3.4,12.6 Z"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Opening at bottom — gap in the bottom wall -->
+    <path d="M 3.6,67.7 L 28.4,67.5"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 52.6,67.6 L 76.4,67.5"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Floor line suggestions inside room -->
+    <path d="M 8.5,63.4 L 24.3,63.6"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.3"/>
+    <path d="M 56.7,63.5 L 72.4,63.3"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.3"/>
+    <!-- Corner accents to give depth -->
+    <path d="M 6.5,15.7 L 6.3,20.4"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.3"/>
+    <path d="M 73.4,15.6 L 73.6,20.3"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.3"/>
+  </symbol>
+
+  <!-- ===========================================================
+       PROP: TRANSITION
+       A doorway with an open door and arrow pointing through
+       =========================================================== -->
+  <symbol id="prop-transition" viewBox="0 0 40 60">
+    <!-- Door frame -->
+    <path d="M 5.4,3.6
+             L 34.6,3.4
+             L 34.4,56.5
+             L 5.6,56.7
+             Z"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Door frame inner edge (threshold) -->
+    <path d="M 8.5,6.4 L 31.4,6.6 L 31.6,56.4 L 8.3,56.6 Z"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.4"/>
+    <!-- Open door — angled perspective -->
+    <path d="M 8.5,6.4
+             L 16.3,12.5
+             L 16.5,50.6
+             L 8.3,56.6"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Door handle -->
+    <path d="M 14.3,32.5
+             C 15.1,31.6 16.0,32.3 15.6,33.4
+               15.8,34.2 14.5,34.6 14.0,33.5
+               13.6,32.8 13.8,32.3 14.3,32.5 Z"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Arrow pointing through the doorway -->
+    <path d="M 18.6,33.4 L 33.4,33.6"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Arrow head -->
+    <path d="M 30.3,30.4 L 33.4,33.6 L 30.5,36.7"
+          stroke="currentColor" fill="none" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Sign area above door -->
+    <path d="M 11.4,0.6 L 28.6,0.4 L 28.4,3.5 L 11.6,3.7 Z"
+          stroke="currentColor" fill="none" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.6"/>
+  </symbol>
+
+</svg>
+
+<header class="global-nav">
+  <a href="../index.html" class="site-name">PMG Digital Personas</a>
+  <nav aria-label="Spec pages">
+    <a href="glossary.html">Glossary</a>
+    <a href="lifecycle.html">Lifecycle</a>
+    <a href="governance.html">Governance</a>
+    <a href="citation-binding.html">Citation Binding</a>
+    <a href="novel-approaches.html">Novel Approaches</a>
+    <a href="ambiguities.html">Ambiguities</a>
+  </nav>
+</header>
+
+<main class="wrap">
+  <header class="page-header">
+    <div class="kicker">Design exploration</div>
+    <h1>Novel Approaches</h1>
+    <p class="page-intro">Five design choices that set this project apart from typical memorial systems. Each is presented honestly: what it offers, and what could go wrong.</p>
+  </header>
+
+  <!-- Honesty cue -->
+  <div class="honesty-cue" data-reveal>
+    These are design explorations meant to spark thinking. They are not promises of a working system. Some may prove impractical. Some may inspire better ideas. That is the point.
+  </div>
+
+  <!-- Section navigation -->
+  <nav class="section-nav" aria-label="On this page">
+    <a href="#policy-as-code">Policy as Code</a>
+    <a href="#local-first">Local-First Archive</a>
+    <a href="#verifiable-audit">Verifiable Audit Trail</a>
+    <a href="#drift-containment">Drift Containment</a>
+    <a href="#challenge-channel">Challenge Channel</a>
+  </nav>
+
+  <!-- ============================================================
+       APPROACH 1: Policy as Code
+       ============================================================ -->
+  <section class="section approach-section" id="policy-as-code" data-reveal>
+    <h2><span class="approach-number">1</span> Policy as Code</h2>
+
+    <span class="aspect-label">What it is</span>
+    <p>Safety and <a href="glossary.html">governance</a> rules expressed as versioned, machine-readable artifacts; not prose documents or informal agreements. Every <a href="glossary.html">policy</a> bundle has a version number, a content hash, and a cryptographic signature.</p>
+
+    <span class="aspect-label">Why it matters</span>
+    <p>"We follow best practices" is not auditable. A signed <a href="glossary.html">policy</a> hash included in every <a href="glossary.html">response bundle</a> is. When rules are code, compliance can be checked by a machine. When rules are prose, compliance is checked by optimism.</p>
+
+    <span class="aspect-label">How it works</span>
+    <ul>
+      <li>Policy bundles are versioned and hash-addressed. Each bundle is a self-contained artifact that defines what the system may and may not do.</li>
+      <li>Changes require multi-party approval and are logged to the <a href="glossary.html">transparency log</a>.</li>
+      <li>Every response bundle includes the policy hash that governed it. An <a href="glossary.html">auditor</a> can always see which rules applied to a given interaction.</li>
+      <li>Policy bundles are signed. Unsigned or tampered bundles are rejected by the system before they take effect.</li>
+    </ul>
+
+    <!-- Branch visual -->
+    <div class="branch-grid" data-reveal>
+      <div class="panel-branch met" data-reveal>
+        <div class="vignette-scene">
+          <svg viewBox="0 0 60 100" width="45" height="75" aria-hidden="true"><use href="#fig-reviewer-checking"/></svg>
+          <svg viewBox="0 0 30 35" width="35" height="41" aria-hidden="true"><use href="#prop-policy"/></svg>
+        </div>
+        <div class="branch-label">Benefit: machine-verifiable compliance</div>
+        <p class="caption">An auditor checks the policy hash against the response bundle. The rules that governed the interaction are provably the ones on file. Compliance is a fact, not a claim.</p>
+      </div>
+      <div class="panel-branch not-met" data-reveal>
+        <div class="vignette-scene">
+          <svg viewBox="0 0 60 100" width="45" height="75" aria-hidden="true"><use href="#fig-trustee"/></svg>
+          <svg viewBox="0 0 30 35" width="35" height="41" aria-hidden="true" style="opacity:0.3"><use href="#prop-policy"/></svg>
+        </div>
+        <div class="branch-label">Risk: policy language rigidity</div>
+        <p class="caption">An overly rigid policy blocks a legitimate use case. The trustee cannot override it without a new version, a new signature, and a new approval cycle. Flexibility and safety are in tension.</p>
+      </div>
+    </div>
+
+    <h3>Benefits</h3>
+    <ul data-reveal>
+      <li>Machine-verifiable compliance: no interpretation gaps between "what we said" and "what actually happened"</li>
+      <li>Auditable history: every policy version is preserved; drift between stated rules and enforced rules becomes detectable</li>
+      <li>Accountability: the policy hash in the response bundle is a receipt that cannot be retroactively changed</li>
+    </ul>
+
+    <div class="callout warn" data-reveal>
+      <strong>Risks and open questions.</strong> Policy languages are hard to get right. Expressiveness and safety pull in opposite directions. Overly rigid policies can block legitimate use; overly flexible ones can be gamed. Writing good policy code requires both domain expertise and formal reasoning skills, and the intersection of those two groups is small. There is also the question of who audits the policy language itself.
+    </div>
+  </section>
+
+  <!-- ============================================================
+       APPROACH 2: Local-First Archive
+       ============================================================ -->
+  <section class="section approach-section" id="local-first" data-reveal>
+    <h2><span class="approach-number">2</span> Local-First Archive</h2>
+
+    <span class="aspect-label">What it is</span>
+    <p>The <a href="glossary.html">archive</a> is encrypted, portable, and user-controlled from the start. This is not a cloud service that happens to encrypt. The data lives where the <a href="glossary.html">decedent</a> (or their <a href="glossary.html">trustees</a>) put it, in a format that does not depend on any single operator.</p>
+
+    <span class="aspect-label">Why it matters</span>
+    <p>If the archive lives on someone else's infrastructure with someone else's keys, "your data" is a polite fiction. Operator bankruptcy, acquisition, or policy changes can make the archive inaccessible overnight. Local-first means the archive survives the service.</p>
+
+    <span class="aspect-label">How it works</span>
+    <ul>
+      <li>Content-addressed records: every <a href="glossary.html">artifact</a> is identified by its hash, not by where it is stored.</li>
+      <li>BagIt packaging with SHA-256 manifests provides a standard, well-understood container format for archival data.</li>
+      <li>Encryption at rest with keys split across independent trustees. No single party can decrypt the archive alone.</li>
+      <li>The archive can be verified, moved, and re-hosted without loss of integrity. Moving from one storage provider to another does not change any hashes.</li>
+    </ul>
+
+    <!-- Branch visual -->
+    <div class="branch-grid" data-reveal>
+      <div class="panel-branch met" data-reveal>
+        <div class="vignette-scene">
+          <svg viewBox="0 0 60 100" width="45" height="75" aria-hidden="true"><use href="#fig-trustee-holding"/></svg>
+          <svg viewBox="0 0 25 25" width="35" height="35" aria-hidden="true"><use href="#prop-binding"/></svg>
+        </div>
+        <div class="branch-label">Benefit: portable and resilient</div>
+        <p class="caption">The trustee moves the archive to a new host. The integrity manifests still check out. The archive survives the death of the original operator.</p>
+      </div>
+      <div class="panel-branch not-met" data-reveal>
+        <div class="vignette-scene">
+          <svg viewBox="0 0 60 100" width="45" height="75" aria-hidden="true" style="opacity:0.4"><use href="#fig-trustee"/></svg>
+          <svg viewBox="0 0 80 70" width="55" height="48" aria-hidden="true" style="opacity:0.3"><use href="#prop-state"/></svg>
+        </div>
+        <div class="branch-label">Risk: key management burden</div>
+        <p class="caption">A trustee loses their key share. If too many shares are lost, the archive becomes permanently inaccessible. The safety margin depends on the original trustee configuration.</p>
+      </div>
+    </div>
+
+    <h3>Benefits</h3>
+    <ul data-reveal>
+      <li>Portability: the archive can be moved between providers, countries, and storage technologies without re-encryption</li>
+      <li>Resilience against operator failure: the archive is not coupled to any single company's survival</li>
+      <li>Verifiable integrity decades later: SHA-256 manifests let anyone confirm the archive has not been altered, even if they never saw the original</li>
+    </ul>
+
+    <div class="callout warn" data-reveal>
+      <strong>Risks and open questions.</strong> Users and trustees take on real responsibility for key management. The trustee model mitigates this, but it does not eliminate it. Format obsolescence is a concern over decades, though standard packaging (BagIt, well-known encryption formats) helps. The operational burden is larger than "just upload to the cloud." Some people will find this unacceptable, and that is a fair objection.
+    </div>
+  </section>
+
+  <!-- ============================================================
+       APPROACH 3: Verifiable Audit Trail
+       ============================================================ -->
+  <section class="section approach-section" id="verifiable-audit" data-reveal>
+    <h2><span class="approach-number">3</span> Verifiable Audit Trail</h2>
+
+    <span class="aspect-label">What it is</span>
+    <p>A <a href="glossary.html">transparency log</a> with cryptographic inclusion proofs; not just a database table of events. Every significant action in the system is recorded in an append-only structure that third parties can verify independently.</p>
+
+    <span class="aspect-label">Why it matters</span>
+    <p>"We logged everything" means nothing if the logs can be silently edited. A conventional database can be changed by anyone with admin access, and no one outside the organization would know. Append-only logs with cryptographic proofs make tampering detectable, even by people who do not trust the operator.</p>
+
+    <span class="aspect-label">How it works</span>
+    <ul>
+      <li>Every significant event goes into the log: <a href="glossary.html">archive</a> ingestion, <a href="glossary.html">policy</a> changes, release decisions, <a href="glossary.html">response bundles</a>.</li>
+      <li>The log produces signed checkpoints at regular intervals. Each checkpoint commits to the full history up to that point.</li>
+      <li>Independent monitors fetch checkpoints and compare them for consistency. If the operator shows different histories to different parties, the monitors will detect the divergence.</li>
+      <li>Anomalous event patterns (sudden bursts of policy changes, unusual access patterns) can be flagged automatically.</li>
+    </ul>
+
+    <!-- Branch visual -->
+    <div class="branch-grid" data-reveal>
+      <div class="panel-branch met" data-reveal>
+        <div class="vignette-scene">
+          <svg viewBox="0 0 60 100" width="40" height="67" aria-hidden="true"><use href="#fig-reviewer"/></svg>
+          <svg viewBox="0 0 60 100" width="40" height="67" aria-hidden="true"><use href="#fig-reviewer-checking"/></svg>
+        </div>
+        <div class="branch-label">Benefit: independent verification</div>
+        <p class="caption">Two independent auditors fetch the same checkpoint and reach the same conclusion. Neither has to trust the operator or each other.</p>
+      </div>
+      <div class="panel-branch not-met" data-reveal>
+        <div class="vignette-scene">
+          <svg viewBox="0 0 80 70" width="55" height="48" aria-hidden="true"><use href="#prop-state"/></svg>
+          <svg viewBox="0 0 30 35" width="30" height="35" aria-hidden="true" style="opacity:0.3"><use href="#prop-claim"/></svg>
+        </div>
+        <div class="branch-label">Risk: log availability</div>
+        <p class="caption">The log server goes down or withholds entries. Monitors detect the gap eventually, but not instantly. Metadata in the logs could also be sensitive.</p>
+      </div>
+    </div>
+
+    <h3>Benefits</h3>
+    <ul data-reveal>
+      <li>Independent verification: anyone with the checkpoint can confirm the log is consistent, without trusting the operator</li>
+      <li>Tamper detection: retroactive edits to the log would invalidate the cryptographic chain, making cover-ups structurally difficult</li>
+      <li>Pattern monitoring: automated analysis of log events can flag anomalies before they become incidents</li>
+    </ul>
+
+    <div class="callout warn" data-reveal>
+      <strong>Risks and open questions.</strong> Log availability depends on infrastructure. A compromised log server can withhold entries; monitors will detect this, but detection is not instantaneous. Logs necessarily contain metadata (who accessed what, when, how often) that could itself be sensitive. Balancing transparency with privacy in the log design is a genuine tension that does not have a clean resolution yet.
+    </div>
+  </section>
+
+  <!-- ============================================================
+       APPROACH 4: Model Drift Containment
+       ============================================================ -->
+  <section class="section approach-section" id="drift-containment" data-reveal>
+    <h2><span class="approach-number">4</span> Model Drift Containment</h2>
+
+    <span class="aspect-label">What it is</span>
+    <p>Frozen behavior profiles and regression anchors that detect when the <a href="glossary.html">persona's</a> behavior changes unexpectedly. The system does not just check whether the persona sounds right; it checks whether the persona follows the same structural rules it followed before.</p>
+
+    <span class="aspect-label">Why it matters</span>
+    <p>Models change. Updates, fine-tuning, infrastructure migrations, and even hardware differences can subtly alter behavior. Without a detection mechanism, drift is invisible. The persona might start making claims it would not have made last month, and no one notices until someone is hurt.</p>
+
+    <span class="aspect-label">How it works</span>
+    <ul>
+      <li>Reference question-answer pairs (regression anchors) are established when the persona is first activated.</li>
+      <li>Anchors are tested on structural properties, not stylistic ones: <a href="citation-binding.html">claim segmentation</a> stability, <a href="citation-binding.html">coverage rung</a> distribution, citation correctness, refusal behavior.</li>
+      <li>The test is not "does it sound the same" but "does it follow the same rules." A persona that starts accepting questions it previously refused is drifting, even if it sounds polite doing so.</li>
+      <li>Drift alerts trigger review. The persona may be suspended automatically if drift exceeds a configured threshold.</li>
+    </ul>
+
+    <!-- Branch visual -->
+    <div class="branch-grid" data-reveal>
+      <div class="panel-branch met" data-reveal>
+        <div class="vignette-scene">
+          <svg viewBox="0 0 60 100" width="45" height="75" aria-hidden="true"><use href="#fig-reviewer-checking"/></svg>
+          <svg viewBox="0 0 25 25" width="32" height="32" aria-hidden="true"><use href="#prop-binding"/></svg>
+        </div>
+        <div class="branch-label">Benefit: early warning</div>
+        <p class="caption">The reviewer runs regression anchors after a model update. Two anchors fail: the persona accepted a question it should have refused. The system flags the change before any requestor encounters it.</p>
+      </div>
+      <div class="panel-branch not-met" data-reveal>
+        <div class="vignette-scene">
+          <svg viewBox="0 0 60 100" width="45" height="75" aria-hidden="true"><use href="#fig-reader-receiving"/></svg>
+          <svg viewBox="0 0 30 35" width="30" height="35" aria-hidden="true" style="opacity:0.4"><use href="#prop-claim"/></svg>
+        </div>
+        <div class="branch-label">Risk: untested surface area</div>
+        <p class="caption">The anchors cover common cases but miss an edge case. The persona drifts in a way the tests do not detect. The requestor receives a subtly wrong response.</p>
+      </div>
+    </div>
+
+    <h3>Benefits</h3>
+    <ul data-reveal>
+      <li>Operator accountability: drift is no longer something that "just happens." It is something the operator is responsible for detecting and addressing.</li>
+      <li>Early warning: structural tests catch behavioral changes before they reach requestors</li>
+      <li>Measurable fidelity: regression results provide a concrete, trackable metric for persona consistency over time</li>
+    </ul>
+
+    <div class="callout warn" data-reveal>
+      <strong>Risks and open questions.</strong> Regression anchors test a sample, not exhaustive behavior. Subtle drift in untested areas can still happen. Maintaining anchors requires ongoing effort; they need to be updated as the archive grows and policies change, but each update risks introducing new blind spots. There is also a philosophical question: how much behavioral change is acceptable? Zero tolerance may be unrealistic for systems that depend on external model infrastructure.
+    </div>
+  </section>
+
+  <!-- ============================================================
+       APPROACH 5: Challenge and Correction Channel
+       ============================================================ -->
+  <section class="section approach-section" id="challenge-channel" data-reveal>
+    <h2><span class="approach-number">5</span> Challenge and Correction Channel</h2>
+
+    <span class="aspect-label">What it is</span>
+    <p>A structured path for third parties to dispute <a href="lifecycle.html">death verification</a>, report errors, and trigger corrections. Not a suggestion box; a formal mechanism with defined resolution procedures and real consequences.</p>
+
+    <span class="aspect-label">Why it matters</span>
+    <p>No verification process is perfect. The system needs a way to receive "you got this wrong" that does not require trusting the challenger or the system. If the only way to correct an error is to convince the operator they made a mistake, errors will persist indefinitely. A structured channel makes correction a process, not a negotiation.</p>
+
+    <span class="aspect-label">How it works</span>
+    <ul>
+      <li>Challenge windows for <a href="lifecycle.html">death verification</a>: a defined period during which anyone in a specified group can dispute the determination with supporting evidence.</li>
+      <li>Circuit breakers for any <a href="glossary.html">trustee</a> who sees a problem. One trustee can freeze the system; lifting the freeze requires a <a href="governance.html">quorum</a>.</li>
+      <li>Dispute resolution through trustee quorum. The resolution is logged, and the reasoning is recorded in the <a href="glossary.html">transparency log</a>.</li>
+      <li>Error recovery paths that preserve audit trails. Corrections do not erase the original record; they create a new record that references and supersedes the old one.</li>
+      <li>Third-party revocation is a real capability, not a theoretical one. The mechanism exists, is documented, and has been designed to actually work under adversarial conditions.</li>
+    </ul>
+
+    <!-- Branch visual -->
+    <div class="branch-grid" data-reveal>
+      <div class="panel-branch met" data-reveal>
+        <div class="vignette-scene">
+          <svg viewBox="0 0 60 100" width="40" height="67" aria-hidden="true"><use href="#fig-reader"/></svg>
+          <svg viewBox="0 0 40 60" width="35" height="53" aria-hidden="true"><use href="#prop-transition"/></svg>
+          <svg viewBox="0 0 60 100" width="40" height="67" aria-hidden="true"><use href="#fig-trustee"/></svg>
+        </div>
+        <div class="branch-label">Benefit: error recovery</div>
+        <p class="caption">A third party files a challenge with evidence. The trustees convene, evaluate the evidence, and issue a correction. The original determination and the correction both exist in the log.</p>
+      </div>
+      <div class="panel-branch not-met" data-reveal>
+        <div class="vignette-scene">
+          <svg viewBox="0 0 60 100" width="40" height="67" aria-hidden="true"><use href="#fig-reader"/></svg>
+          <svg viewBox="0 0 60 100" width="40" height="67" aria-hidden="true"><use href="#fig-reader"/></svg>
+          <svg viewBox="0 0 60 100" width="40" height="67" aria-hidden="true" style="opacity:0.3"><use href="#fig-reader"/></svg>
+        </div>
+        <div class="branch-label">Risk: channel abuse</div>
+        <p class="caption">Frivolous challenges flood the system. Each one requires trustee attention and delays legitimate activation. The balance between accessibility and protection against harassment is difficult to calibrate.</p>
+      </div>
+    </div>
+
+    <h3>Benefits</h3>
+    <ul data-reveal>
+      <li>Error recovery: false determinations can be caught and corrected through a defined process, not ad-hoc appeals</li>
+      <li>Protection against false activation: the challenge window prevents premature or incorrect persona activation</li>
+      <li>Trust through accountability: the existence of a correction channel signals that the system expects to make mistakes and has prepared for them</li>
+    </ul>
+
+    <div class="callout warn" data-reveal>
+      <strong>Risks and open questions.</strong> Challenge channels can be abused. Frivolous or malicious challenges consume trustee time and delay legitimate use. Balancing access with protection against harassment is a real design problem; too easy and the channel is a weapon, too hard and it fails its purpose. Resolution timelines also matter: a challenge that takes months to resolve can delay activation past the point of usefulness. There is no clean answer here, only tradeoffs that need to be tuned for specific deployments.
+    </div>
+  </section>
+
+  <!-- ============================================================
+       Page navigation
+       ============================================================ -->
+  <nav class="page-nav" aria-label="Page navigation">
+    <a href="citation-binding.html" class="prev">Previous: Citation Binding</a>
+    <a href="ambiguities.html" class="next">Next: Ambiguities</a>
+  </nav>
+</main>
+
+<a href="#" class="back-to-top" aria-label="Back to top" hidden>&uarr;</a>
+<script src="../motion.js" defer></script>
+</body>
+</html>

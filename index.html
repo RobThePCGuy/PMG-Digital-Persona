@@ -1,0 +1,781 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Post-Mortem-Governed Digital Personas</title>
+  <meta name="description" content="A privacy-first, consent-first design for a trustworthy digital persona: delayed, audited, citation-bound, and verifiable.">
+  <meta property="og:title" content="Post-Mortem-Governed Digital Personas">
+  <meta property="og:description" content="A privacy-first, consent-first design for a trustworthy digital persona: delayed, audited, citation-bound, and verifiable.">
+  <meta name="theme-color" content="#0b0f14">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="page-index">
+<header class="global-nav">
+  <a href="index.html" class="site-name">PMG Digital Personas</a>
+  <nav aria-label="Spec pages">
+    <a href="spec/glossary.html">Glossary</a>
+    <a href="spec/lifecycle.html">Lifecycle</a>
+    <a href="spec/governance.html">Governance</a>
+    <a href="spec/citation-binding.html">Citation Binding</a>
+    <a href="spec/novel-approaches.html">Novel Approaches</a>
+    <a href="spec/ambiguities.html">Ambiguities</a>
+  </nav>
+</header>
+
+  <main class="wrap">
+    <header class="header">
+      <div class="kicker">Design memo · 2025-02-05</div>
+      <h1>Post-Mortem-Governed Digital Personas</h1>
+      <p class="sub">A privacy-first, consent-first design for a trustworthy digital persona. Delayed, audited, citation-bound, and verifiable. Less like "AI vibes," more like a cranky, cryptographically auditable museum curator that refuses to gossip without receipts.</p>
+      <div class="badges">
+        <span class="badge">Consent-first</span>
+        <span class="badge">Privacy-first</span>
+        <span class="badge">Time-delayed release</span>
+        <span class="badge">Quorum governance</span>
+        <span class="badge">Proof-carrying answers</span>
+        <span class="badge">Transparency log</span>
+        <span class="badge">Standards-based identity</span>
+      </div>
+      <nav class="nav" aria-label="Sections">
+        <a href="#why">Why this exists</a>
+        <a href="#vignette">Concrete moment</a>
+        <a href="#core">Core guarantees</a>
+        <a href="#principles">Principles</a>
+        <a href="#redlines">Red lines</a>
+        <a href="#modes">Interaction modes</a>
+        <a href="#overview">System sketch</a>
+        <a href="#threats">Threat model</a>
+        <a href="#failures">Failure modes</a>
+        <a href="#safety">Safety &amp; misuse</a>
+        <a href="#provenance">Provenance</a>
+        <a href="#roadmap">Roadmap</a>
+        <a href="#contribute">How to help</a>
+        <a href="#sources">Sources</a>
+        <a href="spec/glossary.html">Glossary</a>
+        <a href="spec/lifecycle.html">Lifecycle</a>
+        <a href="spec/citation-binding.html">Citation&nbsp;Binding</a>
+        <a href="spec/governance.html">Governance</a>
+        <a href="spec/ambiguities.html">Ambiguity&nbsp;Ledger</a>
+        <a href="style-tile.html">Style&nbsp;Tile</a>
+      </nav>
+      <div class="cta" role="group" aria-label="Primary actions">
+        <a class="btn primary" href="#vignette">Read the memo</a>
+        <a class="btn" href="#contribute">Contribute</a>
+      </div>
+    </header>
+
+    <!-- STAKES -->
+
+    <section id="why" class="section">
+      <h2>Why this exists</h2>
+      <p>
+        The world is racing toward "memorial bots."<sup><a href="#ref-digital-ghosts">[1]</a></sup><sup><a href="#ref-afterlife-ai">[2]</a></sup> Some are comforting. Some raise ethical and psychological risks.<sup><a href="#ref-deathtech-ethics">[3]</a></sup>
+        Most share the same failure mode: <strong>they feel powerful, but they are not trustworthy</strong>.
+      </p>
+      <p>
+        This memo proposes a different approach: a digital persona that is
+        <strong>cryptographically constrained</strong>, <strong>ethically scoped</strong>, and
+        <strong>grounded in real artifacts with explicit citations</strong>.
+      </p>
+      <div class="callout">
+        This is not "bringing someone back." It is a carefully labeled simulation designed to help living people,
+        without giving scammers, grief, or institutions a new lever to pull.
+      </div>
+      <p>
+        The basic idea: if someone chooses to leave a "persona," it should be released only under rules that the person
+        defined while alive. Rules that cannot be overridden by a company, a family argument, or a bad day.
+      </p>
+    </section>
+
+    <section id="vignette" class="section">
+      <h2>A concrete moment</h2>
+      <p>
+        A request is approved under the configured policy: verified death record, waiting period elapsed, threshold trustees have signed, and the requestor has completed identity and relationship checks. The interface repeats the same line in the header and again before the first message: <em>this is not the person. It is a governed simulation constrained by archived artifacts. Every answer is cited. Otherwise, it abstains.</em>
+      </p>
+      <p>
+        The requestor types a simple question: "Do you remember the porch swing?"
+      </p>
+      <p>
+        The system does not start with nostalgia. It shows three sources: a photo labeled "Back porch, 2009," an email thread about repainting the swing, and a voice note tagged "Sunday afternoons." It answers in two parts. First, a short, grounded description of what the artifacts support. Second, a note about uncertainty: what it cannot know, what it will not invent. A small "show citations" toggle expands into timestamps and links.
+      </p>
+      <p>
+        They try another question: "Did you forgive me for leaving?"
+      </p>
+      <p>
+        The system pauses longer. It returns an abstention: that state of mind is not in the archive. It offers alternatives: excerpts where forgiveness is discussed explicitly, a prompt to write a private note (saved for the requestor, not used for generation), and a support reminder if the conversation is escalating. The refusal is not scolding. It is procedural. The boundary is the product.
+      </p>
+      <p>
+        The session ends with a receipt: what was accessed, what was generated, what was refused, and which trustees' signatures authorized the release. The audit log is exportable. Privacy here is explicit and scoped, not assumed.
+      </p>
+
+      <div class="callout danger">
+        <strong>What goes wrong without governance.</strong>
+        Fabricated quotes → trust collapse. Unmediated access → family conflict escalation. Impersonation → credential theft and social engineering. Institutional misuse → grief monetization with no audit trail and no revocation path.
+      </div>
+    </section>
+
+    <!-- COMMITMENTS -->
+
+    <section id="core" class="section">
+      <h2>Core guarantees</h2>
+      <p>Three commitments that turn this from "AI vibes" into something closer to a verifiable historical instrument.</p>
+      <div class="grid-3">
+        <div class="card">
+          <h4>Proof-carrying answers</h4>
+          <p>
+            Every response ships with a signed bundle. The bundle binds the output to the exact artifacts it drew from, the policy version in effect, and the model that produced it. A machine-checkable coverage map shows which claims are supported by which artifacts. If coverage falls short, the system refuses or drops to retrieval-only.
+          </p>
+        </div>
+        <div class="card">
+          <h4>Transparency log</h4>
+          <p>
+            Events that matter (archive ingestion, policy changes, release decisions, response bundles) go into an append-only log with inclusion proofs. Third parties can run monitors that flag suspicious patterns: a trustee quorum formed unusually fast, a model swapped without notice, an emergency unlock with thin justification.
+          </p>
+        </div>
+        <div class="card">
+          <h4>Standards-based identity</h4>
+          <p>
+            People and organizations are represented by stable identifiers (DIDs<sup><a href="#ref-did">[9]</a></sup>). Authority and relationship claims are expressed as verifiable credentials (VCs<sup><a href="#ref-vc">[10]</a></sup>). Death attestations arrive in the same format. This makes the identity layer auditable by machines, not just lawyers.
+          </p>
+        </div>
+      </div>
+      <p><small>If the system cannot cite, it does not "make it up." It can refuse, or show the source excerpts and stop.</small></p>
+    </section>
+
+    <section id="principles" class="section">
+      <h2>Principles</h2>
+      <div class="grid">
+        <div class="card">
+          <h4>1) Consent is the root</h4>
+          <p>The individual defines what is collected, what is allowed, and what is forbidden. Revocation must be real.</p>
+        </div>
+        <div class="card">
+          <h4>2) Time matters</h4>
+          <p>Access is delayed by default to respect grief and to reduce impulsive or coercive activation.</p>
+        </div>
+        <div class="card">
+          <h4>3) No single point of release</h4>
+          <p>Key material is split across independent trustees. Early release requires a quorum, never one operator.</p>
+        </div>
+        <div class="card">
+          <h4>4) Outputs must be grounded</h4>
+          <p>Responses are citation-bound to the person's own artifacts. If it cannot cite, it abstains.</p>
+        </div>
+        <div class="card">
+          <h4>5) Safety is built into the system</h4>
+          <p>Grief-aware interaction limits, misuse detection, and clear "simulation" disclosure are non-optional.</p>
+        </div>
+        <div class="card">
+          <h4>6) Auditability over vibes</h4>
+          <p>Interactions produce a tamper-evident audit trail: what was accessed, what was generated, and why.</p>
+        </div>
+      </div>
+
+      <div class="callout warn">
+        A trustworthy system should be <strong>hard to misuse on purpose</strong> and <strong>hard to misuse by accident</strong>.
+        "We promise we won't do bad things" is not a mechanism.
+      </div>
+    </section>
+
+    <section id="redlines" class="section">
+      <h2>Non-goals / red lines</h2>
+      <p>This project defines what it will not build with the same rigor as what it will. These are not disclaimers. They are design constraints.</p>
+      <ul>
+        <li><strong>No deception mode.</strong> No setting, prompt, or configuration that encourages a user to believe this is the real person.</li>
+        <li><strong>No off-platform impersonation.</strong> No voice calls, no "leave a voicemail," no proxying into messaging services or social accounts.</li>
+        <li><strong>No financial or identity acts.</strong> The persona cannot authorize transfers, unlock accounts, sign documents, or confirm secrets.</li>
+        <li><strong>No unsourced claims.</strong> See the Abstention Contract below.</li>
+        <li><strong>No silent override.</strong> Any operator attempt to bypass policy before the interval elapses generates an auditable failure record. Override is only possible via the explicit, multi-party, logged break-glass path defined at enrollment. No quiet exceptions.</li>
+      </ul>
+
+      <div class="callout contract">
+        <strong>The Abstention Contract</strong><br>
+        If the system cannot cite supporting artifacts from the archive, it does not answer. It may express uncertainty when the archive is incomplete, but it does not speculate beyond what the artifacts support. When it abstains, it explains what sources were eligible, what it attempted, and why it could not support an answer. Then it stops. This is not a fallback behavior. It is the default behavior.
+      </div>
+    </section>
+
+    <section id="modes" class="section">
+      <h2>Interaction modes</h2>
+      <p>The default mode is not "chatbot." It is "archive guide."</p>
+      <div class="grid">
+        <div class="card">
+          <h4>Default: artifact-grounded</h4>
+          <p>
+            The system must produce citations for substantive claims. If coverage is weak, contradictory, or absent, it refuses or degrades to retrieval-only. This is not a fallback. It is the baseline.
+          </p>
+          <div>
+            <span class="pill">Coverage gate</span>
+            <span class="pill">Deterministic retrieval</span>
+            <span class="pill">Claim-to-citation map</span>
+          </div>
+        </div>
+        <div class="card">
+          <h4>Explicit opt-in: freeform</h4>
+          <p>
+            Freeform generation is a tiered capability gated by policy, not the baseline. It may only be available to specific requestor roles. Even then, outputs carry provenance metadata and stricter disclosure labels.
+          </p>
+          <div>
+            <span class="pill">Policy-gated tier</span>
+            <span class="pill">Stricter disclosures</span>
+            <span class="pill">Rate limits</span>
+          </div>
+        </div>
+      </div>
+
+      <h3>Response bundle (illustrative sketch)</h3>
+      <pre><code>{
+  "output_digest": "sha256:...",
+  "artifacts": [
+    {"hash": "sha256:...", "uri": "bag://archive/payload/003.txt", "snippet_hash": "...", "rank": 3}
+  ],
+  "coverage": {
+    "claim_1": ["artifact_7#snipA", "artifact_9#snipC"]
+  },
+  "policy_hash": "sha256:...",
+  "model_id": "persona-rag-v2",
+  "runtime_hash": "sha256:...",
+  "prompt_hashes": {"system": "sha256:...", "policy": "sha256:..."},
+  "transparency_log": {"entry_id": "...", "inclusion_proof": "..."},
+  "signature": {"kid": "did:...#key-1", "jws": "..."}
+}</code></pre>
+    </section>
+
+    <!-- MECHANISM -->
+
+    <section id="overview" class="section">
+      <h2>System sketch</h2>
+      <p>
+        At a high level, the platform has four jobs:
+      </p>
+      <ul>
+        <li><strong>Archive:</strong> collect and encrypt a person's chosen artifacts (texts, recordings, journals). Package them for long-term preservation.</li>
+        <li><strong>Govern:</strong> enforce delayed release and multi-party authorization (trustees + policy + verifiable credentials).</li>
+        <li><strong>Interact:</strong> generate responses using retrieval over the archive, with persistent disclosure and citations. Ship proof-carrying bundles.</li>
+        <li><strong>Prove:</strong> log activity to a transparency log so tampering is detectable and outputs can be independently audited.</li>
+      </ul>
+
+      <h3>Architecture</h3>
+      <p class="diagram-caption">Data flows are one-way unless explicitly released. The dashed box is the policy gate: everything converges there before anything opens.</p>
+
+      <svg viewBox="0 0 900 520" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="System architecture diagram showing data flow between components" style="width:100%;max-width:900px;height:auto">
+        <rect x="20" y="30" width="120" height="50" rx="8" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="4 3" vector-effect="non-scaling-stroke"/>
+        <text x="80" y="60" text-anchor="middle" fill="var(--muted)" font-size="13">Enroller</text>
+        <rect x="20" y="160" width="160" height="60" rx="10" fill="var(--card-bg)" stroke="var(--text)" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+        <text x="100" y="186" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="600">Archive</text>
+        <text x="100" y="204" text-anchor="middle" fill="var(--muted)" font-size="11">encrypted at rest</text>
+        <rect x="240" y="30" width="160" height="60" rx="10" fill="var(--card-bg)" stroke="var(--text)" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+        <text x="320" y="56" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="600">Key Escrow</text>
+        <text x="320" y="74" text-anchor="middle" fill="var(--muted)" font-size="11">k-of-n VSS shares</text>
+        <rect x="240" y="160" width="160" height="60" rx="10" fill="var(--card-bg)" stroke="var(--text)" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+        <text x="320" y="186" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="600">Death Verification</text>
+        <text x="320" y="204" text-anchor="middle" fill="var(--muted)" font-size="11">VCs + multi-source</text>
+        <rect x="480" y="120" width="170" height="70" rx="10" fill="rgba(106,166,255,.06)" stroke="var(--accent)" stroke-width="2.5" stroke-dasharray="8 4" vector-effect="non-scaling-stroke"/>
+        <text x="565" y="150" text-anchor="middle" fill="var(--accent)" font-size="13" font-weight="700">Release Policy</text>
+        <text x="565" y="168" text-anchor="middle" fill="var(--muted)" font-size="11">interval + quorum + DIDs</text>
+        <rect x="500" y="270" width="160" height="60" rx="10" fill="var(--card-bg)" stroke="var(--text)" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+        <text x="580" y="296" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="600">Persona Engine</text>
+        <text x="580" y="314" text-anchor="middle" fill="var(--muted)" font-size="11">RAG + signed bundles</text>
+        <rect x="720" y="270" width="160" height="60" rx="10" fill="var(--card-bg)" stroke="var(--text)" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+        <text x="800" y="296" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="600">Safety Gateway</text>
+        <text x="800" y="314" text-anchor="middle" fill="var(--muted)" font-size="11">grief-aware UX</text>
+        <rect x="770" y="170" width="110" height="50" rx="8" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="4 3" vector-effect="non-scaling-stroke"/>
+        <text x="825" y="200" text-anchor="middle" fill="var(--muted)" font-size="13">Requestor</text>
+        <rect x="350" y="420" width="200" height="60" rx="10" fill="var(--card-bg)" stroke="var(--text)" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+        <text x="450" y="446" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="600">Transparency Log</text>
+        <text x="450" y="464" text-anchor="middle" fill="var(--muted)" font-size="11">append-only, inclusion proofs</text>
+        <rect x="620" y="430" width="120" height="40" rx="8" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="4 3" vector-effect="non-scaling-stroke"/>
+        <text x="680" y="455" text-anchor="middle" fill="var(--muted)" font-size="12">Monitors</text>
+        <defs>
+          <marker id="arrow" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+            <path d="M0,0 L8,3 L0,6" fill="var(--muted)"/>
+          </marker>
+          <marker id="arrow-accent" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+            <path d="M0,0 L8,3 L0,6" fill="var(--accent)"/>
+          </marker>
+        </defs>
+        <line x1="80" y1="80" x2="80" y2="155" stroke="var(--muted)" stroke-width="1.2" marker-end="url(#arrow)" vector-effect="non-scaling-stroke"/>
+        <text x="90" y="125" fill="var(--muted)" font-size="10">artifacts</text>
+        <line x1="140" y1="55" x2="475" y2="145" stroke="var(--muted)" stroke-width="1.2" marker-end="url(#arrow)" vector-effect="non-scaling-stroke"/>
+        <text x="290" y="88" fill="var(--muted)" font-size="10">policy config</text>
+        <line x1="400" y1="70" x2="490" y2="120" stroke="var(--muted)" stroke-width="1.2" marker-end="url(#arrow)" vector-effect="non-scaling-stroke"/>
+        <text x="460" y="85" fill="var(--muted)" font-size="10">shares</text>
+        <line x1="400" y1="180" x2="475" y2="165" stroke="var(--muted)" stroke-width="1.2" marker-end="url(#arrow)" vector-effect="non-scaling-stroke"/>
+        <text x="430" y="185" fill="var(--muted)" font-size="10">verified DoD</text>
+        <line x1="565" y1="190" x2="575" y2="265" stroke="var(--accent)" stroke-width="1.8" marker-end="url(#arrow-accent)" vector-effect="non-scaling-stroke"/>
+        <text x="590" y="235" fill="var(--accent)" font-size="10" font-weight="600">access grant</text>
+        <line x1="180" y1="200" x2="495" y2="290" stroke="var(--muted)" stroke-width="1.2" marker-end="url(#arrow)" vector-effect="non-scaling-stroke"/>
+        <text x="320" y="260" fill="var(--muted)" font-size="10">query / retrieve</text>
+        <line x1="660" y1="300" x2="715" y2="300" stroke="var(--muted)" stroke-width="1.2" marker-end="url(#arrow)" vector-effect="non-scaling-stroke"/>
+        <line x1="825" y1="270" x2="825" y2="225" stroke="var(--muted)" stroke-width="1.2" marker-end="url(#arrow)" vector-effect="non-scaling-stroke"/>
+        <line x1="815" y1="225" x2="815" y2="270" stroke="var(--muted)" stroke-width="1.2" marker-end="url(#arrow)" vector-effect="non-scaling-stroke"/>
+        <text x="845" y="250" fill="var(--muted)" font-size="10">session</text>
+        <line x1="530" y1="190" x2="480" y2="415" stroke="var(--muted)" stroke-width="1" stroke-dasharray="3 3" marker-end="url(#arrow)" vector-effect="non-scaling-stroke"/>
+        <line x1="560" y1="330" x2="490" y2="415" stroke="var(--muted)" stroke-width="1.2" marker-end="url(#arrow)" vector-effect="non-scaling-stroke"/>
+        <text x="540" y="380" fill="var(--muted)" font-size="10">bundles</text>
+        <line x1="770" y1="330" x2="510" y2="425" stroke="var(--muted)" stroke-width="1.2" marker-end="url(#arrow)" vector-effect="non-scaling-stroke"/>
+        <line x1="550" y1="450" x2="615" y2="450" stroke="var(--muted)" stroke-width="1.2" marker-end="url(#arrow)" vector-effect="non-scaling-stroke"/>
+        <text x="575" y="443" fill="var(--muted)" font-size="10">proofs</text>
+        <line x1="500" y1="420" x2="800" y2="220" stroke="var(--muted)" stroke-width="1" stroke-dasharray="3 3" marker-end="url(#arrow)" vector-effect="non-scaling-stroke"/>
+        <text x="670" y="330" fill="var(--muted)" font-size="10">receipt</text>
+        <line x1="280" y1="90" x2="400" y2="420" stroke="var(--muted)" stroke-width="1" stroke-dasharray="3 3" marker-end="url(#arrow)" vector-effect="non-scaling-stroke"/>
+        <line x1="300" y1="220" x2="380" y2="420" stroke="var(--muted)" stroke-width="1" stroke-dasharray="3 3" marker-end="url(#arrow)" vector-effect="non-scaling-stroke"/>
+        <rect x="20" y="480" width="24" height="14" rx="3" fill="none" stroke="var(--accent)" stroke-width="2" stroke-dasharray="6 3" vector-effect="non-scaling-stroke"/>
+        <text x="52" y="492" fill="var(--muted)" font-size="11">= Policy gate</text>
+        <line x1="140" y1="487" x2="170" y2="487" stroke="var(--muted)" stroke-width="1.2" vector-effect="non-scaling-stroke"/>
+        <text x="178" y="492" fill="var(--muted)" font-size="11">= Data flow</text>
+        <line x1="260" y1="487" x2="290" y2="487" stroke="var(--muted)" stroke-width="1" stroke-dasharray="3 3" vector-effect="non-scaling-stroke"/>
+        <text x="298" y="492" fill="var(--muted)" font-size="11">= Audit / optional</text>
+        <rect x="410" y="480" width="24" height="14" rx="3" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="4 3" vector-effect="non-scaling-stroke"/>
+        <text x="442" y="492" fill="var(--muted)" font-size="11">= External actor</text>
+      </svg>
+
+      <h3>Key components</h3>
+      <ul>
+        <li><strong>Encrypted personal archive</strong> (content-addressed records, encrypted at rest, optionally packaged as a BagIt<sup><a href="#ref-bagit">[14]</a></sup> preservation bag with manifests and tag metadata).</li>
+        <li><strong>Threshold key escrow</strong> (a decryption key split into shares held by independent trustees using verifiable secret sharing<sup><a href="#ref-shamir">[4]</a></sup> so shares can be validated without revealing the key).</li>
+        <li><strong>Death verification</strong> (multi-source evidence expressed as verifiable credentials<sup><a href="#ref-vc">[10]</a></sup> from authorized issuers, with fraud checks and a dispute window).</li>
+        <li><strong>Release policy engine</strong> (minimum time interval + quorum of trustee shares + credential verification; optional delay tokens as sequential friction<sup><a href="#ref-vdt">[15]</a></sup>).</li>
+        <li><strong>Sealed compute</strong> (decryption and inference execute inside an attested boundary, TEE/HSM/MPC, so plaintext is never exposed to the operator).</li>
+        <li><strong>Persona engine</strong> (retrieval-augmented generation<sup><a href="#ref-rag">[6]</a></sup> with citation coverage gate; artifact-grounded by default; proof-carrying response bundles).</li>
+        <li><strong>Safety gateway</strong> (grief-aware session limits; misuse detection; watermarking + C2PA<sup><a href="#ref-c2pa">[7]</a></sup> Content Credentials for voice/avatar).</li>
+        <li><strong>Transparency log</strong> (append-only event log with inclusion and consistency proofs<sup><a href="#ref-rekor">[12]</a></sup>; third-party monitors can watch for anomalies).</li>
+      </ul>
+
+      <div class="callout">
+        <strong>Design stance:</strong> the "persona" should be less like a free-running storyteller
+        and more like a careful librarian with a voice. Grounded, transparent, and willing to say "I don't know."
+      </div>
+
+      <h3>Honest time-release</h3>
+      <div class="callout warn">
+        Don't pretend cryptography is a calendar. Hardware gets faster. Calibration drifts. VDFs add sequential friction that resists parallelism, and that is useful. But they are not a wall-clock oracle. The real guarantee is: k-of-n trustees + verified date of death (via VCs) + dispute window + transparent logging. Treat delay parameters as updatable policy inputs, and keep the human and legal workflow load-bearing.
+      </div>
+
+      <h3>Concrete parameters (example defaults)</h3>
+      <pre>· Threshold escrow: n=7, k=4 with VSS commitments; trustees include (i) notary
+  network, (ii) licensed mental-health nonprofit, (iii) user-designated digital
+  executor, (iv) archival foundation; at least three jurisdictions.
+· Policy interval: five (5) years from verified DoD, plus a dispute window
+  (e.g., 30-90 days) for designated contacts.
+· Identity: decedent, trustees, and requestors represented by DIDs; authority
+  and death attestations expressed as VCs; issuance compatible with OpenID4VCI.
+· Persona engine: RAG-first with artifact-grounded default and citation coverage
+  gate; freeform generation is an explicitly enabled tier; session cap 20 min;
+  ≤ 3 sessions/day; crisis-keyword escalation.
+· Response bundles: signed, with artifact digests + coverage report + policy hash
+  + model/runtime identifiers + transparency log inclusion proof.
+· Archive: optionally packaged as a BagIt preservation bag with SHA-256 manifests.
+· Media: watermark + C2PA Content Credentials manifests for voice/avatar outputs.</pre>
+    </section>
+
+    <!-- ADVERSARIES -->
+
+    <section id="threats" class="section">
+      <h2>Threat model</h2>
+      <p>Some of the threats this design is meant to resist:</p>
+      <div class="grid">
+        <div class="card">
+          <h4>Coercive early release</h4>
+          <p>Family pressure, corporate pressure, "just this once," or legal intimidation aimed at unlocking the archive early.</p>
+          <small>Counter: quorum trustees + time delay + hardware-bound key release where possible.</small>
+        </div>
+        <div class="card">
+          <h4>Impersonation &amp; scams</h4>
+          <p>Attackers attempting "the dead person said to wire money," identity theft, or social-engineered access.</p>
+          <small>Counter: requestor verification via VCs + strict blocking of financial/identity requests + watermarking + logging.</small>
+        </div>
+        <div class="card">
+          <h4>Hallucinated provenance</h4>
+          <p>The system confidently invents "facts" about the person without grounding in real artifacts.</p>
+          <small>Counter: citation coverage gate; abstain when artifacts do not support the claim; proof-carrying bundles make coverage auditable.</small>
+        </div>
+        <div class="card">
+          <h4>Silent editing of history</h4>
+          <p>Someone alters artifacts or the audit log after the fact to manipulate what the persona "says."</p>
+          <small>Counter: content-addressed records + transparency log with inclusion proofs + third-party monitors.</small>
+        </div>
+      </div>
+
+      <div class="callout danger">
+        Hard truth: no system can make grief "safe." The goal is to avoid making grief <em>easier to exploit</em>.
+      </div>
+    </section>
+
+    <section id="failures" class="section">
+      <h2>Failure modes</h2>
+      <p>A system that only describes its happy path is not trustworthy. Here is what happens when things go wrong.</p>
+
+      <div class="failure-mode">
+        <h4>Trustees disagree or become unreachable</h4>
+        <dl>
+          <dt>Default outcome:</dt>
+          <dd>Release is blocked until the quorum threshold is met. The system does not lower the threshold.</dd>
+          <dt>Notified:</dt>
+          <dd>Remaining trustees and the designated digital executor receive a status update at configured intervals.</dd>
+          <dt>Logged:</dt>
+          <dd>Each trustee response (or non-response) and the timestamp of each attempt.</dd>
+          <dt>Appeal:</dt>
+          <dd>The enrolling individual can preauthorize alternate trustees at enrollment. If no alternates exist and the quorum cannot be reached, the archive remains sealed.</dd>
+        </dl>
+      </div>
+
+      <div class="failure-mode">
+        <h4>The archive is sparse</h4>
+        <dl>
+          <dt>Default outcome:</dt>
+          <dd>The persona engine operates normally but abstains more often. Sparse archives produce more "I cannot support an answer" responses, not worse ones.</dd>
+          <dt>Notified:</dt>
+          <dd>The requestor sees a one-time notice at session start: "This archive contains limited material. Expect frequent abstentions."</dd>
+          <dt>Logged:</dt>
+          <dd>Abstention rate per session is recorded in the audit trail.</dd>
+          <dt>Appeal:</dt>
+          <dd>Not applicable. The system does not fill gaps with invention.</dd>
+        </dl>
+      </div>
+
+      <div class="failure-mode">
+        <h4>The user shows signs of distress</h4>
+        <dl>
+          <dt>Default outcome:</dt>
+          <dd>The safety gateway presents a reflection pause and support resources when risk signals are detected (user-reported distress, repeated self-harm queries, escalating sentiment). If risk signals persist, the session ends gracefully with a summary of what was accessed.</dd>
+          <dt>Notified:</dt>
+          <dd>No personal data is shared externally. The system surfaces general crisis resources (hotlines, counseling directories).</dd>
+          <dt>Logged:</dt>
+          <dd>That a risk-signal trigger fired and the session was paused or ended. The content of the conversation is not flagged to third parties.</dd>
+          <dt>Appeal:</dt>
+          <dd>The requestor can begin a new session after a configurable cooldown period.</dd>
+        </dl>
+      </div>
+
+      <div class="failure-mode">
+        <h4>A court order demands early release</h4>
+        <dl>
+          <dt>Default outcome:</dt>
+          <dd>The system cannot comply unilaterally. The architecture requires a trustee quorum and elapsed interval. No single operator holds the key. Operator-alone compliance is technically impossible.</dd>
+          <dt>Notified:</dt>
+          <dd>Legal counsel for the platform and all trustees are notified of the order.</dd>
+          <dt>Logged:</dt>
+          <dd>The order, the platform's response, and any trustee actions are recorded in the audit trail.</dd>
+          <dt>Appeal:</dt>
+          <dd>Legal process. A coerced trustee quorum remains a real-world possibility; the mitigation is jurisdictional distribution, policy enforcement, and audit, not magic.</dd>
+        </dl>
+      </div>
+
+      <div class="failure-mode">
+        <h4>Death verification is wrong or contested</h4>
+        <dl>
+          <dt>Default outcome:</dt>
+          <dd>Release is blocked. The interval clock does not start (or is paused) until the death event is re-verified through the defined evidence path.</dd>
+          <dt>Notified:</dt>
+          <dd>Trustees and the designated digital executor.</dd>
+          <dt>Logged:</dt>
+          <dd>Evidence sources used, confidence scores, flags, and every re-verification attempt.</dd>
+          <dt>Appeal:</dt>
+          <dd>Defined re-verification path using alternate evidence sources and trustee review. If unresolved, the archive remains sealed.</dd>
+        </dl>
+      </div>
+
+      <div class="failure-mode">
+        <h4>Trustee share compromise (loss, theft, coercion)</h4>
+        <dl>
+          <dt>Default outcome:</dt>
+          <dd>Affected share is invalidated. Key shares are rotated and re-issued under the enrollment's recovery policy. Release is blocked during rotation.</dd>
+          <dt>Notified:</dt>
+          <dd>All trustees and the digital executor.</dd>
+          <dt>Logged:</dt>
+          <dd>Compromise indicator, rotation event, and new share issuance metadata.</dd>
+          <dt>Appeal:</dt>
+          <dd>Enrollment-defined recovery path. If rotation is not authorized or possible, the archive remains sealed.</dd>
+        </dl>
+      </div>
+
+      <div class="failure-mode">
+        <h4>Requestor identity fraud or relationship claim fails</h4>
+        <dl>
+          <dt>Default outcome:</dt>
+          <dd>Access is blocked. Step-up verification is required. No partial access.</dd>
+          <dt>Notified:</dt>
+          <dd>Requestor receives a generic failure message. Trustees and executor are optionally notified depending on policy.</dd>
+          <dt>Logged:</dt>
+          <dd>Failed checks and timestamps. Stored minimally; sensitive biometrics are not retained unless explicitly required and consented.</dd>
+          <dt>Appeal:</dt>
+          <dd>Re-verification process. Repeated failures trigger a cooldown or permanent denial per policy.</dd>
+        </dl>
+      </div>
+
+      <div class="failure-mode">
+        <h4>Platform breach or archive exfiltration attempt</h4>
+        <dl>
+          <dt>Default outcome:</dt>
+          <dd>Freeze access. Degrade to deny-by-default. Keys remain unavailable without quorum. Incident response triggers.</dd>
+          <dt>Notified:</dt>
+          <dd>Operators, security team, and trustees. Requestors are notified only if policy or legal requirements mandate it.</dd>
+          <dt>Logged:</dt>
+          <dd>Access anomalies, freeze event, and forensic trail (tamper-evident).</dd>
+          <dt>Appeal:</dt>
+          <dd>Security review. Access resumes only after explicit unfreeze under policy.</dd>
+        </dl>
+      </div>
+
+      <div class="failure-mode">
+        <h4>Persona engine failure or model behavior drift</h4>
+        <dl>
+          <dt>Default outcome:</dt>
+          <dd>Retrieval-only mode or full abstention. No generation without citations.</dd>
+          <dt>Notified:</dt>
+          <dd>Requestor is informed the service is degraded. Operators are alerted.</dd>
+          <dt>Logged:</dt>
+          <dd>Degradation event and reason code.</dd>
+          <dt>Appeal:</dt>
+          <dd>Not applicable. Service restores when citation-bound behavior is verified again.</dd>
+        </dl>
+      </div>
+    </section>
+
+    <!-- SAFEGUARDS -->
+
+    <section id="safety" class="section">
+      <h2>Safety &amp; misuse</h2>
+      <p>
+        This is where most "memorial bot" concepts fail. Not because the creators are evil,
+        but because a plausible demo is not the same thing as a safe system.
+      </p>
+      <h3>Baseline safeguards</h3>
+      <ul>
+        <li><strong>Persistent disclosure:</strong> the UI must continually remind the user this is a simulation.</li>
+        <li><strong>Grief-aware UX:</strong> time-boxed sessions, rate limits, reflection pauses, and off-ramps to support resources.</li>
+        <li><strong>Misuse detection:</strong> block prompts that enable fraud, identity theft, coercion, or circumvention.</li>
+        <li><strong>Watermarking + provenance:</strong> voice/avatar outputs embed detectable watermarks and carry C2PA Content Credentials<sup><a href="#ref-c2pa">[7]</a></sup> describing the generation system, policy tier, and provenance references.</li>
+        <li><strong>Relationship verification:</strong> privileged access requires proof of relationship (as verifiable credentials configured by the individual).</li>
+      </ul>
+
+      <h3>Policy-as-code</h3>
+      <p>
+        Safety, release, and interaction rules are expressed in a machine-readable policy language and stored as versioned, hash-addressed, signed artifacts. Policy changes are logged to the transparency log. In some configurations, updates require multi-party approval (trustees plus a designated reviewer). Policy drift becomes auditable, not invisible.
+      </p>
+
+      <div class="callout warn">
+        A persona that can impersonate someone convincingly is a powerful tool. Power demands constraints.
+      </div>
+    </section>
+
+    <!-- RECEIPTS -->
+
+    <section id="provenance" class="section">
+      <h2>Provenance: "show your work"</h2>
+      <p>
+        Trust requires receipts. A persona should be able to point back to the source artifacts it used, ideally with stable,
+        content-addressed identifiers, so that users can audit, disagree, or correct.
+      </p>
+
+      <h3>Proof-carrying response bundles</h3>
+      <p>
+        Every output is accompanied by a signed response bundle that binds the content to its provenance. The bundle includes: retrieved artifact hashes and URIs, the active policy version, prompt and policy-prompt hashes, model and runtime identifiers, a machine-checkable coverage report mapping claims to citations, and a transparency log inclusion proof. Bundles are signed by a key bound to a DID. An optional verifier can replay retrieval and validate the bundle before the output is displayed.
+      </p>
+
+      <h3>Transparency log</h3>
+      <p>
+        Instead of (or in addition to) periodic Merkle-root anchoring, the preferred design uses a full transparency log<sup><a href="#ref-rekor">[12]</a></sup><sup><a href="#ref-trillian">[13]</a></sup> with inclusion and consistency proofs. Entries cover: artifact ingestion, policy versions, credential verifications, release decisions, response bundles (by hash), and signer key rotations. Independent monitors can fetch signed checkpoints and compare for consistency. Anomalous events (rapid quorum formation, unexpected model changes, policy downgrades) can be flagged automatically.
+      </p>
+
+      <h3>Media provenance</h3>
+      <p>
+        For voice and avatar outputs, the system embeds detectable watermarks and attaches standardized provenance manifests (C2PA Content Credentials<sup><a href="#ref-c2pa">[7]</a></sup>). Think of it as a "nutrition label" for generated media: who made it, under what policy, and with what references. Watermark plus Content Credentials is the belt-and-suspenders approach.
+      </p>
+
+      <h3>Archive packaging</h3>
+      <p>
+        The archive is designed to be portable and re-verifiable decades later. Artifacts are stored with content-addressed names inside a preservation package (e.g., BagIt<sup><a href="#ref-bagit">[14]</a></sup>) with checksum manifests, tag metadata (policies, DID documents, credential snapshots, encrypted as needed), and tag manifests. This structure lets anyone verify integrity without understanding internal payload semantics. Migration to new custodians produces new packages while preserving linkage through signed migration statements recorded in the transparency log.
+      </p>
+
+      <h3>What gets recorded</h3>
+      <ul>
+        <li>Which artifacts were retrieved (content-addressed IDs, snippet hashes)</li>
+        <li>Which model/version was used (weights hash, runtime build hash)</li>
+        <li>The prompts and policy constraints (as stored templates or hashes)</li>
+        <li>The outputs and coverage reports</li>
+        <li>Media watermark metadata and C2PA manifest references</li>
+        <li>Transparency log inclusion proofs for every bundle</li>
+      </ul>
+
+      <h3>Reference pseudocode (sketch)</h3>
+      <pre><code>function enroll(userArtifacts):
+    bag = makeBag(userArtifacts)             # BagIt: payload + manifests + tags
+    DEK = randomKey()
+    archive = encrypt(bag, DEK, mode="AES-GCM")
+    MK = randomKey()
+    shares, commitments = vssSplit(MK, k=4, n=7)  # verifiable secret sharing
+    distributeToTrustees(shares, commitments)
+    policy = signAndLog(policyConfig)
+    store(archive, wrappedDEK, commitments, policy)
+
+function verifyDeath(evidenceCredentials):
+    valid = [vc for vc in evidenceCredentials if verifyVC(vc)]
+    DoD = fuseEvidence(valid)                # m-of-p, issuer thresholds
+    pdo = signPolicyDecision(DoD)            # Policy Decision Object
+    logAppend("DOD_DECISION", hash(pdo))
+
+function releaseCheck(request, pdo):
+    assert verifyRequestorCredentials(request.did, request.vcs)
+    assert now() &gt;= pdo.DoD + policy.interval
+    assert disputeWindowClosed(pdo)
+    shares = collectTrusteeShares(k=4)       # bound to archive + pdo + policy
+    with sealedCompute() as enclave:         # TEE / HSM
+        MK = enclave.vssCombine(shares, commitments)
+        DEK = enclave.unwrap(wrappedDEK, MK)
+        bag = enclave.decrypt(archive, DEK)
+    return parseBag(bag)
+
+function chat(query, archiveView, policy):
+    retrieved = retrieve(archiveView.index, query, snapshotId=...)
+    draft = generate(query, retrieved, policyPrompt)
+    coverage = computeCoverage(draft, retrieved)
+    if coverage &lt; policy.minCoverage:
+        output = retrievalOnlyAnswer(query, retrieved)
+    else:
+        output = draft
+    rb = buildResponseBundle(output, retrieved, coverage, policy, runtime)
+    sig = sign(rb, signingKey)
+    proof = logAppend("RESPONSE_BUNDLE", hash(sig))
+    if output.hasMedia:
+        attachC2PA(output.media, signer, refs=[proof.entryId])
+    return output, sig, proof</code></pre>
+    </section>
+
+    <!-- LOOKING AHEAD -->
+
+    <section id="updates" class="section">
+      <h2>Secure updates</h2>
+      <p>
+        If this system becomes real, it becomes a target. Policy bundles, trust roots, verifier rules, and software updates should be distributed using a secure update framework like TUF<sup><a href="#ref-tuf">[16]</a></sup>. The point: even if some repository keys are compromised, clients can detect the problem. Key rotation, expiration enforcement, and rollback protection are built in. Without this, the whole system can be quietly replaced by a malicious update and nobody notices until it is too late.
+      </p>
+    </section>
+
+    <section id="roadmap" class="section">
+      <h2>Roadmap</h2>
+      <p>A realistic sequence that keeps privacy and trust intact from day one:</p>
+      <ol>
+        <li><strong>Local-first archive + citations:</strong> encrypted artifact store with BagIt packaging, retrieval, and citation-bound Q&amp;A. No "freeform persona" yet.</li>
+        <li><strong>Governance MVP:</strong> VSS-backed trustee shares + time delay + release policy evaluation + dispute workflow, with explicit revocation.</li>
+        <li><strong>Identity layer:</strong> DIDs for principals, VCs for death attestations and relationship claims, pluggable issuance via OpenID4VCI.</li>
+        <li><strong>Safety gateway:</strong> session limits, disclosure UX, misuse detection, watermarking + C2PA pipeline.</li>
+        <li><strong>Transparency log:</strong> append-only log with inclusion proofs + independent monitors + verifiable audit packages.</li>
+        <li><strong>Proof-carrying bundles:</strong> signed response bundles with coverage reports, logged to transparency log. Optional verifier replay.</li>
+        <li><strong>Sealed compute:</strong> decryption and inference inside attested boundaries (TEE/HSM).</li>
+        <li><strong>Persona shaping:</strong> carefully constrained "voice" adapters that cannot outgrow the citations.</li>
+      </ol>
+      <div class="callout">
+        The "persona" is the final layer, not the foundation. If you cannot prove what it is based on, you are shipping fiction.
+      </div>
+      <p>Explore the living specification: <a href="spec/glossary.html">Glossary</a> · <a href="spec/lifecycle.html">Lifecycle</a> · <a href="spec/citation-binding.html">Citation&nbsp;Binding</a> · <a href="spec/governance.html">Governance</a> · <a href="spec/ambiguities.html">Ambiguity&nbsp;Ledger</a> · <a href="style-tile.html">Style&nbsp;Tile</a>.</p>
+    </section>
+
+    <!-- JOIN IN -->
+
+    <section id="contribute" class="section">
+      <h2>How to help</h2>
+      <p>If you want this to become real, here are the most valuable contributions:</p>
+      <ul>
+        <li><strong>Threat modeling:</strong> ways this could be abused; proposed mitigations.</li>
+        <li><strong>UX ethics:</strong> what "grief-aware" interaction should look like in practice.</li>
+        <li><strong>Privacy engineering:</strong> local-first designs, key management, trustee models, sealed compute.</li>
+        <li><strong>Provenance design:</strong> citation formats, response bundle schemas, transparency log integration, C2PA workflows.</li>
+        <li><strong>Identity and credentials:</strong> DID methods, VC schemas, issuer/verifier implementations, OpenID4VCI integration.</li>
+        <li><strong>User research:</strong> talk to people who would (or would not) want this. Listen hard.</li>
+      </ul>
+      <hr>
+      <p class="footer">
+        This document is a public design memo. It is not legal advice, medical advice, or a promise of a product.
+        If you build in this space, please build responsibly: with consent, clear labeling, and safety as a first-class requirement.
+      </p>
+    </section>
+
+    <section id="sources" class="section">
+      <h2>Sources &amp; references</h2>
+      <p>
+        This memo tries to use plain language. When it uses terms that can feel loaded (for example "memorial bots"),
+        it borrows phrasing found in public discussion and academic writing about AI-mediated afterlife technologies.
+        If any wording here feels insensitive or inaccurate, please open an issue with suggested edits.
+      </p>
+      <h3>Academic references</h3>
+      <ol>
+        <li id="ref-digital-ghosts">
+          Spitale, G. et al. "The Making of Digital Ghosts: Designing Ethical AI Afterlives." (2025).
+          <a href="https://arxiv.org/pdf/2511.20094" target="_blank" rel="noreferrer">arXiv PDF</a>
+        </li>
+        <li id="ref-afterlife-ai">
+          Haneman, V. "The Law of Digital Resurrection." <em>Boston College Law Review</em> (2025).
+          <a href="https://bclawreview.bc.edu/articles/3205/files/68389b44a7eae.pdf" target="_blank" rel="noreferrer">PDF</a>
+        </li>
+        <li id="ref-deathtech-ethics">
+          Dwi, M. et al. "Ethical and psychological implications of generative AI in afterlife technologies (DeathTech)." (2025).
+          <a href="https://www.sciencedirect.com/science/article/pii/S2666659625000320" target="_blank" rel="noreferrer">ScienceDirect</a>
+        </li>
+        <li id="ref-shamir">
+          Shamir, A. "How to Share a Secret." <em>Communications of the ACM</em> 22(11), 1979.
+          <a href="https://web.mit.edu/6.857/OldStuff/Fall03/ref/Shamir-HowToShareASecret.pdf" target="_blank" rel="noreferrer">PDF</a>
+        </li>
+        <li id="ref-vdf">
+          Boneh, D. et al. "Verifiable Delay Functions." (CRYPTO 2018).
+          <a href="https://crypto.stanford.edu/~dabo/pubs/abstracts/VDF.html" target="_blank" rel="noreferrer">Stanford page</a>
+        </li>
+        <li id="ref-rag">
+          Lewis, P. et al. "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks." (NeurIPS 2020).
+          <a href="https://arxiv.org/abs/2005.11401" target="_blank" rel="noreferrer">arXiv</a>
+        </li>
+        <li id="ref-c2pa">
+          Coalition for Content Provenance and Authenticity (C2PA). "Content Credentials" spec v2.3.
+          <a href="https://c2pa.org/specifications/specifications/2.3/specs/C2PA_Specification.html" target="_blank" rel="noreferrer">Spec</a>
+        </li>
+        <li id="ref-rfc6962">
+          Laurie, B. et al. "RFC 6962: Certificate Transparency" (Merkle hash tree audit paths).
+          <a href="https://www.rfc-editor.org/rfc/rfc6962.html" target="_blank" rel="noreferrer">RFC 6962</a>
+        </li>
+      </ol>
+      <h3>Standards and specifications</h3>
+      <ol start="9">
+        <li id="ref-did">
+          W3C. "Decentralized Identifiers (DIDs) v1.0."
+          <a href="https://www.w3.org/TR/did-core/" target="_blank" rel="noreferrer">w3.org/TR/did-core/</a>
+        </li>
+        <li id="ref-vc">
+          W3C. "Verifiable Credentials Data Model v2.0."
+          <a href="https://www.w3.org/TR/vc-data-model-2.0/" target="_blank" rel="noreferrer">w3.org/TR/vc-data-model-2.0/</a>
+        </li>
+        <li id="ref-openid4vci">
+          OpenID Foundation. "OpenID for Verifiable Credential Issuance 1.0."
+          <a href="https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0.html" target="_blank" rel="noreferrer">openid.net/specs/...</a>
+        </li>
+        <li id="ref-rekor">
+          Sigstore. "Rekor transparency log."
+          <a href="https://docs.sigstore.dev/logging/overview/" target="_blank" rel="noreferrer">docs.sigstore.dev/logging/overview/</a>
+        </li>
+        <li id="ref-trillian">
+          Google. "Trillian: a transparent, highly scalable, and cryptographically verifiable data store."
+          <a href="https://github.com/google/trillian" target="_blank" rel="noreferrer">github.com/google/trillian</a>
+        </li>
+        <li id="ref-bagit">
+          Kunze, J. et al. "RFC 8493: The BagIt File Packaging Format (V1.0)."
+          <a href="https://www.rfc-editor.org/rfc/rfc8493" target="_blank" rel="noreferrer">rfc-editor.org/rfc/rfc8493</a>
+        </li>
+        <li id="ref-vdt">
+          Bakshi et al. "Verifiable Delay Tokens for Privacy-Preserving Time Enforcement." IETF Internet-Draft.
+          <a href="https://datatracker.ietf.org/doc/draft-bakshi-vdt-verifiable-delay-token/" target="_blank" rel="noreferrer">datatracker.ietf.org/doc/...</a>
+        </li>
+        <li id="ref-tuf">
+          The Update Framework (TUF).
+          <a href="https://theupdateframework.io/" target="_blank" rel="noreferrer">theupdateframework.io</a>
+        </li>
+      </ol>
+      <p class="footer">Last updated: 2025-02-05</p>
+    </section>
+  </main>
+  <footer>
+    <p>Last updated: 2026-02-06</p>
+    <p><a href="spec/glossary.html">Glossary</a> · <a href="spec/lifecycle.html">Lifecycle</a> · <a href="spec/citation-binding.html">Citation&nbsp;Binding</a> · <a href="spec/governance.html">Governance</a> · <a href="spec/ambiguities.html">Ambiguity&nbsp;Ledger</a> · <a href="style-tile.html">Style&nbsp;Tile</a></p>
+  </footer>
+  <a href="#" class="back-to-top" aria-label="Back to top" hidden>&uarr;</a>
+  <script src="motion.js" defer></script>
+</body>
+</html>
